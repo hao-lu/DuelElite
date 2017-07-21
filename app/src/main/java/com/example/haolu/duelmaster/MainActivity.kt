@@ -1,5 +1,6 @@
 package com.example.haolu.duelmaster
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         binding.appBarMain.contentMain.setVariable(BR.LPCalculator, LIFE_POINT_CALCULATOR)
         binding.appBarMain.contentMain.executePendingBindings()
+
     }
 
     override fun onBackPressed() {
@@ -120,12 +122,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun logButtonPressed(view: View) {
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.log_list, LogFragment())
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.replace(R.id.log_list, LogFragment())
+//
+//        fragmentTransaction.commit()
 
-        fragmentTransaction.commit()
+//        println("logButtonPressed")
 
-        println("logButtonPressed")
+        val intent = Intent(view.context, LogActivity::class.java)
+        intent.putExtra("log", LIFE_POINT_CALCULATOR.log)
+        startActivity(intent)
     }
 
 

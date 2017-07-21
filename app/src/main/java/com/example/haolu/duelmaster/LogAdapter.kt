@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class LogAdapter(val log: MutableList<LogItem>) : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
+class LogAdapter(val log: LifePointCalculator.Log) : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -23,12 +23,12 @@ class LogAdapter(val log: MutableList<LogItem>) : RecyclerView.Adapter<LogAdapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.setVariable(BR.log, log[position])
+        holder.binding.setVariable(BR.log, log.log[position])
         holder.binding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
-        return log.size
+        return log.log.size
     }
 
 

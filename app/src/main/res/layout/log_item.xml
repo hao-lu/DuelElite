@@ -5,7 +5,7 @@
     <data>
         <variable
             name="log"
-            type="com.example.haolu.duelmaster.LogItem"/>
+            type="com.example.haolu.duelmaster.LifePointCalculator.LogItem"/>
     </data>
 
     <LinearLayout
