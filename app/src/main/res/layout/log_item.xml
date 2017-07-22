@@ -11,13 +11,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{log.logItem}"
-            tools:text="PLAYER ONE LOST 1400" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{log.player}"
+            tools:text="PLAYER ONE "
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{log.operation}"
+            tools:text="LOST "
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(log.turnLP)}"
+            tools:text="1500 "
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            tools:text=": "
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(log.totalLP)}"
+            tools:text="7500 "/>
+
+
 
     </LinearLayout>
 </layout>

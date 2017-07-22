@@ -173,12 +173,13 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="HALF"
+            android:text="HALVE"
             app:layout_constraintBottom_toTopOf="@+id/custom_lp_btn"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/two_thousand_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/two_thousand_btn"
+            android:onClick="halfButtonPressed"/>
 
         <Button
             android:id="@+id/custom_lp_btn"
@@ -208,7 +209,8 @@
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_lp_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_lp_btn"
+            android:onClick="clearButtonPressed"/>
 
         <Button
             android:id="@+id/log_lp_btn"

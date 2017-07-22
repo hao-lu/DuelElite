@@ -32,9 +32,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Search YuGiOh Cards on Wikia", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            LIFE_POINT_CALCULATOR.printLog()
+//            Snackbar.make(view, "Search YuGiOh Cards on Wikia", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+//            LIFE_POINT_CALCULATOR.printLog()
+            val intent = Intent(this, SearchCardActivity::class.java)
+            startActivity(intent)
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -100,8 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun numberButtonPressed(view: View) {
-        // Toast.makeText(this, (view as TextView).text.toString(), Toast.LENGTH_SHORT).show()
-        if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLP += view.text.toString().toDouble()
+        if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLP += view.text.toString().toInt()
 //        if (view is TextView) LIFE_POINT_CALCULATOR.updateCumulatedLP(view.text.toString().toDouble())
         println(LIFE_POINT_CALCULATOR.cumulatedLP)
     }
@@ -116,22 +117,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             LIFE_POINT_CALCULATOR.updateLP(addOrSubtractToggle.isChecked, false)
             println(LIFE_POINT_CALCULATOR.playerTwoLP)
         }
-
-//        LIFE_POINT_CALCULATOR.resetCumulatedLP()
-//        LIFE_POINT_CALCULATOR.cumulatedLP = 0.0
     }
 
     fun logButtonPressed(view: View) {
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.log_list, LogFragment())
-//
-//        fragmentTransaction.commit()
-
-//        println("logButtonPressed")
-
         val intent = Intent(view.context, LogActivity::class.java)
         intent.putExtra("log", LIFE_POINT_CALCULATOR.log)
         startActivity(intent)
+    }
+
+    fun halfButtonPressed(view: View) {
+        cumulated_lp.text = "HALVE"
+        LIFE_POINT_CALCULATOR.halve = true
+    }
+
+    fun clearButtonPressed(view: View) {
+        LIFE_POINT_CALCULATOR.halve = false
+        LIFE_POINT_CALCULATOR.cumulatedLP = 0
     }
 
 

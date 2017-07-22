@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".LogActivity"></activity>
+        <activity android:name=".SearchCardActivity"
+            android:launchMode="singleTop"></activity>
+        <activity android:name=".CardInfoActivity"></activity>
     </application>
 
 </manifest>
