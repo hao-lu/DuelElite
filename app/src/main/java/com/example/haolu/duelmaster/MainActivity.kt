@@ -11,17 +11,18 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.example.haolu.duelmaster.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.content_main.*
+import io.realm.Realm
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var LIFE_POINT_CALCULATOR = LifePointCalculator()
+    var realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Snackbar.make(view, "Search YuGiOh Cards on Wikia", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //            LIFE_POINT_CALCULATOR.printLog()
-            val intent = Intent(this, SearchCardActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, SearchCardActivity::class.java)
+//            startActivity(intent)
+            val realm = Realm.getDefaultInstance()
+            val cards = realm.where(Card::class.java).findAll().size
+            Snackbar.make(view, "$cards", Snackbar.LENGTH_SHORT).setAction("Action", null).show()
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -50,6 +54,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         binding.appBarMain.contentMain.setVariable(BR.LPCalculator, LIFE_POINT_CALCULATOR)
         binding.appBarMain.contentMain.executePendingBindings()
+
+        println(realm.isEmpty)
 
     }
 
@@ -101,6 +107,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+//        realm.close()
+    }
+
     fun numberButtonPressed(view: View) {
         if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLP += view.text.toString().toInt()
 //        if (view is TextView) LIFE_POINT_CALCULATOR.updateCumulatedLP(view.text.toString().toDouble())
@@ -134,6 +145,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         LIFE_POINT_CALCULATOR.halve = false
         LIFE_POINT_CALCULATOR.cumulatedLP = 0
     }
+
+
 
 
 }
