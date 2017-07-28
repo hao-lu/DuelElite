@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.haolu.duelmaster">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <!-- <supports-screens -->
     <!-- android:largeScreens="true" -->
     <!-- android:normalScreens="true" -->
@@ -14,6 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -24,10 +29,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogActivity"></activity>
-        <activity android:name=".SearchCardActivity"
-            android:launchMode="singleTop"></activity>
-        <activity android:name=".CardInfoActivity"></activity>
+
+        <activity android:name=".LogActivity">
+        </activity>
+
+        <!-- Searchable Activity -->
+        <activity
+            android:name=".SearchCardActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.SearchSuggestion">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
+        <!-- Activity that shows the details of the cards -->
+        <activity android:name=".CardInfoActivity">
+        </activity>
+
+        <activity
+            android:name=".CardDetailActivity"
+            android:label="@string/title_activity_card_detail"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <!-- Provides search suggestions for cards -->
+        <provider
+            android:name=".CardSuggestionProvider"
+            android:authorities="com.example.haolu.duelmaster.CardSuggestionProvider"/>
+
     </application>
 
 </manifest>

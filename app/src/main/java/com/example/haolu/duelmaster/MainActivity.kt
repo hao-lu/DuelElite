@@ -22,7 +22,7 @@ import io.realm.Realm
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var LIFE_POINT_CALCULATOR = LifePointCalculator()
-    var realm = Realm.getDefaultInstance()
+    var mRealm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +30,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Search YuGiOh Cards on Wikia", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //            LIFE_POINT_CALCULATOR.printLog()
-//            val intent = Intent(this, SearchCardActivity::class.java)
-//            startActivity(intent)
-            val realm = Realm.getDefaultInstance()
-            val cards = realm.where(Card::class.java).findAll().size
-            Snackbar.make(view, "$cards", Snackbar.LENGTH_SHORT).setAction("Action", null).show()
+            val intent = Intent(this, SearchCardActivity::class.java)
+            startActivity(intent)
+//            val realm = Realm.getDefaultInstance()
+//            val cards = realm.where(Card::class.java).findAll().size
+//            Snackbar.make(view, "$cards", Snackbar.LENGTH_SHORT).setAction("Action", null).show()
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.appBarMain.contentMain.setVariable(BR.LPCalculator, LIFE_POINT_CALCULATOR)
         binding.appBarMain.contentMain.executePendingBindings()
 
-        println(realm.isEmpty)
+//        println(realm.isEmpty)
 
     }
 
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onDestroy() {
         super.onDestroy()
-//        realm.close()
+        mRealm.close()
     }
 
     fun numberButtonPressed(view: View) {
