@@ -1,6 +1,10 @@
 package com.example.haolu.duelmaster
 
+import android.app.SearchManager
+import android.support.v4.content.CursorLoader;
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +15,9 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.v4.app.LoaderManager.LoaderCallbacks
+import android.support.v4.content.Loader
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -19,7 +26,7 @@ import android.view.ViewGroup
 
 import android.widget.TextView
 
-class CardDetailActivity : AppCompatActivity() {
+class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -35,6 +42,10 @@ class CardDetailActivity : AppCompatActivity() {
      * The [ViewPager] that will host the section contents.
      */
     private var mViewPager: ViewPager? = null
+
+    private val TAG = "CardDetailActivity"
+
+    private lateinit var mUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +71,9 @@ class CardDetailActivity : AppCompatActivity() {
         val searchIntent = intent
         if (Intent.ACTION_SEARCH.equals(searchIntent.action))
             println("EQUALS")
+        mUri = searchIntent.data
 
+        supportLoaderManager.initLoader(0, null, this)
     }
 
 
@@ -143,6 +156,20 @@ class CardDetailActivity : AppCompatActivity() {
                 fragment.arguments = args
                 return fragment
             }
+        }
+    }
+
+    override fun onLoaderReset(loader: Loader<Cursor>?) {
+        //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+        return CursorLoader(this, mUri, null, null, null, null)
+    }
+
+    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+        if (data!!.moveToFirst()) {
+            Log.d(TAG, data.getString(data.getColumnIndex(data.getColumnName(1))))
         }
     }
 }

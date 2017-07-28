@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.haolu.duelmaster">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-
-    <!-- <supports-screens -->
-    <!-- android:largeScreens="true" -->
-    <!-- android:normalScreens="true" -->
-    <!-- android:smallScreens="true"/> -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -47,9 +40,6 @@
         </activity>
 
         <!-- Activity that shows the details of the cards -->
-        <activity android:name=".CardInfoActivity">
-        </activity>
-
         <activity
             android:name=".CardDetailActivity"
             android:label="@string/title_activity_card_detail"
@@ -59,7 +49,9 @@
         <!-- Provides search suggestions for cards -->
         <provider
             android:name=".CardSuggestionProvider"
-            android:authorities="com.example.haolu.duelmaster.CardSuggestionProvider"/>
+            android:authorities="com.example.haolu.duelmaster.CardSuggestionProvider"
+            android:exported="false"/>
+
 
     </application>
 
