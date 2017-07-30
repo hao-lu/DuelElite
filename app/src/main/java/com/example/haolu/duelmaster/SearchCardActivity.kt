@@ -69,10 +69,10 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         }
 
         mCursorAdapter = SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                android.R.layout.simple_list_item_2,
                 null,
-                arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1),
-                kotlin.IntArray(android.R.id.text1), 0)
+                arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1),
+                intArrayOf(android.R.id.text1, android.R.id.text2), 0)
 
         mListView.adapter = mCursorAdapter
 
@@ -93,9 +93,9 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         }
         else if (i.action == Intent.ACTION_SEARCH) {
             val query = i.getStringExtra(SearchManager.QUERY)
-            // Go button clciked
-            println("Received query $query")
-//            displayResults(query)
+            // Go button clicked
+            println("Received query: $query")
+            displayResults(query)
         }
     }
 
@@ -125,24 +125,23 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         searchView.onActionViewExpanded()
         // Can use getComponentName() because searchableActivity is the current activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.setIconifiedByDefault(false)
+        searchView.maxWidth = Int.MAX_VALUE
 
-//        val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
-//        val dropDownAnchor = searchView.findViewById(autoCompleteTextView.dropDownAnchor)
-//        // Need to add a listener to AutoCompleteTextView, AutoCompleteTextView's offset are calculated in SearchView each time bound is changed
-//        if (dropDownAnchor != null) {
-//            dropDownAnchor.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-//                var point = IntArray(2)
-//                dropDownAnchor.getLocationOnScreen(point)
-//                val dropDownPadding = point[0] + autoCompleteTextView.dropDownHorizontalOffset
-//
-//                val screenSize = Rect()
-//                windowManager.defaultDisplay.getRectSize(screenSize)
-//                val screenWidth = screenSize.width()
-//j
-//                autoCompleteTextView.dropDownWidth = screenWidth
-//            }
-//        }
+        val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
+        val dropDownAnchor = searchView.findViewById(autoCompleteTextView.dropDownAnchor)
+        // Need to add a listener to AutoCompleteTextView, AutoCompleteTextView's offset are calculated in SearchView each time bound is changed
+        if (dropDownAnchor != null) {
+            dropDownAnchor.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                var point = IntArray(2)
+                dropDownAnchor.getLocationOnScreen(point)
+                val dropDownPadding = point[0] + autoCompleteTextView.dropDownHorizontalOffset
+
+                val screenSize = Rect()
+                windowManager.defaultDisplay.getRectSize(screenSize)
+                val screenWidth = screenSize.width()
+                autoCompleteTextView.dropDownWidth = screenWidth
+            }
+        }
 
 //        autoCompleteTextView.imeOptions = EditorInfo.IME_ACTION_DONE
 

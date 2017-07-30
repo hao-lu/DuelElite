@@ -33,7 +33,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#114B5F"
+        android:divider="#9E9E9E"
         android:dividerHeight="1dp">
     </ListView>
 
