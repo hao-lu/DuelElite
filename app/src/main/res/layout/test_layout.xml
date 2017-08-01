@@ -1,53 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="0dp"
+    android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/fragmentCardInfo_mainLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="31dp" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:fontFamily="sans-serif" >
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteY="31dp"
-        app:layout_constraintRight_toLeftOf="@+id/textView10"
-        app:layout_constraintLeft_toRightOf="@+id/textView8"
-        app:layout_constraintHorizontal_bias="0.516" />
+        <LinearLayout
+            android:id="@+id/progressbar_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ProgressBar
+                android:id="@+id/fragmentCardInfo_progressBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="31dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/button2"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="50"
-        tools:layout_editor_absoluteX="-187dp"
-        tools:layout_editor_absoluteY="81dp" />
+        <ImageView
+            android:id="@+id/imageView_detail_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Card image" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="180dp" />
+        <!-- separator row -->
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#33691E"
+            android:gravity="center"
+            android:text="Information"
+            android:textColor="#FFFFFF" />
 
-</android.support.constraint.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/fragmentCardInfo_progressBar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:id="@+id/infoTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="1" >
+
+            <!-- separator row -->
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#33691E"
+            android:gravity="center"
+            android:text="Card lore"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewCardEffect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="\n" />
+
+        <!-- separator row -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/banlistHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#33691E"
+            android:gravity="center"
+            android:text="TCG/OCG Statuses"
+            android:textColor="#FFFFFF" />
+
+        <TableLayout
+            android:id="@+id/banlistTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="1" >
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>

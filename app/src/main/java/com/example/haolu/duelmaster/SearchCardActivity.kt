@@ -65,6 +65,10 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
             // This appends the rowId to the path content://com.example.haolu.duelmaster.CardSuggestionProvider/cards/#
             val data = Uri.withAppendedPath(CardSuggestionProvider.CONTENT_URI, id.toString())
             cardDetailIntent.setData(data)
+            val cardName = view.findViewById(android.R.id.text2) as TextView
+
+            Log.d(TAG, "HERE +THIS ONE " +cardName.text.toString())
+//            cardDetailIntent.putExtra("cardName", cardName.text.toString())
             startActivity(cardDetailIntent)
         }
 
