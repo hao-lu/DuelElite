@@ -56,7 +56,7 @@ class CardSuggestionProvider : ContentProvider() {
     }
 
     override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
-        Log.d(TAG, "HERE: " + uri.toString())
+//        Log.d(TAG, "HERE: " + uri.toString())
         when (mUriMatcher.match(uri)) {
             SEARCH_SUGGEST -> if (selectionArgs == null)
                 throw IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri)
@@ -118,7 +118,7 @@ class CardSuggestionProvider : ContentProvider() {
 
     private fun getName(uri: Uri): Cursor {
         val rowId = uri.lastPathSegment.toInt()
-        Log.d(TAG, "Row ID : $rowId")
+//        Log.d(TAG, "Row ID : $rowId")
         val columns = arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1)
         val selection = "rowId = ?"
         val selectionArgs = arrayOf(rowId)

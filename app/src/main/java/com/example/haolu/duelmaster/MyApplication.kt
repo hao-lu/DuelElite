@@ -14,7 +14,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        println(applicationContext.filesDir.toString())
+//        println(applicationContext.filesDir.toString())
 
         // Check if the database is loaded
         if (!fileFound("tcg.realm", this.filesDir)) {

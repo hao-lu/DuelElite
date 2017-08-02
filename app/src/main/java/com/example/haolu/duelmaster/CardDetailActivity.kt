@@ -1,9 +1,7 @@
 package com.example.haolu.duelmaster
 
-import android.support.v4.content.CursorLoader;
-import android.content.Intent
+import android.support.v4.content.CursorLoader
 import android.database.Cursor
-import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -12,21 +10,14 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.TabLayout
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.content.Loader
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_card_detail.*
-import kotlinx.android.synthetic.main.activity_search_card.*
-import android.support.design.widget.CollapsingToolbarLayout
 import android.widget.Toast
-import com.example.haolu.duelmaster.databinding.ActivityCardDetailBinding
-import com.example.haolu.duelmaster.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
-
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
@@ -65,10 +56,9 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 //        card_detail_appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset -> this }
 
 
-
         header.setOnClickListener { Toast.makeText(this, "Show image", Toast.LENGTH_SHORT).show()}
 
-
+        // Needed for CursorLoader
         mUri = intent.data
 
         mViewPager = container
@@ -85,15 +75,15 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         val detailsFragment = DetailsFragment()
         detailsFragment.arguments = bundle
 
-//        val rulings = DetailsFragment()
-//        rulings.arguments = bundle
+        val rulingsFragment = RulingsFragment()
+        rulingsFragment.arguments = bundle
 
-//        val tips = DetailsFragment()
-//        tips.arguments = bundle
+        val tipsFragment = TipsFragment()
+        tipsFragment.arguments = bundle
 
         mSectionsPagerAdapter.addFragment(detailsFragment, "DETAILS")
-//        mSectionsPagerAdapter.addFragment(rulings, "RULINGS")
-//        mSectionsPagerAdapter.addFragment(tips, "TIPS")
+        mSectionsPagerAdapter.addFragment(rulingsFragment, "RULINGS")
+        mSectionsPagerAdapter.addFragment(tipsFragment, "TIPS")
         mViewPager.adapter = mSectionsPagerAdapter
         tabs.setupWithViewPager(mViewPager)
     }
@@ -151,6 +141,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         private val mFragmentTitle = mutableListOf<String>()
 
         override fun getItem(position: Int): Fragment {
+            Log.d(TAG, position.toString())
             return mFragmentList[position]
         }
 

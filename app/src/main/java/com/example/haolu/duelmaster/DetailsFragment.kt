@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -25,7 +27,7 @@ class DetailsFragment : Fragment() {
             "Pendulum Scale",
             "ATK / DEF",
             "Materials",
-            "Card effect mCardDetailTypes",
+            "Card effect types",
             "Statuses",
             "Description",
             "ImageUrl")
@@ -45,8 +47,23 @@ class DetailsFragment : Fragment() {
 
         ParseDetailsTask().execute(cardName)
 
-
         return rootView
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "Details Paused")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "Details Stop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "Details DestoryView")
+        mCardDetailsList.clear()
     }
 
     private inner class ParseDetailsTask : AsyncTask<String, Void, Void>() {
@@ -82,34 +99,34 @@ class DetailsFragment : Fragment() {
 //                // Get the header
                 val cardTableRows = cardTable.getElementsByClass("cardtablerow")
                 var diffStatuses = 0
-                for (e in cardTableRows) {
-                    val header = e.select("th").text()
-                    val value = e.select("td").text()
+                for (tr in cardTableRows) {
+                    val header = tr.select("th").text()
+                    val value = tr.select("td").text()
 
                     // Different status for formats TCG, OCG
-                    if (header == "Statuses" && e.select("th").attr("rowspan") != "")
-                        diffStatuses = e.select("th").attr("rowspan").toString().toInt()
+                    if (header == "Statuses" && tr.select("th").attr("rowspan") != "")
+                        diffStatuses = tr.select("th").attr("rowspan").toString().toInt()
 
                     if (diffStatuses-- > 0) {
                         for (l in mCardDetailsList) {
+                            // pair is val can't change so just delete last item and add new with appended data
                             if (l.first == "Statuses") {
-                                val statusUpdated = l.second + value
+                                val statusUpdated = l.second + "\n" + value
                                 mCardDetailsList.removeAt(mCardDetailsList.lastIndex)
                                 mCardDetailsList.add(Pair("Statuses", statusUpdated))
                             }
                         }
                     }
 
+                    // Get the card descriptions
+                    if (tr.select("td").select("b").text() == "Card descriptions") {
+                        val desc = tr.select("table")[1].select("tr")[2].text()
+                        mCardDetailsList.add(Pair("Description", desc))
+                    }
+
                     addData(Pair(header, value))
                 }
-
-                // <td class = "navbox-mCardDetailsList" ... >
-//                val description = cardTable.getElementsByClass("cardtablerow")[19].select("table")[1].select("tr")[2].text()
-////                Log.d(TAG, description)
-//                mCardDetails.update("Description", description)
-
-//                mCardDetails.print()
-                print()
+//                print()
             }
             catch (e: Exception) {
                 e.printStackTrace()
@@ -121,25 +138,25 @@ class DetailsFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
 //            super.onPostExecute(result)
-            val row = View.inflate(context, R.layout.fragment_table_row, null)
-            val cardHeader = row.findViewById(R.id.card_header) as TextView
-            val cardValue = row.findViewById(R.id.card_value) as TextView
-            cardHeader.text = "HELLO"
-            cardValue.text = "WOLRD"
-            val row2 = View.inflate(context, R.layout.fragment_table_row, null)
-            var cardHeader2 = row2.findViewById(R.id.card_header) as TextView
-            val cardValue2 = row2.findViewById(R.id.card_value) as TextView
-            cardHeader2.text = "BYE"
-            cardValue2.text = "WOLRD"
-            card_information.addView(row)
-            card_information.addView(row2)
+            for (detail in mCardDetailsList) {
+                if (detail.first != "ImageUrl") {
+                    val row = View.inflate(context, R.layout.fragment_table_row, null)
+                    val cardHeader = row.findViewById(R.id.card_header) as TextView
+                    val cardValue = row.findViewById(R.id.card_value) as TextView
+                    cardHeader.text = detail.first
+                    cardValue.text = detail.second
+                    card_information.addView(row)
+                }
+            }
+
+            val image = activity.findViewById(R.id.header) as ImageView
+            Picasso.with(context).load(mCardDetailsList[0].second).into(image)
         }
     }
 
     fun addData(p: Pair<String, String>) {
-        var pair = p
         for (s in mCardDetailTypes) {
-            if (p.first == s) mCardDetailsList.add(pair)
+            if (p.first == s) mCardDetailsList.add(p)
         }
     }
 
