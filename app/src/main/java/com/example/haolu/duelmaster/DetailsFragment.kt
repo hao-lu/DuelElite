@@ -1,5 +1,7 @@
 package com.example.haolu.duelmaster
 
+import android.app.Activity
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,70 +10,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TableLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
-    var mCardDetailsList: MutableList<Pair<String, String>> = mutableListOf()
-
-    private val mCardDetailTypes = arrayOf(
-            "Card type",
-            "Property",
-            "Attribute",
-            "Types",
-            "Level",
-            "Pendulum Scale",
-            "ATK / DEF",
-            "Materials",
-            "Card effect types",
-            "Statuses",
-            "Description",
-            "ImageUrl")
-
     private val TAG = "DetailsFragment"
+
+    lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_details, container, false)
-//        val binding: FragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-//        val rootView = binding.root
+        progressBar = rootView.findViewById(R.id.progresbar_details) as ProgressBar
 
         val cardName = arguments.getString("cardName")
-
-        Log.d(TAG, cardName)
-//
-//        binding.setVariable(BR.CardDetails, mCardDetails)
-
-        ParseDetailsTask().execute(cardName)
+        ParseDetailsTask(context).execute(cardName)
 
         return rootView
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "Details Paused")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "Details Stop")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d(TAG, "Details DestoryView")
-        mCardDetailsList.clear()
-    }
-
-    private inner class ParseDetailsTask : AsyncTask<String, Void, Void>() {
+    private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseDetailsTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private val CARD_DETAIL_TYPES = arrayOf(
+                "Card type",
+                "Property",
+                "Attribute",
+                "Types",
+                "Level",
+                "Pendulum Scale",
+                "ATK / DEF",
+                "Materials",
+                "Card effect types",
+                "Statuses",
+                "Description",
+                "ImageUrl")
+
+
+        private var mCardDetailsList: MutableList<Pair<String, String>> = mutableListOf()
 
         override fun onPreExecute() {
             super.onPreExecute()
+//            activity.runOnUiThread { progressBar.visibility = ProgressBar.VISIBLE }
+
         }
 
         override fun doInBackground(vararg params: String?): Void? {
@@ -96,7 +81,7 @@ class DetailsFragment : Fragment() {
 
                 mCardDetailsList.add(Pair("ImageUrl", imageUrl))
 
-//                // Get the header
+                // Get the header
                 val cardTableRows = cardTable.getElementsByClass("cardtablerow")
                 var diffStatuses = 0
                 for (tr in cardTableRows) {
@@ -137,32 +122,30 @@ class DetailsFragment : Fragment() {
         }
 
         override fun onPostExecute(result: Void?) {
-//            super.onPostExecute(result)
+            super.onPostExecute(result)
+//            progressBar.visibility = ProgressBar.GONE
             for (detail in mCardDetailsList) {
                 if (detail.first != "ImageUrl") {
-                    val row = View.inflate(context, R.layout.fragment_table_row, null)
+                    val row = View.inflate(context, R.layout.fragment_table_row_detail, null)
                     val cardHeader = row.findViewById(R.id.card_header) as TextView
                     val cardValue = row.findViewById(R.id.card_value) as TextView
                     cardHeader.text = detail.first
                     cardValue.text = detail.second
+                    val card_information = (context as Activity).findViewById(R.id.table_card_details) as TableLayout
                     card_information.addView(row)
                 }
             }
 
-            val image = activity.findViewById(R.id.header) as ImageView
+            val activity = context as Activity
+            val image = activity.findViewById(R.id.image_header) as ImageView
             Picasso.with(context).load(mCardDetailsList[0].second).into(image)
         }
-    }
 
-    fun addData(p: Pair<String, String>) {
-        for (s in mCardDetailTypes) {
-            if (p.first == s) mCardDetailsList.add(p)
+        private fun addData(p: Pair<String, String>) {
+            for (s in CARD_DETAIL_TYPES) {
+                if (p.first == s) mCardDetailsList.add(p)
+            }
         }
     }
 
-    fun print() {
-        for (s in mCardDetailsList) {
-            println(s)
-        }
-    }
 }

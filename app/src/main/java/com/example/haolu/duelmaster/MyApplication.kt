@@ -9,19 +9,20 @@ import java.io.InputStream
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
+// Used to initialize Realm database
 class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-//        println(applicationContext.filesDir.toString())
-
-        // Check if the database is loaded
+        // Check if the database is loaded, if not then load it from raw directory
         if (!fileFound("tcg.realm", this.filesDir)) {
             Log.d("MyApplication", "FILE NOT FOUND")
             copyBundledRealmFile(this.resources.openRawResource(R.raw.tcg), "tcg.realm")
         }
-        Log.d("MyApplication", "FILE FOUND")
+//        else {
+//        Log.d("MyApplication", "FILE FOUND")
+//        }
 
         // Config the Realm
         Realm.init(this)
@@ -51,6 +52,7 @@ class MyApplication : Application() {
         return null
     }
 
+    // Find the .realm file if it exist
     fun fileFound(name: String, file: File): Boolean {
         val list = file.listFiles()
         if (list != null) {

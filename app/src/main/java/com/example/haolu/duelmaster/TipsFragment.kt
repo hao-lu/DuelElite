@@ -1,5 +1,7 @@
 package com.example.haolu.duelmaster
 
+import android.app.Activity
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,38 +9,29 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
+import android.widget.TableLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.android.synthetic.main.fragment_rulings.*
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
-import kotlinx.android.synthetic.main.fragment_tips.*
 import org.jsoup.HttpStatusException
 
 class TipsFragment : Fragment() {
-
-    var mTipsList: ArrayList<String> = arrayListOf()
 
     private val TAG = "TipsFragment"
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_tips, container, false)
         val cardName = arguments.getString("cardName")
-        ParseTipsTask().execute(cardName)
+        ParseTipsTask(context).execute(cardName)
         return rootView
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mTipsList.clear()
-    }
-
-    private inner class ParseTipsTask : AsyncTask<String, Void, Void>() {
+    private class ParseTipsTask(val context: Context): AsyncTask<String, Void, Void>() {
         private val TAG = "ParseTipsTask"
+
         private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Tips:"
+
+        private val activity = context as Activity
+        private var mTipsList: ArrayList<String> = arrayListOf()
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -69,7 +62,7 @@ class TipsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.no_tips.visibility = TextView.VISIBLE }
+                activity.runOnUiThread { activity.findViewById(R.id.no_tips).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {
@@ -85,11 +78,10 @@ class TipsFragment : Fragment() {
 //            super.onPostExecute(result)
             Log.d(TAG, mTipsList.size.toString())
             for (tip in mTipsList) {
-
                 val row = View.inflate(context, R.layout.fragment_table_row_tips, null)
-                val cardHeader = row.findViewById(R.id.card_tip) as TextView
+                val cardHeader = row.findViewById(R.id.textview_tip) as TextView
                 cardHeader.text = tip
-                card_tips.addView(row)
+                (activity.findViewById(R.id.table_card_tips) as TableLayout).addView(row)
             }
 
         }

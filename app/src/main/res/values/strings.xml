@@ -5,11 +5,30 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_start">Start</string>
-    <string name="action_pause">Pause</string>
-    <string name="action_reset">Reset</string>
     <string name="title_activity_card_detail">CardDetailActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="search_hint">Search for cards...</string>
+
+    <!-- Menu Options for MainActivity -->
+    <string name="action_start">Start</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_reset">Reset</string>
+
+    <!-- Text for Buttons in MainActivity-->
+    <string name="fifty_button">50</string>
+    <string name="one_hundred_button">100</string>
+    <string name="five_hundred">500</string>
+    <string name="one_thousand">1000</string>
+    <string name="two_thousand">2000</string>
+    <string name="halve">HALVE</string>
+    <string name="custom">Custom</string>
+    <string name="clear">CLEAR</string>
+    <string name="log">LOG</string>
+    <string name="player_one">Player One</string>
+    <string name="player_two">Player Two</string>
+    <string name="lose">LOSE</string>
+    <string name="gain">GAIN</string>
+    <string name="no_rulings_available">No rulings available</string>
+    <string name="no_tips_available">No tips available</string>
 </resources>

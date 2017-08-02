@@ -6,14 +6,8 @@
     android:paddingEnd="16dp"
     android:paddingTop="16dp">
 
-    <ImageView
-        android:layout_marginTop="1dp"
-        android:layout_height="15dp"
-        android:layout_width="15dp"
-        android:src="@drawable/ic_lightbulb_outline_black_24px"
-        android:layout_marginRight="4dp"/>
     <TextView
-        android:id="@+id/textview_tip"
+        android:id="@+id/textview_ruling"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"

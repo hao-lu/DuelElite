@@ -8,6 +8,7 @@ import java.text.DecimalFormat
 
 class LifePointCalculator : BaseObservable() {
 
+    // List of log items
     data class Log(var log: MutableList<LifePointCalculator.LogItem>) : Parcelable {
 
         fun add(l: LifePointCalculator.LogItem) {
@@ -32,6 +33,7 @@ class LifePointCalculator : BaseObservable() {
         }
     }
 
+    // Log item, which contains player, operation, the cumulatedLP for that turn, and totalLP
     data class LogItem(val player: String, val operation: String, val turnLP: Int, val totalLP: Int) : Parcelable {
 
         companion object {

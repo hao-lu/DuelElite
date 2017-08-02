@@ -17,48 +17,32 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_card_detail.*
 import android.widget.Toast
-import com.squareup.picasso.Picasso
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * [FragmentPagerAdapter] derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
-    private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
-
-    /**
-     * The [ViewPager] that will host the section contents.
-     */
-    private lateinit var mViewPager: ViewPager
-
     private val TAG = "CardDetailActivity"
 
+    private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
+    private lateinit var mViewPager: ViewPager
     private lateinit var mUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail)
-//        val binding: ActivityCardDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_card_detail)
+
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        // Remove title from toolbar
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
         // Enable and show back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        // Remove the big title
         collapse_toolbar.isTitleEnabled = false
-//        card_detail_appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset -> this }
 
+        // Show image
+        image_header.setOnClickListener { Toast.makeText(this, "Show image", Toast.LENGTH_SHORT).show()}
 
-        header.setOnClickListener { Toast.makeText(this, "Show image", Toast.LENGTH_SHORT).show()}
-
-        // Needed for CursorLoader
+        // Needed for CursorLoader to get data
         mUri = intent.data
 
         mViewPager = container
@@ -66,9 +50,11 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
+        // Invokes onCreateLoader()
         supportLoaderManager.initLoader(0, null, this)
     }
 
+    // Setups ViewPager with different fragments and each fragment passes the card name
     private fun setupViewPagerandTabLayout(cardName: String) {
         val bundle = Bundle()
         bundle.putString("cardName", cardName)
@@ -101,7 +87,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-
         if (id == R.id.action_settings) {
             return true
         }
@@ -118,10 +103,13 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         //To change body of created functions use File | Settings | File Templates.
     }
 
+    // Loads the cursor with the data from the intent
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         return CursorLoader(this, mUri, null, null, null, null)
     }
 
+    // After the cursor has been loaded with the name, the actionBar title can be set and the
+    // fragments can get the name and begin to work
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
         if (data!!.moveToFirst()) {
             val cardName = data.getString(data.getColumnIndex(data.getColumnName(1)))
@@ -131,17 +119,12 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         private val mFragmentList = mutableListOf<Fragment>()
         private val mFragmentTitle = mutableListOf<String>()
 
         override fun getItem(position: Int): Fragment {
-            Log.d(TAG, position.toString())
             return mFragmentList[position]
         }
 

@@ -7,10 +7,8 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import android.util.Log
 import io.realm.Case
 import io.realm.Realm
-import android.content.ContentResolver
 
 class CardSuggestionProvider : ContentProvider() {
 
@@ -21,16 +19,10 @@ class CardSuggestionProvider : ContentProvider() {
         val CONTENT_URI = Uri.parse("content://$AUTHORITY/cards")
     }
 
+    // Different ID for each case
     private val SEARCH_SUGGEST = 0
     private val SEARCH_WORDS = 1
     private val GET_NAME = 2
-
-    // Need _id column
-    // The column names have to match (suggest_text_1)
-
-    // MIME types used for searching words or looking up a single definition
-    val WORDS_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.example.android.duelmaster"
-    val DEFINITION_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.example.android.duelmaster"
 
     private var mUriMatcher = buildUriMatcher()
 
@@ -56,7 +48,6 @@ class CardSuggestionProvider : ContentProvider() {
     }
 
     override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
-//        Log.d(TAG, "HERE: " + uri.toString())
         when (mUriMatcher.match(uri)) {
             SEARCH_SUGGEST -> if (selectionArgs == null)
                 throw IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri)
@@ -69,10 +60,12 @@ class CardSuggestionProvider : ContentProvider() {
         }
     }
 
+    // Get the cursor with the suggestions
     private fun getSuggestions(query: String): Cursor {
         val lowerCaseQuery = query.toLowerCase()
-
         // SUGGEST_COLUMN_INTENT_DATA_ID appends the path to content://com.example.haolu.duelmaster.CardSuggestionProvider/cards/#
+        // Need _id column, the column names have to match (suggest_text_1)
+        // Need the suggest_column_intent_data_id to launch intent on click suggestion
         val columns = arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID)
 
         val mRealm = Realm.getDefaultInstance()
@@ -88,12 +81,11 @@ class CardSuggestionProvider : ContentProvider() {
             matrixCursor.addRow(rowData)
         }
 
-//        Log.d(TAG, "query()")
-//        Log.d(TAG, matrixCursor.count.toString())
         mRealm.close()
         return matrixCursor
     }
 
+    // Get the cursor with suggestions (similar to getSuggestion)
     private fun getCardList(query: String): Cursor {
         val lowerCaseQuery = query.toLowerCase()
 
@@ -105,7 +97,6 @@ class CardSuggestionProvider : ContentProvider() {
         var size = 10
         if (results.size < 10) size = results.size
         val subList = results.subList(0, size)
-//
         val matrixCursor = MatrixCursor(columns)
         for (r in subList) {
             val rowData = arrayOf(r.id, r.name)
@@ -116,24 +107,21 @@ class CardSuggestionProvider : ContentProvider() {
         return matrixCursor
     }
 
+    // Get the name of the the suggestion clicked on
     private fun getName(uri: Uri): Cursor {
         val rowId = uri.lastPathSegment.toInt()
-//        Log.d(TAG, "Row ID : $rowId")
+        // SUGGEST_COLUMN_TEXT_1 = name
         val columns = arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val selection = "rowId = ?"
-        val selectionArgs = arrayOf(rowId)
 
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
         val result = realmQuery.equalTo("id", rowId).findFirst()
-
 
         val matrixCursor = MatrixCursor(columns)
         val rowData = arrayOf(result.id, result.name)
         matrixCursor.addRow(rowData)
 
         mRealm.close()
-
         return matrixCursor
     }
 
@@ -150,12 +138,6 @@ class CardSuggestionProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri?): String {
-//        when (mUriMatcher.match(uri)) {
-//            SEARCH_WORDS -> return WORDS_MIME_TYPE
-//            GET_NAME -> return DEFINITION_MIME_TYPE
-//            SEARCH_SUGGEST -> return SearchManager.SUGGEST_MIME_TYPE
-//            else -> throw IllegalArgumentException("Unknown URL " + uri)
-//        }
         throw UnsupportedOperationException()
     }
 }

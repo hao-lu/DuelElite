@@ -1,5 +1,7 @@
 package com.example.haolu.duelmaster
 
+import android.app.Activity
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,33 +9,30 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
 import android.widget.TextView
 import org.jsoup.Jsoup
-import kotlinx.android.synthetic.main.fragment_rulings.*
 import org.jsoup.HttpStatusException
 
 class RulingsFragment : Fragment() {
 
-    var mRulingsList: MutableList<String> = mutableListOf()
-    var mTcgRulings = arrayListOf<String>()
-    var mOcgRulings = arrayListOf<String>()
+    private val TAG = "RulingsFragment"
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_rulings, container, false)
         val cardName = arguments.getString("cardName")
-        ParseRulingsTask().execute(cardName)
+        ParseRulingsTask(context).execute(cardName)
         return rootView
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mOcgRulings.clear()
-        mTcgRulings.clear()
-    }
-
-    private inner class ParseRulingsTask : AsyncTask<String, Void, Void>() {
+    private class ParseRulingsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseRulingsTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Rulings:"
+
+        private var mTcgRulings = arrayListOf<String>()
+        private var mOcgRulings = arrayListOf<String>()
+
+        private val activity = context as Activity
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -74,7 +73,7 @@ class RulingsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.no_rulings.visibility = TextView.VISIBLE }
+                activity.runOnUiThread { activity.findViewById(R.id.no_rulings).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {
@@ -82,23 +81,22 @@ class RulingsFragment : Fragment() {
             }
 
             // no internet connection error
-            // no webpage error
             return null
         }
 
         override fun onPostExecute(result: Void?) {
-//            super.onPostExecute(result)
+            super.onPostExecute(result)
             for (tip in mTcgRulings) {
-                val row = View.inflate(context, R.layout.fragment_table_row_tips, null)
-                val cardHeader = row.findViewById(R.id.card_tip) as TextView
+                val row = View.inflate(context, R.layout.fragment_table_row_ruling, null)
+                val cardHeader = row.findViewById(R.id.textview_ruling) as TextView
                 cardHeader.text = tip
-                table_tcg_rulings.addView(row)
+                (activity.findViewById(R.id.table_tcg_rulings) as TableLayout).addView(row)
             }
             for (tip in mOcgRulings) {
-                val row = View.inflate(context, R.layout.fragment_table_row_tips, null)
-                val cardHeader = row.findViewById(R.id.card_tip) as TextView
+                val row = View.inflate(context, R.layout.fragment_table_row_ruling, null)
+                val cardHeader = row.findViewById(R.id.textview_ruling) as TextView
                 cardHeader.text = tip
-                table_ocg_rulings.addView(row)
+                (activity.findViewById(R.id.table_ocg_rulings) as TableLayout).addView(row)
             }
 
         }
