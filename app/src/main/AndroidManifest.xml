@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LogActivity">
+        <!-- Log Activity -->
+        <activity android:name=".LogActivity"
+            android:label="@string/title_log_activity">
         </activity>
 
         <!-- Searchable Activity -->

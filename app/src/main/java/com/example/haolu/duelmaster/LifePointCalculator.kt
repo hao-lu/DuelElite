@@ -145,7 +145,8 @@ class LifePointCalculator : BaseObservable() {
             player = "PLAYER TWO"
             lp = playerTwoLP
         }
-        log.add(LifePointCalculator.LogItem(player, op, cumulatedLP, lp))
+        if (cumulatedLP != 0)
+            log.add(LifePointCalculator.LogItem(player, op, cumulatedLP, lp))
     }
 
     fun printLog() {

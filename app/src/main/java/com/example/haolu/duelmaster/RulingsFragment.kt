@@ -64,7 +64,7 @@ class RulingsFragment : Fragment() {
                     if (c.`is`("h2") && c.text() == "OCG Rulings") {
                         currentRuling = mOcgRulings
                     }
-                    if (c.`is`("h2") && c.text() == "Previously Official Rulings") {
+                    if (c.`is`("h2") && c.text() != "TCG Rulings" && c.text() != "OCG Rulings") {
                         currentRuling = null
                     }
                     if (currentRuling != null) currentRuling?.add(c.text().replace(Regex("\\[\\w+\\s*\\w*\\]"), ""))
@@ -97,6 +97,11 @@ class RulingsFragment : Fragment() {
                 val cardHeader = row.findViewById(R.id.textview_ruling) as TextView
                 cardHeader.text = tip
                 (activity.findViewById(R.id.table_ocg_rulings) as TableLayout).addView(row)
+            }
+            // No TCG rulings or OCG rulings
+            if (mTcgRulings.size == 0 && mOcgRulings.size ==0) {
+                (activity.findViewById(R.id.no_rulings) as TextView).text = "No current official rulings available"
+                activity.findViewById(R.id.no_rulings).visibility = TextView.VISIBLE
             }
 
         }

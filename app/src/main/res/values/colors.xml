@@ -4,7 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="colorYugiYellow">#CFC46B</color>
-    <color name="colorYugiRed">#B74F6F</color>
-    <color name="colorYugiBlack">#2F2F2F</color>
+    <color name="colorYugiYellow">#d2c86f</color>
+    <color name="colorYugiRed">#9c396c</color>
+    <color name="colorYugiBlack">#2f2f2f</color>
+    <color name="colorYugiBlue">#374096</color>
+
+    <!--<color name="colorYugiYellow">#CFC46B</color>-->
+    <!--<color name="colorYugiRed">#B74F6F</color>-->
+    <!--<color name="colorYugiBlack">#2F2F2F</color>-->
 </resources>

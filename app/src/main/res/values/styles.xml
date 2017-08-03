@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#2e2e2e</item>
+        <item name="colorPrimary">@color/colorYugiBlack</item>
         <item name="colorPrimaryDark">#252525</item>
-        <item name="colorAccent">#840032</item>
+        <item name="colorAccent">@color/colorYugiBlue</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -30,7 +30,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ButtonStyle">
+    <style name="ButtonStyleWeight">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -63,4 +63,10 @@
         <item name="android:dropDownVerticalOffset">10dip</item>
     </style>
 
+    
+    <!-- MainActivity Button Style -->
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>
