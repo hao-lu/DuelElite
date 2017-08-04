@@ -5,11 +5,13 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
@@ -76,14 +78,16 @@ class TipsFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
 //            super.onPostExecute(result)
-            Log.d(TAG, mTipsList.size.toString())
-            for (tip in mTipsList) {
-                val row = View.inflate(context, R.layout.fragment_table_row_tips, null)
-                val cardHeader = row.findViewById(R.id.textview_tip) as TextView
-                cardHeader.text = tip
-                (activity.findViewById(R.id.table_card_tips) as TableLayout).addView(row)
-            }
 
+            // Lb the world chalice priestess
+            Log.d(TAG, mTipsList.size.toString())
+            val simpleAdapter = TipsRecyclerViewAdapter(mTipsList)
+            val layoutManger = LinearLayoutManager(activity)
+            val tipList = activity.findViewById(R.id.tips_recycler_view) as RecyclerView
+            val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+            tipList.addItemDecoration(itemDecoration)
+            tipList.layoutManager = layoutManger
+            tipList.adapter = simpleAdapter
         }
 
     }

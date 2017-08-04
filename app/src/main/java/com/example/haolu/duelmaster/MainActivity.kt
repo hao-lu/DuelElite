@@ -124,10 +124,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         LIFE_POINT_CALCULATOR.cumulatedLP = 0
     }
 
-    // Launch log activity
+    // Launch mLog activity
     fun logButtonPressed(view: View) {
         val intent = Intent(view.context, LogActivity::class.java)
-        intent.putExtra("log", LIFE_POINT_CALCULATOR.log)
+        intent.putExtra("mLog", LIFE_POINT_CALCULATOR.log)
         startActivity(intent)
     }
 

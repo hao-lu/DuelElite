@@ -20,6 +20,7 @@
         <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>
         <item name="android:listPopupWindowStyle">@style/CustomListPopupWindowStyle</item>
+        <item name="android:windowBackground">@color/colorGrayBg</item>
         <!--<item name="android:dropDownSpinnerStyle">@style/test2</item>-->
         <!--<item name="android:spinnerDropDownItemStyle">@style/CustomDropDownItemStyle</item>-->
         <!--<item name="textAppearanceSearchResultTitle">@style/CustomSearchResult</item>-->

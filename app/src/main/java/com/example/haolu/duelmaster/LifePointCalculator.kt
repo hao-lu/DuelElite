@@ -8,7 +8,7 @@ import java.text.DecimalFormat
 
 class LifePointCalculator : BaseObservable() {
 
-    // List of log items
+    // List of mLog items
     data class Log(var log: MutableList<LifePointCalculator.LogItem>) : Parcelable {
 
         fun add(l: LifePointCalculator.LogItem) {

@@ -1,54 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorYugiYellow">
+    android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/no_rulings"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorYugiBlack"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:padding="8dp"
+        android:text="@string/no_rulings_available"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/no_rulings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/no_rulings_available"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="25dp" />
 
-        <TableLayout
-            android:id="@+id/table_tcg_rulings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="25dp">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tcg_ruling_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="8dp">
+    </android.support.v7.widget.RecyclerView>
 
-        </TableLayout>
 
-        <TableLayout
-            android:id="@+id/table_ocg_rulings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/table_tcg_rulings">
-        </TableLayout>
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/ocg_ruling_rv"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tcg_ruling_rv">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
 
-    </android.support.constraint.ConstraintLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

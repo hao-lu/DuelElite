@@ -71,7 +71,9 @@ class DetailsFragment : Fragment() {
 
                 val document = Jsoup.connect(cardUrl).get()
                 // <table class = cardtable>
-                val cardTable: Element = document.select("table").first()
+
+//                val cardTable: Element = document.select("table").first()
+                val cardTable: Element = document.getElementsByClass("cardtable").first()
 
                 // <a href = ... >
                 val imageUrl = cardTable.select("tr")[1].
@@ -80,6 +82,7 @@ class DetailsFragment : Fragment() {
                         attr("href").toString()
 
                 mCardDetailsList.add(Pair("ImageUrl", imageUrl))
+                Log.d(TAG, imageUrl)
 
                 // Get the header
                 val cardTableRows = cardTable.getElementsByClass("cardtablerow")

@@ -17,13 +17,13 @@ class LogActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val log = intent.extras.getParcelable<LifePointCalculator.Log>("log")
+        val log = intent.extras.getParcelable<LifePointCalculator.Log>("mLog")
 
         val layoutManger = LinearLayoutManager(this)
-        // Puts the recent log on top (stack)
+        // Puts the recent mLog on top (stack)
         layoutManger.reverseLayout = true
         layoutManger.stackFromEnd = true
-        val adapter = LogAdapter(log)
+        val adapter = LogRecyclerViewAdapter(log)
         log_recycler_view.layoutManager = layoutManger
         log_recycler_view.adapter = adapter
     }
