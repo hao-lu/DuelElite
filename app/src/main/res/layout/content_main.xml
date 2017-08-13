@@ -18,38 +18,38 @@
         android:background="@color/colorYugiBlack">
 
         <TextView
-            android:id="@+id/player_one_lp"
+            android:id="@+id/text_player_one_lp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{LPCalculator.LP_FORMAT.format(LPCalculator.playerOneLP)}"
+            android:text="8000"
             android:textSize="40sp"
             android:textAlignment="center"
             android:textColor="@color/colorYugiBlack"
             android:textStyle="bold"
             tools:text="8000"
-            android:background="@color/colorYugiYellow"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/two_thousand_btn" />
+            app:layout_constraintRight_toLeftOf="@+id/button_two_thousand"
+            android:elevation="2dp"/>
 
         <TextView
-            android:id="@+id/player_two_lp"
+            android:id="@+id/text_player_two_lp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{LPCalculator.LP_FORMAT.format(LPCalculator.playerTwoLP)}"
+            android:text="8000"
             android:textSize="40sp"
             android:textAlignment="center"
             android:textColor="@color/colorYugiBlack"
             android:padding="4dp"
             tools:text="8000"
             android:textStyle="bold"
-            android:background="@color/colorYugiRed"
-            app:layout_constraintLeft_toRightOf="@+id/two_thousand_btn"
+            app:layout_constraintLeft_toRightOf="@+id/button_two_thousand"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="2dp"/>
 
         <TextView
-            android:id="@+id/duel_time"
+            android:id="@+id/text_duel_time"
             android:layout_width="@dimen/button_width"
             android:layout_height="wrap_content"
             android:text="40:00"
@@ -63,132 +63,147 @@
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
-            android:id="@+id/cumulated_lp"
+            android:id="@+id/text_cumulated_lp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{LPCalculator.LP_FORMAT.format(LPCalculator.cumulatedLP)}"
+            android:text="0"
             android:textColor="#bdbdbd"
             android:textSize="24sp"
             app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintLeft_toRightOf="@+id/player_one_lp"
-            app:layout_constraintRight_toLeftOf="@+id/player_two_lp"
+            app:layout_constraintLeft_toRightOf="@+id/text_player_one_lp"
+            app:layout_constraintRight_toLeftOf="@+id/text_player_two_lp"
             app:layout_constraintTop_toBottomOf="@+id/addOrSubtractToggle"
             tools:text="0000" />
 
         <Button
-            android:id="@+id/fifty_btn"
+            android:id="@+id/button_fifty"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:onClick="numberButtonPressed"
             android:text="@string/fifty_button"
             android:textSize="@dimen/number_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/one_hundred_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_one_hundred"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cumulated_lp" />
+            app:layout_constraintTop_toBottomOf="@+id/text_cumulated_lp"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <Button
-            android:id="@+id/one_hundred_btn"
+            android:id="@+id/button_one_hundred"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:onClick="numberButtonPressed"
             android:text="@string/one_hundred_button"
             android:textSize="@dimen/number_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/five_hundred_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_five_hundred"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fifty_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/button_fifty" />
 
         <Button
-            android:id="@+id/five_hundred_btn"
+            android:id="@+id/button_five_hundred"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:onClick="numberButtonPressed"
             android:text="@string/five_hundred"
             android:textSize="@dimen/number_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/one_thousand_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_one_thousand"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/one_hundred_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/button_one_hundred" />
 
         <Button
-            android:id="@+id/one_thousand_btn"
+            android:id="@+id/button_one_thousand"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:onClick="numberButtonPressed"
             android:text="@string/one_thousand"
             android:textSize="@dimen/number_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/two_thousand_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_two_thousand"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/five_hundred_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/button_five_hundred" />
 
         <Button
-            android:id="@+id/two_thousand_btn"
+            android:id="@+id/button_two_thousand"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:onClick="numberButtonPressed"
             android:text="@string/two_thousand"
             android:textSize="@dimen/number_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/half_lp_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_half_lp"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/one_thousand_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/button_one_thousand" />
 
         <Button
-            android:id="@+id/half_lp_btn"
+            android:id="@+id/button_half_lp"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:text="@string/halve"
             android:textSize="@dimen/word_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/custom_lp_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_custom_lp"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/two_thousand_btn"
+            app:layout_constraintTop_toBottomOf="@+id/button_two_thousand"
             android:onClick="halfButtonPressed"/>
 
         <Button
-            android:id="@+id/custom_lp_btn"
+            android:id="@+id/button_custom_lp"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:text="@string/custom"
             android:textSize="@dimen/word_button_text_size"
             android:padding="-8dp"
-            app:layout_constraintBottom_toTopOf="@+id/clear_lp_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_clear_lp"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/half_lp_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/button_half_lp" />
 
         <Button
-            android:id="@+id/clear_lp_btn"
+            android:id="@+id/button_clear_lp"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
             android:text="@string/clear"
             android:textSize="@dimen/word_button_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/log_lp_btn"
+            app:layout_constraintBottom_toTopOf="@+id/button_rng"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_lp_btn"
+            app:layout_constraintTop_toBottomOf="@+id/button_custom_lp"
             android:onClick="clearButtonPressed"/>
 
         <Button
-            android:id="@+id/log_lp_btn"
+            android:id="@+id/button_rng"
+            style="@style/ButtonStyle"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="0dp"
+            android:text="@string/rng"
+            android:textSize="26sp"
+            tools:layout_editor_absoluteY="535dp"
+            tools:layout_editor_absoluteX="143dp"
+            app:layout_constraintTop_toBottomOf="@id/button_clear_lp"
+            app:layout_constraintBottom_toTopOf="@+id/button_log_lp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Button
+            android:id="@+id/button_log_lp"
             style="@style/ButtonStyle"
             android:layout_width="@dimen/button_width"
             android:layout_height="0dp"
@@ -198,37 +213,37 @@
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clear_lp_btn"
+            app:layout_constraintTop_toBottomOf="@+id/button_rng"
             app:layout_constraintVertical_bias="0.0"
             android:onClick="logButtonPressed"/>
 
         <Button
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/player_one_btn"
+            android:id="@+id/button_player_one"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorYugiYellow"
+            android:background="@drawable/ripple_effect_p2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/two_thousand_btn"
+            app:layout_constraintRight_toLeftOf="@+id/button_two_thousand"
             android:onClick="playerButtonPressed"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/player_one_lp" />
+            app:layout_constraintTop_toTopOf="@+id/text_player_one_lp" />
 
         <Button
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/player_two_btn"
+            android:id="@+id/button_player_two"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorYugiRed"
+            android:background="@drawable/ripple_effect_p1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/two_thousand_btn"
+            app:layout_constraintLeft_toRightOf="@+id/button_two_thousand"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintVertical_bias="0.0"
             android:onClick="playerButtonPressed"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/player_two_lp" />
+            app:layout_constraintTop_toTopOf="@+id/text_player_two_lp"/>
 
         <ToggleButton
             android:id="@+id/addOrSubtractToggle"
@@ -242,7 +257,7 @@
             tools:layout_editor_absoluteY="25dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/duel_time"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_duel_time"/>
 
     </android.support.constraint.ConstraintLayout>
 

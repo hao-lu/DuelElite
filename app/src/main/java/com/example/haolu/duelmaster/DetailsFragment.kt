@@ -129,9 +129,9 @@ class DetailsFragment : Fragment() {
 //            progressBar.visibility = ProgressBar.GONE
             for (detail in mCardDetailsList) {
                 if (detail.first != "ImageUrl") {
-                    val row = View.inflate(context, R.layout.fragment_table_row_detail, null)
-                    val cardHeader = row.findViewById(R.id.card_header) as TextView
-                    val cardValue = row.findViewById(R.id.card_value) as TextView
+                    val row = View.inflate(context, R.layout.table_row_detail, null)
+                    val cardHeader = row.findViewById(R.id.text_card_header) as TextView
+                    val cardValue = row.findViewById(R.id.text_card_value) as TextView
                     cardHeader.text = detail.first
                     cardValue.text = detail.second
                     val card_information = (context as Activity).findViewById(R.id.table_card_details) as TableLayout

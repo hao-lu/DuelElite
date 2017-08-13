@@ -14,7 +14,7 @@
     </View>
 
     <TextView
-        android:id="@+id/textView_tip_item"
+        android:id="@+id/text_tip_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"

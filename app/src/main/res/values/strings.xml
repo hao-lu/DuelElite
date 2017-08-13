@@ -32,4 +32,5 @@
     <string name="no_rulings_available">No rulings available</string>
     <string name="no_tips_available">No tips available</string>
     <string name="title_log_activity">Log</string>
+    <string name="rng">RNG</string>
 </resources>

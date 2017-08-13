@@ -11,7 +11,7 @@ class TipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapt
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: String) {
-            itemView.textView_tip_item.text = item
+            itemView.text_tip_item.text = item
         }
     }
 

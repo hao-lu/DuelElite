@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGrayBg">#EEEEEE</color>
+    <color name="colorRipple">#353535</color>
 
     <color name="colorYugiYellow">#d2c86f</color>
     <color name="colorYugiRed">#9c396c</color>

@@ -64,7 +64,7 @@ class TipsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.findViewById(R.id.no_tips).visibility = TextView.VISIBLE }
+                activity.runOnUiThread { activity.findViewById(R.id.text_no_tips).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {

@@ -1,7 +1,6 @@
 package com.example.haolu.duelmaster
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
@@ -26,27 +25,26 @@ class RulingsRecyclerViewAdapter(val mList: ArrayList<HeaderOrItem>) : RecyclerV
         private val TAG = "ViewHolder"
 
         fun bind(item: HeaderOrItem) {
-            Log.d(TAG, item.type.toString() + " " + item.data)
             when (item.type) {
                 HeaderOrItem.Types.H2 -> {
                     itemView.setBackgroundResource(R.color.colorGrayBg)
-                    itemView.textView_ruling_item.textSize = 20f
+                    itemView.text_ruling.textSize = 20f
                 }
                 HeaderOrItem.Types.H3 -> {
-                    itemView.textView_ruling_item.textSize = 18f
+                    itemView.text_ruling.textSize = 18f
                     itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiRed)
                 }
                 HeaderOrItem.Types.TABLE -> {
-                    itemView.textView_ruling_item.textSize = 12f
+                    itemView.text_ruling.textSize = 12f
                     itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiBlue)
                 }
                 HeaderOrItem.Types.UL -> {
-                    itemView.textView_ruling_item.textSize = 14f
+                    itemView.text_ruling.textSize = 14f
                     itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiYellow)
                 }
 
             }
-            itemView.textView_ruling_item.text = item.data
+            itemView.text_ruling.text = item.data
         }
 
     }

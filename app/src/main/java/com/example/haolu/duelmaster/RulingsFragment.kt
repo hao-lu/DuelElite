@@ -74,7 +74,7 @@ class RulingsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.findViewById(R.id.no_rulings).visibility = TextView.VISIBLE }
+                activity.runOnUiThread { activity.findViewById(R.id.text_no_rulings).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {

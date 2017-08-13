@@ -1,5 +1,6 @@
 package com.example.haolu.duelmaster
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -75,6 +76,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         else if (id == R.id.action_reset) {
             LIFE_POINT_CALCULATOR.reset()
+            text_player_one_lp.text = "8000"
+            text_player_two_lp.text = "8000"
+            text_cumulated_lp.text = "0"
         }
 
         return super.onOptionsItemSelected(item)
@@ -100,21 +104,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun numberButtonPressed(view: View) {
+        val currLp = LIFE_POINT_CALCULATOR.cumulatedLP
         // Update the cumulatedLP
         if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLP += view.text.toString().toInt()
+        val newLp = LIFE_POINT_CALCULATOR.cumulatedLP
+
+        val animator = ValueAnimator.ofInt(currLp, newLp)
+        animator.duration = 500
+        animator.addUpdateListener { text_cumulated_lp.text = it.animatedValue.toString() }
+        animator.start()
     }
 
     // Update the player life points (gain/lose)
     fun playerButtonPressed(view: View) {
-        if (view.id == R.id.player_one_btn)
+        val currLp: Int
+        val newLp: Int
+        val currPlayer: TextView
+
+        if (view.id == R.id.button_player_one) {
+            currLp = LIFE_POINT_CALCULATOR.playerOneLP
+            currPlayer = text_player_one_lp
             LIFE_POINT_CALCULATOR.updateLP(addOrSubtractToggle.isChecked, true)
-        else
+            newLp = LIFE_POINT_CALCULATOR.playerOneLP
+        }
+        else {
+            currLp = LIFE_POINT_CALCULATOR.playerTwoLP
+            currPlayer = text_player_two_lp
             LIFE_POINT_CALCULATOR.updateLP(addOrSubtractToggle.isChecked, false)
+            newLp = LIFE_POINT_CALCULATOR.playerTwoLP
+        }
+
+        val animator = ValueAnimator.ofInt(currLp, newLp)
+        animator.duration = 500
+        animator.addUpdateListener { currPlayer.text = it.animatedValue.toString() }
+        animator.start()
     }
 
     // Halve the life points
     fun halfButtonPressed(view: View) {
-        cumulated_lp.text = "HALVE"
+        text_cumulated_lp.text = "HALVE"
         LIFE_POINT_CALCULATOR.halve = true
     }
 
@@ -122,6 +150,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun clearButtonPressed(view: View) {
         LIFE_POINT_CALCULATOR.halve = false
         LIFE_POINT_CALCULATOR.cumulatedLP = 0
+        text_cumulated_lp.text = LIFE_POINT_CALCULATOR.cumulatedLP.toString()
     }
 
     // Launch mLog activity
