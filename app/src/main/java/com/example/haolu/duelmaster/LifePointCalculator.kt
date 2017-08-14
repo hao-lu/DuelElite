@@ -33,7 +33,7 @@ class LifePointCalculator : BaseObservable() {
         }
     }
 
-    // Log item, which contains player, operation, the cumulatedLP for that turn, and totalLP
+    // Log item, which contains player, operation, the cumulatedLp for that turn, and totalLP
     data class LogItem(val player: String, val operation: String, val turnLP: Int, val totalLP: Int) : Parcelable {
 
         companion object {
@@ -62,24 +62,24 @@ class LifePointCalculator : BaseObservable() {
     }
 
     @get:Bindable
-    var playerOneLP: Int = 8000
+    var playerOneLp: Int = 8000
         set(value) {
             field = value
-            notifyPropertyChanged(BR.playerOneLP)
+            notifyPropertyChanged(BR.playerOneLp)
         }
 
     @get:Bindable
-    var playerTwoLP: Int = 8000
+    var playerTwoLp: Int = 8000
         set(value) {
             field = value
-            notifyPropertyChanged(BR.playerTwoLP)
+            notifyPropertyChanged(BR.playerTwoLp)
         }
 
     @get:Bindable
-    var cumulatedLP: Int = 0
+    var cumulatedLp: Int = 0
         set(value) {
             field = value
-            notifyPropertyChanged(BR.cumulatedLP)
+            notifyPropertyChanged(BR.cumulatedLp)
         }
 
     @get:Bindable
@@ -95,40 +95,40 @@ class LifePointCalculator : BaseObservable() {
     fun updateLP(operation: Boolean, isPlayerOne: Boolean) {
         if (!halve) {
             if (isPlayerOne) {
-                if (operation) playerOneLP += cumulatedLP else playerOneLP -= cumulatedLP
+                if (operation) playerOneLp += cumulatedLp else playerOneLp -= cumulatedLp
             } else {
-                if (operation) playerTwoLP += cumulatedLP else playerTwoLP -= cumulatedLP
+                if (operation) playerTwoLp += cumulatedLp else playerTwoLp -= cumulatedLp
             }
         }
          else {
             if (isPlayerOne) {
-                playerOneLP /= 2
-                cumulatedLP = playerOneLP
+                playerOneLp /= 2
+                cumulatedLp = playerOneLp
             }
             else {
-                playerTwoLP /= 2
-                cumulatedLP = playerTwoLP
+                playerTwoLp /= 2
+                cumulatedLp = playerTwoLp
             }
         }
 
         log(operation, isPlayerOne)
         // reset after updating life points
         halve = false
-        cumulatedLP = 0
+        cumulatedLp = 0
     }
 
     fun updateCumulatedLP(lp: Int) {
-        cumulatedLP += lp
+        cumulatedLp += lp
     }
 
     fun resetCumulatedLP() {
-        cumulatedLP = 0
+        cumulatedLp = 0
     }
 
     fun reset() {
-        playerOneLP = 8000
-        playerTwoLP = 8000
-        cumulatedLP = 0
+        playerOneLp = 8000
+        playerTwoLp = 8000
+        cumulatedLp = 0
         log.log.clear()
     }
 
@@ -139,14 +139,14 @@ class LifePointCalculator : BaseObservable() {
         if (operation) op = "GAINED" else op = "LOST"
         if (isPlayerOne) {
             player = "PLAYER ONE"
-            lp = playerOneLP
+            lp = playerOneLp
         }
         else {
             player = "PLAYER TWO"
-            lp = playerTwoLP
+            lp = playerTwoLp
         }
-        if (cumulatedLP != 0)
-            log.add(LifePointCalculator.LogItem(player, op, cumulatedLP, lp))
+        if (cumulatedLp != 0)
+            log.add(LifePointCalculator.LogItem(player, op, cumulatedLp, lp))
     }
 
     fun printLog() {

@@ -6,6 +6,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
+import android.support.v4.app.DialogFragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
@@ -13,12 +15,15 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.ToggleButton
 import com.example.haolu.duelmaster.databinding.AppBarMainBinding
 import kotlinx.android.synthetic.main.content_main.*
 import io.realm.Realm
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CustomLpFragment.CustomLpDialogListener {
 
     var LIFE_POINT_CALCULATOR = LifePointCalculator()
     var mRealm = Realm.getDefaultInstance()
@@ -104,15 +109,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun numberButtonPressed(view: View) {
-        val currLp = LIFE_POINT_CALCULATOR.cumulatedLP
-        // Update the cumulatedLP
-        if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLP += view.text.toString().toInt()
-        val newLp = LIFE_POINT_CALCULATOR.cumulatedLP
+        val currLp = LIFE_POINT_CALCULATOR.cumulatedLp
+        // Update the cumulatedLp
+        if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLp += view.text.toString().toInt()
+        val newLp = LIFE_POINT_CALCULATOR.cumulatedLp
 
-        val animator = ValueAnimator.ofInt(currLp, newLp)
-        animator.duration = 500
-        animator.addUpdateListener { text_cumulated_lp.text = it.animatedValue.toString() }
-        animator.start()
+        animateValue(currLp, newLp, text_cumulated_lp)
     }
 
     // Update the player life points (gain/lose)
@@ -120,24 +122,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val currLp: Int
         val newLp: Int
         val currPlayer: TextView
+        val cumulateLp = LIFE_POINT_CALCULATOR.cumulatedLp
 
         if (view.id == R.id.button_player_one) {
-            currLp = LIFE_POINT_CALCULATOR.playerOneLP
+            currLp = LIFE_POINT_CALCULATOR.playerOneLp
             currPlayer = text_player_one_lp
             LIFE_POINT_CALCULATOR.updateLP(addOrSubtractToggle.isChecked, true)
-            newLp = LIFE_POINT_CALCULATOR.playerOneLP
+            newLp = LIFE_POINT_CALCULATOR.playerOneLp
         }
         else {
-            currLp = LIFE_POINT_CALCULATOR.playerTwoLP
+            currLp = LIFE_POINT_CALCULATOR.playerTwoLp
             currPlayer = text_player_two_lp
             LIFE_POINT_CALCULATOR.updateLP(addOrSubtractToggle.isChecked, false)
-            newLp = LIFE_POINT_CALCULATOR.playerTwoLP
+            newLp = LIFE_POINT_CALCULATOR.playerTwoLp
         }
 
-        val animator = ValueAnimator.ofInt(currLp, newLp)
-        animator.duration = 500
-        animator.addUpdateListener { currPlayer.text = it.animatedValue.toString() }
-        animator.start()
+        // Animate player losing life points
+        animateValue(currLp, newLp, currPlayer)
+        // Animate decreasing of cumulated lp
+        animateValue(cumulateLp, 0, text_cumulated_lp)
+
+
+//        text_cumulated_lp.text = "0"
     }
 
     // Halve the life points
@@ -146,11 +152,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         LIFE_POINT_CALCULATOR.halve = true
     }
 
-    // Clear the cumulatedLP
+    fun customButtonPressed(view: View) {
+//        val fm = supportFragmentManager
+//        val customLpFragment = CustomLpFragment()
+//        customLpFragment.show(fm, "fragment_custom_lp")
+        val dialog = CustomLpFragment()
+        dialog.show(supportFragmentManager, "CustomLpFragment")
+    }
+
+    // Clear the cumulatedLp
     fun clearButtonPressed(view: View) {
         LIFE_POINT_CALCULATOR.halve = false
-        LIFE_POINT_CALCULATOR.cumulatedLP = 0
-        text_cumulated_lp.text = LIFE_POINT_CALCULATOR.cumulatedLP.toString()
+        LIFE_POINT_CALCULATOR.cumulatedLp = 0
+        text_cumulated_lp.text = LIFE_POINT_CALCULATOR.cumulatedLp.toString()
     }
 
     // Launch mLog activity
@@ -160,6 +174,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(intent)
     }
 
+    fun rngButtonPressed(view: View) {
+        Toast.makeText(this, "Roll dice / flip coin", Toast.LENGTH_SHORT).show()
+    }
 
+    fun toggleButtonPressed(view: View) {
+        val toggleButton = view as ToggleButton
+        if (toggleButton.isChecked) addOrSubtractToggle.
+                setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGain))
+        else addOrSubtractToggle.
+                setTextColor(ContextCompat.getColor(applicationContext, R.color.colorLose))
+    }
 
+    private fun animateValue(currLp: Int, newLp: Int, text: TextView) {
+        val animator = ValueAnimator.ofInt(currLp, newLp)
+        animator.duration = 500
+        animator.addUpdateListener { text.text = it.animatedValue.toString() }
+        animator.start()
+    }
+
+    // CustomLpDialogListener interface functions
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        val currLp = LIFE_POINT_CALCULATOR.cumulatedLp
+        val editText = dialog.dialog.findViewById(R.id.edit_custom) as EditText
+        LIFE_POINT_CALCULATOR.cumulatedLp += editText.text.toString().toInt()
+        val newLp = LIFE_POINT_CALCULATOR.cumulatedLp
+        animateValue(currLp, newLp, text_cumulated_lp)
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        // Cancel
+    }
 }
