@@ -21,16 +21,16 @@ class DetailsFragment : Fragment() {
 
     private val TAG = "DetailsFragment"
 
-    lateinit var progressBar: ProgressBar
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_details, container, false)
-        progressBar = rootView.findViewById(R.id.progresbar_details) as ProgressBar
-
         val cardName = arguments.getString("cardName")
+        rootView.findViewById(R.id.progressbar_details).visibility = View.VISIBLE
         ParseDetailsTask(context).execute(cardName)
-
         return rootView
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
@@ -50,13 +50,10 @@ class DetailsFragment : Fragment() {
                 "Description",
                 "ImageUrl")
 
-
         private var mCardDetailsList: MutableList<Pair<String, String>> = mutableListOf()
 
         override fun onPreExecute() {
             super.onPreExecute()
-//            activity.runOnUiThread { progressBar.visibility = ProgressBar.VISIBLE }
-
         }
 
         override fun doInBackground(vararg params: String?): Void? {
@@ -111,10 +108,8 @@ class DetailsFragment : Fragment() {
                         val desc = tr.select("table")[1].select("tr")[2].text()
                         mCardDetailsList.add(Pair("Description", desc))
                     }
-
                     addData(Pair(header, value))
                 }
-//                print()
             }
             catch (e: Exception) {
                 e.printStackTrace()
@@ -126,22 +121,25 @@ class DetailsFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-//            progressBar.visibility = ProgressBar.GONE
-            for (detail in mCardDetailsList) {
-                if (detail.first != "ImageUrl") {
-                    val row = View.inflate(context, R.layout.table_row_detail, null)
-                    val cardHeader = row.findViewById(R.id.text_card_header) as TextView
-                    val cardValue = row.findViewById(R.id.text_card_value) as TextView
-                    cardHeader.text = detail.first
-                    cardValue.text = detail.second
-                    val card_information = (context as Activity).findViewById(R.id.table_card_details) as TableLayout
-                    card_information.addView(row)
+            if ((context as Activity).findViewById(R.id.progressbar_details) != null) {
+                val progressBar = (context as Activity).findViewById(R.id.progressbar_details) as ProgressBar
+                progressBar.visibility = ProgressBar.GONE
+                for (detail in mCardDetailsList) {
+                    if (detail.first != "ImageUrl") {
+                        val row = View.inflate(context, R.layout.table_row_detail, null)
+                        val cardHeader = row.findViewById(R.id.text_card_header) as TextView
+                        val cardValue = row.findViewById(R.id.text_card_value) as TextView
+                        cardHeader.text = detail.first
+                        cardValue.text = detail.second
+                        val card_information = (context as Activity).findViewById(R.id.table_card_details) as TableLayout
+                        card_information.addView(row)
+                    }
                 }
             }
-
             val activity = context as Activity
             val image = activity.findViewById(R.id.image_header) as ImageView
             Picasso.with(context).load(mCardDetailsList[0].second).into(image)
+
         }
 
         private fun addData(p: Pair<String, String>) {

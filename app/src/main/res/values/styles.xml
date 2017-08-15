@@ -69,6 +69,9 @@
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/ripple_effect</item>
+        <item name="android:layout_width">@dimen/button_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

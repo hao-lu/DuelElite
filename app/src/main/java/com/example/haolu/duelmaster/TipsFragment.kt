@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
@@ -23,6 +24,7 @@ class TipsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_tips, container, false)
         val cardName = arguments.getString("cardName")
+        rootView.findViewById(R.id.progressbar_tips).visibility = View.VISIBLE
         ParseTipsTask(context).execute(cardName)
         return rootView
     }
@@ -64,7 +66,9 @@ class TipsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.findViewById(R.id.text_no_tips).visibility = TextView.VISIBLE }
+                Log.d(TAG, "httpStatusException")
+//                activity.runOnUiThread { activity.findViewById(R.id.progressbar_tips).visibility = TextView.GONE }
+//                activity.runOnUiThread { activity.findViewById(R.id.text_no_tips).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {
@@ -77,17 +81,27 @@ class TipsFragment : Fragment() {
         }
 
         override fun onPostExecute(result: Void?) {
-//            super.onPostExecute(result)
+            super.onPostExecute(result)
 
-            // Lb the world chalice priestess
-            Log.d(TAG, mTipsList.size.toString())
-            val simpleAdapter = TipsRecyclerViewAdapter(mTipsList)
-            val layoutManger = LinearLayoutManager(activity)
-            val tipList = activity.findViewById(R.id.tips_recycler_view) as RecyclerView
-            val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            tipList.addItemDecoration(itemDecoration)
-            tipList.layoutManager = layoutManger
-            tipList.adapter = simpleAdapter
+            if ((context as Activity).findViewById(R.id.progressbar_tips) != null) {
+                val progressBar = (context as Activity).findViewById(R.id.progressbar_tips) as ProgressBar
+                progressBar.visibility = ProgressBar.GONE
+
+                // Lb the world chalice priestess
+                if (mTipsList.size != 0) {
+                    Log.d(TAG, mTipsList.size.toString())
+                    val simpleAdapter = TipsRecyclerViewAdapter(mTipsList)
+                    val layoutManger = LinearLayoutManager(activity)
+                    val tipList = activity.findViewById(R.id.tips_recycler_view) as RecyclerView
+                    val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+                    tipList.addItemDecoration(itemDecoration)
+                    tipList.layoutManager = layoutManger
+                    tipList.adapter = simpleAdapter
+                } else {
+                    val noTipsText = (context as Activity).findViewById(R.id.text_no_tips) as TextView
+                    noTipsText.visibility = TextView.VISIBLE
+                }
+            }
         }
 
     }

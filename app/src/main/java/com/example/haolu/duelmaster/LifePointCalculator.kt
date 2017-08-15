@@ -111,6 +111,9 @@ class LifePointCalculator : BaseObservable() {
             }
         }
 
+//        if (playerOneLp < 0) playerOneLp = 0
+//        if (playerTwoLp < 0) playerTwoLp = 0
+
         log(operation, isPlayerOne)
         // reset after updating life points
         halve = false

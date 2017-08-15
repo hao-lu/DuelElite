@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
@@ -23,8 +25,15 @@ class RulingsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_rulings, container, false)
         val cardName = arguments.getString("cardName")
+        rootView.findViewById(R.id.progressbar_rulings).visibility = View.VISIBLE
         ParseRulingsTask(context).execute(cardName)
         return rootView
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+
     }
 
     private class ParseRulingsTask(val context: Context) : AsyncTask<String, Void, Void>() {
@@ -74,7 +83,9 @@ class RulingsFragment : Fragment() {
             }
 
             catch (httpStatusException: HttpStatusException) {
-                activity.runOnUiThread { activity.findViewById(R.id.text_no_rulings).visibility = TextView.VISIBLE }
+                Log.d(TAG, "httpStatusException")
+//                activity.runOnUiThread { activity.findViewById(R.id.progressbar_rulings).visibility = TextView.GONE }
+//                activity.runOnUiThread { activity.findViewById(R.id.text_no_rulings).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {
@@ -85,9 +96,14 @@ class RulingsFragment : Fragment() {
             return null
         }
 
+
+        // TODO: BUG if internet is slow and the user switches viewpager quickly, null on recyclerview
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
 
+            if ((context as Activity).findViewById(R.id.progressbar_rulings) != null) {
+            val progressBar = (context as Activity).findViewById(R.id.progressbar_rulings) as ProgressBar
+            progressBar.visibility = ProgressBar.GONE
             if (mRulingsList.size != 0) {
                 val simpleAdapter = RulingsRecyclerViewAdapter(mRulingsList)
                 val layoutManger = LinearLayoutManager(activity)
@@ -97,6 +113,11 @@ class RulingsFragment : Fragment() {
                 tipList.layoutManager = layoutManger
                 tipList.adapter = simpleAdapter
             }
+            else {
+                val noRulingText = (context as Activity).findViewById(R.id.text_no_rulings) as TextView
+                noRulingText.visibility = TextView.VISIBLE
+            }
+                }
         }
 
         private fun addItem(c: Element) {
@@ -131,4 +152,6 @@ class RulingsFragment : Fragment() {
                                 HeaderOrItem.Types.UL, text))
         }
     }
+
+
 }
