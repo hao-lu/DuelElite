@@ -16,8 +16,8 @@
     <string name="action_reset">Reset</string>
 
     <!-- Text for Buttons in MainActivity-->
-    <string name="fifty_button">50</string>
     <string name="one_hundred_button">100</string>
+    <string name="two_hundred_button">200</string>
     <string name="five_hundred">500</string>
     <string name="one_thousand">1000</string>
     <string name="two_thousand">2000</string>
@@ -32,5 +32,7 @@
     <string name="no_rulings_available">No rulings available</string>
     <string name="no_tips_available">No tips available</string>
     <string name="title_log_activity">Log</string>
-    <string name="rng">RNG</string>
+    <string name="flip">FLIP</string>
+    <string name="roll">ROLL</string>
+
 </resources>

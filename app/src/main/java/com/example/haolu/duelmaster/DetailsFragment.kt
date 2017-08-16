@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import java.net.URLEncoder
 
 class DetailsFragment : Fragment() {
 
@@ -27,10 +28,6 @@ class DetailsFragment : Fragment() {
         rootView.findViewById(R.id.progressbar_details).visibility = View.VISIBLE
         ParseDetailsTask(context).execute(cardName)
         return rootView
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
@@ -59,12 +56,13 @@ class DetailsFragment : Fragment() {
         override fun doInBackground(vararg params: String?): Void? {
 
             val cardName = params[0]
-            val cardNamePath = cardName?.replace(" ", "_")
+            val encoder = URLEncoder.encode(cardName!!, "UTF-8")
+            val cardNamePath = encoder.replace("+", "_")
             val cardUrl = BASE_URL + cardNamePath
 
             try {
 
-                Log.d(TAG, "QUERY : " + cardName?.replace(" ", "_"))
+                Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
 
                 val document = Jsoup.connect(cardUrl).get()
                 // <table class = cardtable>

@@ -46,6 +46,8 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         mUri = intent.data
 
         mViewPager = container
+        // Prevents the Fragments from being redrawn
+        mViewPager.offscreenPageLimit = 3
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)

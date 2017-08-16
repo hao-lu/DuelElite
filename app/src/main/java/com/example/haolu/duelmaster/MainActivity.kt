@@ -1,14 +1,14 @@
 package com.example.haolu.duelmaster
 
 import android.animation.ValueAnimator
-import android.support.v4.animation.ValueAnimatorCompat
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
-import android.support.v4.animation.AnimatorCompatHelper
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -24,6 +24,7 @@ import android.widget.ToggleButton
 import com.example.haolu.duelmaster.databinding.AppBarMainBinding
 import kotlinx.android.synthetic.main.content_main.*
 import io.realm.Realm
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CustomLpFragment.CustomLpDialogListener {
 
@@ -54,13 +55,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        finish()
 //        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
 //            drawer.closeDrawer(GravityCompat.START)
 //        } else {
 //            super.onBackPressed()
 //        }
+
+        if (fragmentManager.backStackEntryCount > 0) fragmentManager.popBackStack()
+        else super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -76,6 +79,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.action_start) {
+            val timer = object: CountDownTimer(5000, 1000) {
+                override fun onFinish() {
+                    text_duel_time.text = "Round Over"
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+                    val formatted = String.format("%02d:%02d",
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
+                    )
+                    text_duel_time.text = formatted
+                }
+            }.start()
             return true
         }
         else if (id == R.id.action_pause) {
@@ -192,9 +209,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(intent)
     }
 
-    fun rngButtonPressed(view: View) {
-        Toast.makeText(this, "Roll dice / flip coin", Toast.LENGTH_SHORT).show()
+    fun flipButtonPressed(view: View) {
+//        Toast.makeText(this, "Roll dice / flip coin", Toast.LENGTH_SHORT).show()
+//        val dialog = CoinFlipFragment()
+//        dialog.show(supportFragmentManager, "CoinFlipFragment")
+        val fragment = CoinFlipFragment()
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+    }
 
+    fun rollButtonPressed(view: View) {
+        val fragment = RollDiceFragment()
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
     }
 
     fun toggleButtonPressed(view: View) {
@@ -203,6 +234,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGain))
         else addOrSubtractToggle.
                 setTextColor(ContextCompat.getColor(applicationContext, R.color.colorLose))
+    }
+
+    fun captureFragmentTouches(view: View) {
+
+    }
+
+    fun dismissFragment(view: View) {
+        supportFragmentManager.popBackStack()
     }
 
 }
