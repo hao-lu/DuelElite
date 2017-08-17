@@ -1,33 +1,31 @@
 package com.example.haolu.duelmaster
-import android.app.Dialog
+
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 
-class RollDiceFragment : DialogFragment() {
+class DiceFragment : Fragment() {
 
-    private val TAG = "RollDiceFragment"
+    private val TAG = "DiceFragment"
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater?.inflate(R.layout.fragment_roll_dice, container, false)
-        val image = rootView?.findViewById(R.id.imageButton) as ImageButton
+        val rootView = inflater?.inflate(R.layout.fragment_dice, container, false)
+        return rootView
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        val image = view?.findViewById(R.id.image_dice) as ImageButton
+        val pulse = AnimationUtils.loadAnimation(context, R.anim.pulse)
         image.setOnClickListener {
             val images = resources.obtainTypedArray(R.array.dice_images)
             val rand = (Math.random() * images.length()).toInt()
             image.setImageResource(images.getResourceId(rand, R.drawable.dice1))
+            image.startAnimation(pulse)
             images.recycle()
         }
-        return rootView
     }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return dialog
-    }
-
 }

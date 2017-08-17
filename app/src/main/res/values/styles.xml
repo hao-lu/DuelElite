@@ -13,9 +13,10 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">@color/colorGrayBg</item>
     </style>
 
-    <style name="AppTheme.SearchSuggestion">
+    <style name="AppTheme.SearchSuggestion" parent="AppTheme.NoActionBar">
         <item name="autoCompleteTextViewStyle">@style/CustomAutoCompleteTextViewStyle</item>
         <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>

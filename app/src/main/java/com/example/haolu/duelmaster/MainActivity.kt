@@ -19,7 +19,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import android.widget.ToggleButton
 import com.example.haolu.duelmaster.databinding.AppBarMainBinding
 import kotlinx.android.synthetic.main.content_main.*
@@ -28,8 +27,28 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CustomLpFragment.CustomLpDialogListener {
 
-    var LIFE_POINT_CALCULATOR = LifePointCalculator()
-    var mRealm = Realm.getDefaultInstance()
+    private inner class CountDownTimerPausable(val millisInFuture: Long, val countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
+
+        override fun onTick(millisUntilFinished: Long) {
+            val formatted = String.format("%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
+            )
+            text_duel_time.text = formatted
+            mTimeRemaining = millisUntilFinished
+        }
+
+        override fun onFinish() {
+            text_duel_time.text = "Round Over"
+        }
+    }
+
+    private var mTimeRemaining = 2400000L
+    private var mTimer = CountDownTimerPausable(mTimeRemaining, 1000)
+
+    private var LIFE_POINT_CALCULATOR = LifePointCalculator()
+    private var mRealm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,30 +98,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.action_start) {
-            val timer = object: CountDownTimer(5000, 1000) {
-                override fun onFinish() {
-                    text_duel_time.text = "Round Over"
-                }
-
-                override fun onTick(millisUntilFinished: Long) {
-                    val formatted = String.format("%02d:%02d",
-                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
-                    )
-                    text_duel_time.text = formatted
-                }
-            }.start()
-            return true
+//            val timer = object: CountDownTimer(2400000, 1000) {
+//                override fun onFinish() {
+//                    text_duel_time.text = "Round Over"
+//                }
+//
+//                override fun onTick(millisUntilFinished: Long) {
+//                    val formatted = String.format("%02d:%02d",
+//                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+//                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+//                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
+//                    )
+//                    text_duel_time.text = formatted
+//                }
+//            }.start()
+            // Cancel old one
+            mTimer.cancel()
+            mTimer = CountDownTimerPausable(mTimeRemaining, 1000)
+            mTimer.start()
         }
         else if (id == R.id.action_pause) {
-            return true
+            mTimer.cancel()
         }
         else if (id == R.id.action_reset) {
             LIFE_POINT_CALCULATOR.reset()
             text_player_one_lp.text = "8000"
             text_player_two_lp.text = "8000"
             text_cumulated_lp.text = "0"
+            mTimer.cancel()
+            text_duel_time.text = "40:00"
         }
 
         return super.onOptionsItemSelected(item)
@@ -209,23 +233,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(intent)
     }
 
-    fun flipButtonPressed(view: View) {
-//        Toast.makeText(this, "Roll dice / flip coin", Toast.LENGTH_SHORT).show()
-//        val dialog = CoinFlipFragment()
-//        dialog.show(supportFragmentManager, "CoinFlipFragment")
-        val fragment = CoinFlipFragment()
-        val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
-    }
-
-    fun rollButtonPressed(view: View) {
-        val fragment = RollDiceFragment()
-        val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+    fun rngButtonPressed(view: View) {
+        val intent = Intent(this, RngActivity::class.java)
+        startActivity(intent)
     }
 
     fun toggleButtonPressed(view: View) {

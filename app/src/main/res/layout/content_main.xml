@@ -154,17 +154,10 @@
                 android:textSize="@dimen/word_button_text_size" />
 
             <Button
-                android:id="@+id/button_flip"
+                android:id="@+id/button_rng"
                 style="@style/ButtonStyle"
-                android:onClick="flipButtonPressed"
-                android:text="@string/flip"
-                android:textSize="@dimen/word_button_text_size" />
-
-            <Button
-                android:id="@+id/button_roll"
-                style="@style/ButtonStyle"
-                android:onClick="rollButtonPressed"
-                android:text="@string/roll"
+                android:onClick="rngButtonPressed"
+                android:text="@string/rng"
                 android:textSize="@dimen/word_button_text_size" />
 
             <Button

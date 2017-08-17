@@ -2,6 +2,7 @@ package com.example.haolu.duelmaster
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_log.*
 
@@ -24,6 +25,8 @@ class LogActivity : AppCompatActivity() {
         layoutManger.reverseLayout = true
         layoutManger.stackFromEnd = true
         val adapter = LogRecyclerViewAdapter(log)
+        val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        log_recycler_view.addItemDecoration(itemDecoration)
         log_recycler_view.layoutManager = layoutManger
         log_recycler_view.adapter = adapter
     }

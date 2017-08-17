@@ -139,13 +139,13 @@ class LifePointCalculator : BaseObservable() {
         var op = ""
         var player = ""
         var lp = 0
-        if (operation) op = "GAINED" else op = "LOST"
+        if (operation) op = "+" else op = "-"
         if (isPlayerOne) {
-            player = "PLAYER ONE"
+            player = "Player 1"
             lp = playerOneLp
         }
         else {
-            player = "PLAYER TWO"
+            player = "Player 2"
             lp = playerTwoLp
         }
         if (cumulatedLp != 0)

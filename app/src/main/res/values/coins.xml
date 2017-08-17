@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="coin_images">
-        <item>@drawable/poke_ball</item>
-        <item>@drawable/master_ball</item>
+        <item>@drawable/heads</item>
+        <item>@drawable/tails</item>
     </array>
 </resources>

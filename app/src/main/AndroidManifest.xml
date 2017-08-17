@@ -47,7 +47,7 @@
         <activity
             android:name=".CardDetailActivity"
             android:label="@string/title_activity_card_detail"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <!-- Provides search suggestions for cards -->
@@ -56,6 +56,11 @@
             android:authorities="com.example.haolu.duelmaster.CardSuggestionProvider"
             android:exported="false"/>
 
+        <!-- Rng Activity -->
+        <activity android:name=".RngActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/flip_and_roll">
+        </activity>
 
     </application>
 
