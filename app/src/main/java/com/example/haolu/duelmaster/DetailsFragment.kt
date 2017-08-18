@@ -22,6 +22,10 @@ class DetailsFragment : Fragment() {
 
     private val TAG = "DetailsFragment"
 
+    companion object {
+        var url = ""
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_details, container, false)
         val cardName = arguments.getString("cardName")
@@ -75,6 +79,7 @@ class DetailsFragment : Fragment() {
                         getElementsByClass("cardtable-cardimage")[0].
                         select("a[href]")[0].
                         attr("href").toString()
+                url = imageUrl
 
                 mCardDetailsList.add(Pair("ImageUrl", imageUrl))
                 Log.d(TAG, imageUrl)
@@ -137,7 +142,6 @@ class DetailsFragment : Fragment() {
             val activity = context as Activity
             val image = activity.findViewById(R.id.image_header) as ImageView
             Picasso.with(context).load(mCardDetailsList[0].second).into(image)
-
         }
 
         private fun addData(p: Pair<String, String>) {

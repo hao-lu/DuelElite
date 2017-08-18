@@ -1,13 +1,17 @@
 package com.example.haolu.duelmaster
 
+import android.app.Activity
+import android.content.Context
 import android.support.v4.content.CursorLoader
 import android.database.Cursor
 import android.net.Uri
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewPager
 import android.os.Bundle
 import android.support.v4.app.LoaderManager.LoaderCallbacks
@@ -15,8 +19,13 @@ import android.support.v4.content.Loader
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_card_detail.*
-import android.widget.Toast
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
+import java.net.URLEncoder
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
@@ -40,7 +49,14 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         collapse_toolbar.isTitleEnabled = false
 
         // Show image
-        image_header.setOnClickListener { Toast.makeText(this, "Show image", Toast.LENGTH_SHORT).show()}
+        image_header.setOnClickListener {
+            val fragment = ImageDialogFragment()
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+
+        }
 
         // Needed for CursorLoader to get data
         mUri = intent.data
@@ -54,6 +70,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         // Invokes onCreateLoader()
         supportLoaderManager.initLoader(0, null, this)
+
     }
 
     // Setups ViewPager with different fragments and each fragment passes the card name
@@ -142,5 +159,58 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mFragmentList.add(fragment)
             mFragmentTitle.add(title)
         }
+    }
+
+    private class LoadImageHeaderTask(val context: Context) : AsyncTask<String, Void, Void>() {
+        private val TAG = "ParseDetailsTask"
+        private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private var imageUrl = ""
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+        }
+
+        override fun doInBackground(vararg params: String?): Void? {
+
+            val cardName = params[0]
+            val encoder = URLEncoder.encode(cardName!!, "UTF-8")
+            val cardNamePath = encoder.replace("+", "_")
+            val cardUrl = BASE_URL + cardNamePath
+
+            try {
+
+                Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
+
+                val document = Jsoup.connect(cardUrl).get()
+                // <table class = cardtable>
+
+//                val cardTable: Element = document.select("table").first()
+                val cardTable: Element = document.getElementsByClass("cardtable").first()
+
+                // <a href = ... >
+                imageUrl = cardTable.select("tr")[1].
+                        getElementsByClass("cardtable-cardimage")[0].
+                        select("a[href]")[0].
+                        attr("href").toString()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            // no internet connection error
+            // no webpage error
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            val activity = context as Activity
+            val image = activity.findViewById(R.id.image_header) as ImageView
+            Picasso.with(context).load(imageUrl).into(image)
+
+        }
+    }
+
+    fun dismissImageFragment(view: View) {
+        supportFragmentManager.popBackStack()
     }
 }
