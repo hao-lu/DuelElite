@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -17,6 +16,7 @@ import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
+import java.net.URLEncoder
 
 class RulingsFragment : Fragment() {
 
@@ -40,7 +40,7 @@ class RulingsFragment : Fragment() {
         private val TAG = "ParseRulingsTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Rulings:"
 
-        private var mRulingsList = arrayListOf<RulingsRecyclerViewAdapter.HeaderOrItem>()
+        private var mRulingsList = ArrayList<ArrayList<RulingsRecyclerViewAdapter.HeaderOrItem>>()
 
         private val activity = context as Activity
 
@@ -51,7 +51,8 @@ class RulingsFragment : Fragment() {
         override fun doInBackground(vararg params: String?): Void? {
 
             val cardName = params[0]
-            val cardNamePath = cardName?.replace(" ", "_")
+            val encoder = URLEncoder.encode(cardName!!, "UTF-8")
+            val cardNamePath = encoder.replace("+", "_")
             val cardUrl = BASE_URL + cardNamePath
 
             try {
@@ -60,14 +61,17 @@ class RulingsFragment : Fragment() {
                 val article = document.select("article").first()
                 val div = article.getElementById("mw-content-text")
                 val children = div.children()
-
                 var addToList = false
                 for (c in children) {
                     // Top header
-                    if (c.`is`("h2") && c.text() == "TCG Rulings" ||
-                            c.text() == "OCG Rulings" ||
-                            c.text() == "Previously Official Rulings") {
+//                    if (c.`is`("h2") && c.text() == "TCG Rulings" ||
+//                            c.text() == "OCG Rulings" ||
+//                            c.text() == "Previously Official Rulings") {
+                    if (c.`is`("h2") && c.text() != "References" &&
+                            c.text() != "Notes") {
                         addToList = true
+                        mRulingsList.add(arrayListOf())
+                        Log.d(TAG, c.text())
                     }
                     else if (c.`is`("h2")) addToList = false
 //                    else if (c.`is`("h2") && c.text() != "TCG Rulings" &&
@@ -79,6 +83,8 @@ class RulingsFragment : Fragment() {
                     if (addToList) addItem(c)
 
                 }
+
+                Log.d(TAG, mRulingsList.size.toString())
 
             }
 
@@ -96,11 +102,10 @@ class RulingsFragment : Fragment() {
             return null
         }
 
-
-        // TODO: BUG if internet is slow and the user switches viewpager quickly, null on recyclerview
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
 
+            // Fixes bug when internet is slow and the user switches viewpager quicker, checks for null
             if ((context as Activity).findViewById(R.id.progressbar_rulings) != null) {
             val progressBar = (context as Activity).findViewById(R.id.progressbar_rulings) as ProgressBar
             progressBar.visibility = ProgressBar.GONE
@@ -108,8 +113,8 @@ class RulingsFragment : Fragment() {
                 val simpleAdapter = RulingsRecyclerViewAdapter(mRulingsList)
                 val layoutManger = LinearLayoutManager(activity)
                 val tipList = activity.findViewById(R.id.tcg_ruling_rv) as RecyclerView
-                val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-                tipList.addItemDecoration(itemDecoration)
+//                val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+//                tipList.addItemDecoration(itemDecoration)
                 tipList.layoutManager = layoutManger
                 tipList.adapter = simpleAdapter
             }
@@ -121,23 +126,24 @@ class RulingsFragment : Fragment() {
         }
 
         private fun addItem(c: Element) {
+            val rulingList = mRulingsList[mRulingsList.size - 1]
             // Removes the superscripts (foot notes)
             val text = c.text().replace(Regex("((References: )*\\[.*?\\])"), "")
 //            val text = c.text().replace(Regex("\\[.*?\\]"), "")
             if (c.`is`("h2"))
-                mRulingsList.add(RulingsRecyclerViewAdapter.
+                rulingList.add(RulingsRecyclerViewAdapter.
                         HeaderOrItem(RulingsRecyclerViewAdapter.
                                 HeaderOrItem.Types.H2, text))
             // Subheader
             else if (c.`is`("h3"))
-                mRulingsList.add(RulingsRecyclerViewAdapter.
+                rulingList.add(RulingsRecyclerViewAdapter.
                         HeaderOrItem(RulingsRecyclerViewAdapter.
                                 HeaderOrItem.Types.H3, text))
-            // Information table
-            else if (c.`is`("table"))
-                mRulingsList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.TABLE, text))
+//            // Information table
+//            else if (c.`is`("table"))
+//                rulingList.add(RulingsRecyclerViewAdapter.
+//                        HeaderOrItem(RulingsRecyclerViewAdapter.
+//                                HeaderOrItem.Types.TABLE, text))
             // Div has children (red / green box)
             else if (c.`is`("div")) {
                 val grandChildren = c.children()
@@ -147,7 +153,7 @@ class RulingsFragment : Fragment() {
             }
             // Item
             else if (c.`is`("ul"))
-                mRulingsList.add(RulingsRecyclerViewAdapter.
+                rulingList.add(RulingsRecyclerViewAdapter.
                         HeaderOrItem(RulingsRecyclerViewAdapter.
                                 HeaderOrItem.Types.UL, text))
         }

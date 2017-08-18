@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
+import java.net.URLEncoder
 
 class TipsFragment : Fragment() {
 
@@ -44,7 +45,8 @@ class TipsFragment : Fragment() {
         override fun doInBackground(vararg params: String?): Void? {
 
             val cardName = params[0]
-            val cardNamePath = cardName?.replace(" ", "_")
+            val encoder = URLEncoder.encode(cardName!!, "UTF-8")
+            val cardNamePath = encoder.replace("+", "_")
             val cardUrl = BASE_URL + cardNamePath
 
             try {

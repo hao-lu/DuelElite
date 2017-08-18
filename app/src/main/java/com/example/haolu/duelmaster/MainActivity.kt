@@ -245,13 +245,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else addOrSubtractToggle.
                 setTextColor(ContextCompat.getColor(applicationContext, R.color.colorLose))
     }
-
-    fun captureFragmentTouches(view: View) {
-
-    }
-
-    fun dismissFragment(view: View) {
-        supportFragmentManager.popBackStack()
-    }
-
 }

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorGrayBg">#EEEEEE</color>
+    <color name="colorHeading">#E0E0E0</color>
     <color name="colorRipple">#9E9E9E</color>
     <color name="colorGain">#4CAF50</color>
     <color name="colorLose">#C62828</color>

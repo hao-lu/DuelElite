@@ -1,12 +1,16 @@
 package com.example.haolu.duelmaster
 
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.ruling_item_row.view.*
+import android.view.ViewGroup.MarginLayoutParams
+import android.widget.TextView
 
-class RulingsRecyclerViewAdapter(val mList: ArrayList<HeaderOrItem>) : RecyclerView.Adapter<RulingsRecyclerViewAdapter.ViewHolder>() {
+class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOrItem>>) : RecyclerView.Adapter<RulingsRecyclerViewAdapter.ViewHolder>() {
 
     data class HeaderOrItem(val type: Types, val data: String) {
 
@@ -24,27 +28,32 @@ class RulingsRecyclerViewAdapter(val mList: ArrayList<HeaderOrItem>) : RecyclerV
 
         private val TAG = "ViewHolder"
 
-        fun bind(item: HeaderOrItem) {
-            when (item.type) {
-                HeaderOrItem.Types.H2 -> {
-                    itemView.setBackgroundResource(R.color.colorGrayBg)
-                    itemView.text_ruling.textSize = 20f
-                }
-                HeaderOrItem.Types.H3 -> {
-                    itemView.text_ruling.textSize = 18f
-                    itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiRed)
-                }
-                HeaderOrItem.Types.TABLE -> {
-                    itemView.text_ruling.textSize = 12f
-                    itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiBlue)
-                }
-                HeaderOrItem.Types.UL -> {
-                    itemView.text_ruling.textSize = 14f
-                    itemView.ruling_color_bar.setBackgroundResource(R.color.colorYugiYellow)
-                }
+        fun bind(items: ArrayList<HeaderOrItem>) {
+            for (item in items) {
+                val row = View.inflate(itemView.context, R.layout.table_row_ruling, null)
+                val text = row.findViewById(R.id.text_table_ruling) as TextView
+                when (item.type) {
+                    HeaderOrItem.Types.H2 -> {
+                        text.textSize = 20f
+                        text.setTypeface(text.typeface, Typeface.BOLD)
+                        text.text = item.data
+                    }
+                    HeaderOrItem.Types.H3 -> {
+                        text.textSize = 16f
+                        text.setTypeface(text.typeface, Typeface.BOLD)
+                        text.text = item.data
+                    }
+//                    HeaderOrItem.Types.TABLE -> {
+//                    }
+                    else -> {
+                        text.textSize = 14f
+                        text.text = "• " + item.data
+                    }
 
+                }
+//                text.text = item.data
+                itemView.table.addView(row)
             }
-            itemView.text_ruling.text = item.data
         }
 
     }
