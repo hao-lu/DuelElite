@@ -34,5 +34,6 @@
     <string name="title_log_activity">Log</string>
     <string name="rng">RNG</string>
     <string name="flip_and_roll"><![CDATA[Flip & Roll]]></string>
+    <string name="action_start_pause">Start/Pause</string>
 
 </resources>

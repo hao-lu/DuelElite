@@ -18,114 +18,125 @@
         tools:context="com.example.haolu.duelmaster.MainActivity"
         tools:showIn="@layout/app_bar_main">
 
-        <TextView
-            android:id="@+id/text_player_one_lp"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_lp_time"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:text="8000"
-            android:textAlignment="center"
-            android:textColor="@color/colorYugiBlack"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            tools:text="8000"
-            app:layout_constraintRight_toLeftOf="@+id/ll_buttons"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/text_player_two_lp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:text="8000"
-            android:textAlignment="center"
-            android:textColor="@color/colorYugiBlack"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/ll_buttons"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="8000"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-            android:id="@+id/ll_buttons"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="47dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="8dp">
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="2dp">
+
+            <TextView
+                android:id="@+id/text_player_one_lp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:text="8000"
+                android:textAlignment="center"
+                android:textColor="@color/colorYugiBlack"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                tools:text="8000"
+                app:layout_constraintRight_toLeftOf="@+id/text_duel_time"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_player_two_lp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:text="8000"
+                android:textAlignment="center"
+                android:textColor="@color/colorYugiBlack"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/text_duel_time" />
 
             <TextView
                 android:id="@+id/text_duel_time"
-                android:layout_width="@dimen/button_width"
+                android:gravity="center_vertical"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="40:00"
                 android:textAlignment="center"
                 android:textColor="#bdbdbd"
                 android:textSize="16sp"
-                tools:text="40:00" />
+                android:onClick="timerClicked"
+                android:paddingTop="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/text_player_two_lp"
+                app:layout_constraintLeft_toRightOf="@+id/text_player_one_lp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_buttons"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_lp_time"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ToggleButton
                 android:id="@+id/addOrSubtractToggle"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
                 android:background="@null"
-                android:onClick="toggleButtonPressed"
+                android:onClick="toggleButtonClicked"
                 android:textColor="@color/colorLose"
                 android:textOff="@string/lose"
                 android:textOn="@string/gain"
-                android:textSize="@dimen/number_button_text_size"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_duel_time"
-                tools:layout_editor_absoluteY="25dp" />
+                android:textSize="@dimen/number_button_text_size" />
 
             <TextView
-                style="@style/ButtonStyle"
                 android:id="@+id/text_cumulated_lp"
                 android:text="0"
+                style="@style/ButtonStyle"
+                android:textAlignment="center"
                 android:textColor="#bdbdbd"
-                android:textSize="24sp"
-                tools:text="0000" />
+                android:textSize="24sp"/>
 
             <Button
                 android:id="@+id/button_one_hundred"
                 style="@style/ButtonStyle"
-                android:onClick="numberButtonPressed"
+                android:onClick="numberButtonClicked"
                 android:text="@string/one_hundred_button"
                 android:textSize="@dimen/number_button_text_size" />
 
             <Button
                 android:id="@+id/button_two_hundred"
                 style="@style/ButtonStyle"
-                android:onClick="numberButtonPressed"
+                android:onClick="numberButtonClicked"
                 android:text="@string/two_hundred_button"
                 android:textSize="@dimen/number_button_text_size" />
 
             <Button
                 android:id="@+id/button_five_hundred"
                 style="@style/ButtonStyle"
-                android:onClick="numberButtonPressed"
+                android:onClick="numberButtonClicked"
                 android:text="@string/five_hundred"
                 android:textSize="@dimen/number_button_text_size" />
 
             <Button
                 android:id="@+id/button_one_thousand"
                 style="@style/ButtonStyle"
-                android:onClick="numberButtonPressed"
+                android:onClick="numberButtonClicked"
                 android:text="@string/one_thousand"
                 android:textSize="@dimen/number_button_text_size" />
 
             <Button
                 android:id="@+id/button_two_thousand"
                 style="@style/ButtonStyle"
-                android:onClick="numberButtonPressed"
+                android:onClick="numberButtonClicked"
                 android:text="@string/two_thousand"
                 android:textSize="@dimen/number_button_text_size" />
 
@@ -133,15 +144,14 @@
                 android:id="@+id/button_half_lp"
                 style="@style/ButtonStyle"
                 android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
-                android:onClick="halfButtonPressed"
+                android:onClick="halfButtonClicked"
                 android:text="@string/halve"
                 android:textSize="@dimen/word_button_text_size" />
 
             <Button
                 android:id="@+id/button_custom_lp"
                 style="@style/ButtonStyle"
-                android:onClick="customButtonPressed"
+                android:onClick="customButtomClicked"
                 android:padding="-8dp"
                 android:text="@string/custom"
                 android:textSize="@dimen/word_button_text_size" />
@@ -149,21 +159,21 @@
             <Button
                 android:id="@+id/button_clear_lp"
                 style="@style/ButtonStyle"
-                android:onClick="clearButtonPressed"
+                android:onClick="clearButtonClicked"
                 android:text="@string/clear"
                 android:textSize="@dimen/word_button_text_size" />
 
             <Button
                 android:id="@+id/button_rng"
                 style="@style/ButtonStyle"
-                android:onClick="rngButtonPressed"
+                android:onClick="rngButtonClicked"
                 android:text="@string/rng"
                 android:textSize="@dimen/word_button_text_size" />
 
             <Button
                 android:id="@+id/button_log_lp"
                 style="@style/ButtonStyle"
-                android:onClick="logButtonPressed"
+                android:onClick="logButtonClicked"
                 android:text="@string/log"
                 android:textSize="@dimen/word_button_text_size" />
 
@@ -175,7 +185,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect_p2"
-            android:onClick="playerButtonPressed"
+            android:onClick="playerButtonClicked"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -187,7 +197,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect_p1"
-            android:onClick="playerButtonPressed"
+            android:onClick="playerButtonClicked"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

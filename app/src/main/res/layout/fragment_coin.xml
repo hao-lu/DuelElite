@@ -21,6 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
-            android:src="@drawable/heads" />
+            android:src="@drawable/coin_head" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

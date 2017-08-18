@@ -23,7 +23,7 @@ class CoinFragment : Fragment() {
         image.setOnClickListener {
             val images = resources.obtainTypedArray(R.array.coin_images)
             val rand = (Math.random() * images.length()).toInt()
-            image.setImageResource(images.getResourceId(rand, R.drawable.heads))
+            image.setImageResource(images.getResourceId(rand, R.drawable.coin_head))
             image.startAnimation(pulse)
             images.recycle()
         }

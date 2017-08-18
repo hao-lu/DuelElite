@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private var mTimeRemaining = 2400000L
     private var mTimer = CountDownTimerPausable(mTimeRemaining, 1000)
+    private var mIsTimerRunnning = false
+    private lateinit var mMenu: Menu
 
     private var LIFE_POINT_CALCULATOR = LifePointCalculator()
     private var mRealm = Realm.getDefaultInstance()
@@ -87,7 +89,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
+        mMenu = menu
         return true
     }
 
@@ -97,35 +100,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-        if (id == R.id.action_start) {
-//            val timer = object: CountDownTimer(2400000, 1000) {
-//                override fun onFinish() {
-//                    text_duel_time.text = "Round Over"
-//                }
-//
-//                override fun onTick(millisUntilFinished: Long) {
-//                    val formatted = String.format("%02d:%02d",
-//                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-//                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
-//                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
-//                    )
-//                    text_duel_time.text = formatted
-//                }
-//            }.start()
-            // Cancel old one
-            mTimer.cancel()
-            mTimer = CountDownTimerPausable(mTimeRemaining, 1000)
-            mTimer.start()
-        }
-        else if (id == R.id.action_pause) {
-            mTimer.cancel()
-        }
-        else if (id == R.id.action_reset) {
+        if (id == R.id.action_reset) {
             LIFE_POINT_CALCULATOR.reset()
             text_player_one_lp.text = "8000"
             text_player_two_lp.text = "8000"
             text_cumulated_lp.text = "0"
             mTimer.cancel()
+            mTimeRemaining = 2400000L
+            mIsTimerRunnning = false
             text_duel_time.text = "40:00"
         }
 
@@ -171,7 +153,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         animator.start()
     }
 
-    fun numberButtonPressed(view: View) {
+    fun timerClicked(view: View) {
+        mTimer.cancel()
+        if (!mIsTimerRunnning) {
+            mTimer = CountDownTimerPausable(mTimeRemaining, 1000)
+            mTimer.start()
+            mIsTimerRunnning = true
+            Snackbar.make(view, "Timer started", Snackbar.LENGTH_SHORT).show()
+        }
+        else {
+            mIsTimerRunnning = false
+            Snackbar.make(view, "Timer paused", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    fun numberButtonClicked(view: View) {
         val currLp = LIFE_POINT_CALCULATOR.cumulatedLp
         // Update the cumulatedLp
         if (view is TextView) LIFE_POINT_CALCULATOR.cumulatedLp += view.text.toString().toInt()
@@ -180,7 +176,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // Update the player life points (gain/lose)
-    fun playerButtonPressed(view: View) {
+    fun playerButtonClicked(view: View) {
         val currLp: Int
         val newLp: Int
         val currPlayer: TextView
@@ -206,12 +202,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // Halve the life points
-    fun halfButtonPressed(view: View) {
+    fun halfButtonClicked(view: View) {
         text_cumulated_lp.text = "HALVE"
         LIFE_POINT_CALCULATOR.halve = true
     }
 
-    fun customButtonPressed(view: View) {
+    fun customButtomClicked(view: View) {
 //        val fm = supportFragmentManager
 //        val customLpFragment = CustomLpFragment()
 //        customLpFragment.show(fm, "fragment_custom_lp")
@@ -220,25 +216,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // Clear the cumulatedLp
-    fun clearButtonPressed(view: View) {
+    fun clearButtonClicked(view: View) {
         LIFE_POINT_CALCULATOR.halve = false
         LIFE_POINT_CALCULATOR.cumulatedLp = 0
         text_cumulated_lp.text = LIFE_POINT_CALCULATOR.cumulatedLp.toString()
     }
 
     // Launch mLog activity
-    fun logButtonPressed(view: View) {
+    fun logButtonClicked(view: View) {
         val intent = Intent(view.context, LogActivity::class.java)
         intent.putExtra("mLog", LIFE_POINT_CALCULATOR.log)
         startActivity(intent)
     }
 
-    fun rngButtonPressed(view: View) {
+    fun rngButtonClicked(view: View) {
         val intent = Intent(this, RngActivity::class.java)
         startActivity(intent)
     }
 
-    fun toggleButtonPressed(view: View) {
+    fun toggleButtonClicked(view: View) {
         val toggleButton = view as ToggleButton
         if (toggleButton.isChecked) addOrSubtractToggle.
                 setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGain))

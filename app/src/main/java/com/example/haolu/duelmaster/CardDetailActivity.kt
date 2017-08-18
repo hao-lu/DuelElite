@@ -8,12 +8,10 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewPager
+import android.support.v4.app.FragmentTransaction
 import android.os.Bundle
+import android.support.v4.app.*
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.content.Loader
 import android.util.Log
@@ -23,6 +21,7 @@ import android.view.View
 import android.widget.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_card_detail.*
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
@@ -49,15 +48,16 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         collapse_toolbar.isTitleEnabled = false
 
         // Show image
-        image_header.setOnClickListener {
-            val fragment = ImageDialogFragment()
-            val fm = supportFragmentManager
-            val ft = fm.beginTransaction()
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+//        image_header.setOnClickListener {
+//            val fragment = ImageDialogFragment()
+//            val fm = supportFragmentManager
+//            val ft = fm.beginTransaction()
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//            ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+//
+//        }
 
-        }
-
+        supportFragmentManager
         // Needed for CursorLoader to get data
         mUri = intent.data
 
@@ -135,6 +135,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             Log.d(TAG, data.getString(data.getColumnIndex(data.getColumnName(1))))
             supportActionBar?.title = data.getString(data.getColumnIndex(data.getColumnName(1)))
             setupViewPagerandTabLayout(cardName)
+            LoadImageHeaderTask(this).execute(cardName)
         }
     }
 
@@ -162,7 +163,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     private class LoadImageHeaderTask(val context: Context) : AsyncTask<String, Void, Void>() {
-        private val TAG = "ParseDetailsTask"
+        private val TAG = "LoadImageHeaderTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
         private var imageUrl = ""
 
@@ -176,6 +177,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val encoder = URLEncoder.encode(cardName!!, "UTF-8")
             val cardNamePath = encoder.replace("+", "_")
             val cardUrl = BASE_URL + cardNamePath
+            Log.d(TAG, TAG)
 
             try {
 
@@ -192,9 +194,14 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         getElementsByClass("cardtable-cardimage")[0].
                         select("a[href]")[0].
                         attr("href").toString()
+            }
+            catch (httpStatus: HttpStatusException) {
+                Log.d(TAG, "HTTPstatus")
+            }
 
-            } catch (e: Exception) {
-                e.printStackTrace()
+            catch (e: Exception) {
+                Log.d(TAG, "ee")
+//                e.printStackTrace()
             }
             // no internet connection error
             // no webpage error
@@ -203,10 +210,20 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            val activity = context as Activity
-            val image = activity.findViewById(R.id.image_header) as ImageView
-            Picasso.with(context).load(imageUrl).into(image)
+            val activity = context as AppCompatActivity
+            val imageHeader = activity.findViewById(R.id.image_header) as ImageView
+            Picasso.with(context).load(imageUrl).into(imageHeader)
 
+            imageHeader.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("imageUrl", imageUrl)
+
+                val fragment = ImageDialogFragment()
+                fragment.arguments = bundle
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+            }
         }
     }
 
