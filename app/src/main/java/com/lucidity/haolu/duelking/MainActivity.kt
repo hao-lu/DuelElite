@@ -3,6 +3,7 @@ package com.lucidity.haolu.duelking
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.FloatingActionButton
@@ -14,6 +15,8 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -146,6 +149,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Cancel
     }
 
+    private fun reset() {
+        LIFE_POINT_CALCULATOR.reset()
+        text_player_one_lp.text = "8000"
+        text_player_two_lp.text = "8000"
+        text_cumulated_lp.text = "0"
+        mTimer.cancel()
+        mTimeRemaining = 2400000L
+        mIsTimerRunnning = false
+        text_duel_time.text = "40:00"
+    }
+
     private fun animateValue(currLp: Int, newLp: Int, text: TextView) {
         val animator = ValueAnimator.ofInt(currLp, newLp)
         animator.duration = 500
@@ -199,6 +213,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         animateValue(currLp, newLp, currPlayer)
         // Animate decreasing of cumulated lp
         animateValue(cumulateLp, 0, text_cumulated_lp)
+
+        if (LIFE_POINT_CALCULATOR.playerOneLp == 0 && LIFE_POINT_CALCULATOR.playerTwoLp != 0) {
+            Snackbar.make(view, "Player 2 has won", Snackbar.LENGTH_LONG).setAction("RESET", { reset()} ).setActionTextColor(Color.WHITE).show()
+        }
+        else if (LIFE_POINT_CALCULATOR.playerTwoLp == 0 && LIFE_POINT_CALCULATOR.playerOneLp != 0) {
+            Snackbar.make(view, "Player 1 has won", Snackbar.LENGTH_LONG).setAction("RESET", { reset() }).setActionTextColor(Color.WHITE).show()
+        }
     }
 
     // Halve the life points
