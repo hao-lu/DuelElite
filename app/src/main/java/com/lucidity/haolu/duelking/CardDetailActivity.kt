@@ -1,6 +1,7 @@
 package com.lucidity.haolu.duelking
 
 import android.content.Context
+import android.content.Intent
 import android.support.v4.content.CursorLoader
 import android.database.Cursor
 import android.net.Uri
@@ -28,6 +29,8 @@ import java.net.URLEncoder
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private val TAG = "CardDetailActivity"
+
+    private var mCardName: String = ""
 
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
     private lateinit var mViewPager: ViewPager
@@ -105,8 +108,13 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-        if (id == R.id.action_settings) {
-            return true
+        if (id == R.id.action_open_wikia) {
+            val encoder = URLEncoder.encode(mCardName, "UTF-8")
+            val cardNamePath = encoder.replace("+", "_")
+            val cardUrl = "http://yugioh.wikia.com/wiki/" + cardNamePath
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(cardUrl)
+            startActivity(i)
         }
 
         return super.onOptionsItemSelected(item)
@@ -133,6 +141,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val cardName = data.getString(data.getColumnIndex(data.getColumnName(1)))
             Log.d(TAG, data.getString(data.getColumnIndex(data.getColumnName(1))))
             supportActionBar?.title = data.getString(data.getColumnIndex(data.getColumnName(1)))
+            mCardName = cardName
             setupViewPagerandTabLayout(cardName)
             LoadImageHeaderTask(this).execute(cardName)
         }
