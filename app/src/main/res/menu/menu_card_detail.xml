@@ -4,8 +4,8 @@
     tools:context="com.lucidity.haolu.duelking.CardDetailActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_open_wikia"
         android:orderInCategory="101"
-        android:title="@string/action_settings"
+        android:title="@string/action_open_wikia_page"
         app:showAsAction="never" />
 </menu>

@@ -1,97 +1,45 @@
-<LinearLayout android:id="@+id/ll_buttons"
-    android:layout_width="@dimen/button_width"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ToggleButton
-        android:id="@+id/addOrSubtractToggle"
-        style="@style/ButtonStyle"
-        android:background="@null"
-        android:onClick="toggleButtonClicked"
-        android:textColor="@color/colorLose"
-        android:textOff="@string/lose"
-        android:textOn="@string/gain"
-        android:textSize="@dimen/number_button_text_size" />
+    <ProgressBar
+        android:id="@+id/progressbar_rulings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp"></LinearLayout>
 
     <TextView
-        style="@style/ButtonStyle"
-        android:id="@+id/text_cumulated_lp"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="#bdbdbd"
-        android:textSize="24sp" />
+        android:id="@+id/text_no_rulings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/no_rulings_available"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_one_hundred"
-        style="@style/ButtonStyle"
-        android:onClick="numberButtonClicked"
-        android:text="@string/one_hundred_button"
-        android:textSize="@dimen/number_button_text_size" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tcg_ruling_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/button_two_hundred"
-        style="@style/ButtonStyle"
-        android:onClick="numberButtonClicked"
-        android:text="@string/two_hundred_button"
-        android:textSize="@dimen/number_button_text_size" />
-
-    <Button
-        android:id="@+id/button_five_hundred"
-        style="@style/ButtonStyle"
-        android:onClick="numberButtonClicked"
-        android:text="@string/five_hundred"
-        android:textSize="@dimen/number_button_text_size" />
-
-    <Button
-        android:id="@+id/button_one_thousand"
-        style="@style/ButtonStyle"
-        android:onClick="numberButtonClicked"
-        android:text="@string/one_thousand"
-        android:textSize="@dimen/number_button_text_size" />
-
-    <Button
-        android:id="@+id/button_two_thousand"
-        style="@style/ButtonStyle"
-        android:onClick="numberButtonClicked"
-        android:text="@string/two_thousand"
-        android:textSize="@dimen/number_button_text_size" />
-
-    <Button
-        android:id="@+id/button_half_lp"
-        style="@style/ButtonStyle"
-        android:layout_width="@dimen/button_width"
-        android:onClick="halfButtonClicked"
-        android:text="@string/halve"
-        android:textSize="@dimen/word_button_text_size" />
-
-    <Button
-        android:id="@+id/button_custom_lp"
-        style="@style/ButtonStyle"
-        android:onClick="customButtomClicked"
-        android:padding="-8dp"
-        android:text="@string/custom"
-        android:textSize="@dimen/word_button_text_size" />
-
-    <Button
-        android:id="@+id/button_clear_lp"
-        style="@style/ButtonStyle"
-        android:onClick="clearButtonClicked"
-        android:text="@string/clear"
-        android:textSize="@dimen/word_button_text_size" />
-
-    <Button
-        android:id="@+id/button_rng"
-        style="@style/ButtonStyle"
-        android:onClick="rngButtonClicked"
-        android:text="@string/rng"
-        android:textSize="@dimen/word_button_text_size" />
-
-    <Button
-        android:id="@+id/button_log_lp"
-        style="@style/ButtonStyle"
-        android:onClick="logButtonClicked"
-        android:text="@string/log"
-        android:textSize="@dimen/word_button_text_size" />
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import org.jsoup.Jsoup
@@ -100,8 +101,11 @@ class TipsFragment : Fragment() {
                     tipList.layoutManager = layoutManger
                     tipList.adapter = simpleAdapter
                 } else {
-                    val noTipsText = (context as Activity).findViewById(R.id.text_no_tips) as TextView
-                    noTipsText.visibility = TextView.VISIBLE
+//                    val noTipsText = (context as Activity).findViewById(R.id.text_no_tips) as TextView
+//                    noTipsText.visibility = TextView.VISIBLE
+
+                    val noTipsText = (context as Activity).findViewById(R.id.empty_no_tips) as LinearLayout
+                    noTipsText.visibility = View.VISIBLE
                 }
             }
         }

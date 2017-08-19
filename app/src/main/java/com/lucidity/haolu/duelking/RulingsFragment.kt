@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import org.jsoup.Jsoup
@@ -119,8 +120,10 @@ class RulingsFragment : Fragment() {
                 tipList.adapter = simpleAdapter
             }
             else {
-                val noRulingText = (context as Activity).findViewById(R.id.text_no_rulings) as TextView
-                noRulingText.visibility = TextView.VISIBLE
+//                val noRulingText = (context as Activity).findViewById(R.id.text_no_rulings) as TextView
+//                noRulingText.visibility = TextView.VISIBLE
+                val noRulingText = (context as Activity).findViewById(R.id.empty_no_rulings) as LinearLayout
+                noRulingText.visibility = View.VISIBLE
             }
                 }
         }

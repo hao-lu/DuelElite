@@ -35,5 +35,6 @@
     <string name="rng">RNG</string>
     <string name="flip_and_roll"><![CDATA[Flip & Roll]]></string>
     <string name="action_start_pause">Start/Pause</string>
+    <string name="action_open_wikia_page">Open Wikia Page</string>
 
 </resources>
