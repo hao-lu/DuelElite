@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.haolu.duelmaster.LogActivity">
+    tools:context="com.lucidity.haolu.duelking.LogActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/log_app_bar"

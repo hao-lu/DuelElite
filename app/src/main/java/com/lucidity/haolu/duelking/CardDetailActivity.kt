@@ -1,6 +1,5 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
-import android.app.Activity
 import android.content.Context
 import android.support.v4.content.CursorLoader
 import android.database.Cursor

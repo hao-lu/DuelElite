@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.app.Activity
 import android.content.Context
@@ -9,11 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URLEncoder

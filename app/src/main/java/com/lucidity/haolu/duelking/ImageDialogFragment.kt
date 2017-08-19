@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.app.Dialog
 import android.os.Bundle

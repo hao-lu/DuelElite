@@ -7,7 +7,7 @@
 
         <variable
             name="log"
-            type="com.example.haolu.duelmaster.LifePointCalculator.LogItem" />
+            type="com.lucidity.haolu.duelking.LifePointCalculator.LogItem" />
     </data>
 
     <android.support.constraint.ConstraintLayout

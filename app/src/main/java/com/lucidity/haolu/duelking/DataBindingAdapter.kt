@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import com.squareup.picasso.Picasso
 import android.databinding.BindingAdapter

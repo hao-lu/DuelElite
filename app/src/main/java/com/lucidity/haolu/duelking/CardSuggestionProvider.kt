@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.app.SearchManager
 import android.content.ContentProvider
@@ -15,7 +15,7 @@ class CardSuggestionProvider : ContentProvider() {
     private val TAG = "CardSuggestionProvider"
 
     companion object {
-        val AUTHORITY = "com.example.haolu.duelmaster.CardSuggestionProvider"
+        val AUTHORITY = "com.lucidity.haolu.duelking.CardSuggestionProvider"
         val CONTENT_URI = Uri.parse("content://$AUTHORITY/cards")
     }
 

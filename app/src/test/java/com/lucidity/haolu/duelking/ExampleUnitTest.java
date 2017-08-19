@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster;
+package com.lucidity.haolu.duelking;
 
 import org.junit.Test;
 

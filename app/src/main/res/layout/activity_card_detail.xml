@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.example.haolu.duelmaster.CardDetailActivity">
+        tools:context="com.lucidity.haolu.duelking.CardDetailActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/card_detail_appbar"

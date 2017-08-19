@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

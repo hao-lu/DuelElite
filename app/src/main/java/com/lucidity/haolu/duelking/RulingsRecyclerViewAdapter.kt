@@ -1,13 +1,11 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
-import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.ruling_item_row.view.*
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 
 class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOrItem>>) : RecyclerView.Adapter<RulingsRecyclerViewAdapter.ViewHolder>() {

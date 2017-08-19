@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.animation.ValueAnimator
 import android.content.Intent
@@ -20,7 +20,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.ToggleButton
-import com.example.haolu.duelmaster.databinding.AppBarMainBinding
+import com.lucidity.haolu.duelking.databinding.AppBarMainBinding
 import kotlinx.android.synthetic.main.content_main.*
 import io.realm.Realm
 import java.util.concurrent.TimeUnit

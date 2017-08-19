@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import io.realm.RealmObject
 import io.realm.annotations.Required

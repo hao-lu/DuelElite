@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.haolu.duelmaster">
+    package="com.lucidity.haolu.duelking">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.lucidity.haolu.duelking.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
 
         <!-- MainActivity -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.lucidity.haolu.duelking.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
@@ -27,13 +27,13 @@
         </activity>
 
         <!-- Log Activity -->
-        <activity android:name=".LogActivity"
+        <activity android:name="com.lucidity.haolu.duelking.LogActivity"
             android:label="@string/title_log_activity">
         </activity>
 
         <!-- Searchable Activity -->
         <activity
-            android:name=".SearchCardActivity"
+            android:name="com.lucidity.haolu.duelking.SearchCardActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.SearchSuggestion">
             <intent-filter>
@@ -46,19 +46,19 @@
 
         <!-- Activity that shows the details of the cards -->
         <activity
-            android:name=".CardDetailActivity"
+            android:name="com.lucidity.haolu.duelking.CardDetailActivity"
             android:label="@string/title_activity_card_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <!-- Provides search suggestions for cards -->
         <provider
-            android:name=".CardSuggestionProvider"
-            android:authorities="com.example.haolu.duelmaster.CardSuggestionProvider"
+            android:name="com.lucidity.haolu.duelking.CardSuggestionProvider"
+            android:authorities="com.lucidity.haolu.duelking.CardSuggestionProvider"
             android:exported="false"/>
 
         <!-- Rng Activity -->
-        <activity android:name=".RngActivity"
+        <activity android:name="com.lucidity.haolu.duelking.RngActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/flip_and_roll">
         </activity>

@@ -1,4 +1,4 @@
-package com.example.haolu.duelmaster
+package com.lucidity.haolu.duelking
 
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
@@ -9,19 +9,13 @@ import android.graphics.Rect
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView;
 import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
-import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_search_card.*
-import android.view.inputmethod.EditorInfo
 import android.widget.*
 import android.content.Intent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 
 
 import android.support.v4.app.LoaderManager.LoaderCallbacks
