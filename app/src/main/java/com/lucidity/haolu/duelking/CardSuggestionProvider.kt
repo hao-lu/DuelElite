@@ -94,7 +94,7 @@ class CardSuggestionProvider : ContentProvider() {
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
         val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
-        var size = 10
+        var size = 20
         if (results.size < 10) size = results.size
         val subList = results.subList(0, size)
         val matrixCursor = MatrixCursor(columns)

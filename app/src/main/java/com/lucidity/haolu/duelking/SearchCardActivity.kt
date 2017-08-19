@@ -10,13 +10,12 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_search_card.*
 import android.widget.*
 import android.content.Intent
-
 
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.widget.SimpleCursorAdapter
@@ -56,10 +55,10 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         mListView = findViewById(R.id.list_view) as ListView
         mListView.setOnItemClickListener { parent, view, position, id ->
             val cardDetailIntent = Intent(this, CardDetailActivity::class.java)
-            // This appends the rowId to the path content://com.example.haolu.duelmaster.CardSuggestionProvider/cards/#
+            // This appends the rowId to the path content://com.lucidity.haolu.duelking.CardSuggestionProvider/cards/#
             val data = Uri.withAppendedPath(CardSuggestionProvider.CONTENT_URI, id.toString())
             cardDetailIntent.setData(data)
-            val cardName = view.findViewById(android.R.id.text2) as TextView
+            val cardName = view.findViewById(android.R.id.text1) as TextView
 
             Log.d(TAG, "HERE +THIS ONE " +cardName.text.toString())
 //            cardDetailIntent.putExtra("cardName", cardName.text.toString())
@@ -67,10 +66,10 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         }
 
         mCursorAdapter = SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_2,
+                android.R.layout.simple_list_item_1,
                 null,
-                arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1),
-                intArrayOf(android.R.id.text1, android.R.id.text2), 0)
+                arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1),
+                intArrayOf(android.R.id.text1), 0)
 
         mListView.adapter = mCursorAdapter
 
@@ -92,7 +91,6 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         else if (i.action == Intent.ACTION_SEARCH) {
             val query = i.getStringExtra(SearchManager.QUERY)
             // Go button clicked
-            println("Received query: $query")
             displayResults(query)
         }
     }
@@ -102,9 +100,12 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         data.putString("query", query)
 
         // Invoke onCreateLoader() in non-UI thread
-        supportLoaderManager.initLoader(1, data, this)
+//        supportLoaderManager.initLoader(1, data, this)
+        // Use restart to change the data of the query since we're using the same Activity
+        supportLoaderManager.restartLoader(1, data, this)
     }
 
+    // Show the dropdown when the user returns from CardDetailActivity
     override fun onRestart() {
         val searchView = findViewById(R.id.action_search)
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
@@ -180,7 +181,7 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         val uri = CardSuggestionProvider.CONTENT_URI
-		return CursorLoader(getBaseContext(), uri, null, null , arrayOf(args?.getString("query")), null)
+		return CursorLoader(baseContext, uri, null, null , arrayOf(args?.getString("query")), null)
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>?) {
