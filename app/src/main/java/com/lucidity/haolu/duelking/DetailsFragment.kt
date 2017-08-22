@@ -36,9 +36,15 @@ class DetailsFragment : Fragment() {
                 "Property",
                 "Attribute",
                 "Types",
+                "Rank",
                 "Level",
+                "Link Arrows",
                 "Pendulum Scale",
                 "ATK / DEF",
+                "ATK / LINK",
+                "Ritual Spell Card required",
+                "Ritual Monster required",
+                "Fusion Material",
                 "Materials",
                 "Card effect types",
                 "Statuses",
@@ -104,6 +110,8 @@ class DetailsFragment : Fragment() {
                         val desc = tr.select("table")[1].select("tr")[2].text()
                         mCardDetailsList.add(Pair("Description", desc))
                     }
+
+//                    if (header == "Ritual Spell Card required")
                     addData(Pair(header, value))
                 }
             }
@@ -137,6 +145,7 @@ class DetailsFragment : Fragment() {
 //            Picasso.with(context).load(mCardDetailsList[0].second).into(image)
         }
 
+        // Check if the data matches the card details we care for
         private fun addData(p: Pair<String, String>) {
             for (s in CARD_DETAIL_TYPES) {
                 if (p.first == s) mCardDetailsList.add(p)
