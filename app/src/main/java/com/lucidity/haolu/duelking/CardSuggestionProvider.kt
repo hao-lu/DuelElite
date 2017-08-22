@@ -72,7 +72,7 @@ class CardSuggestionProvider : ContentProvider() {
         // blue eyes = blue?eyes*
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
-        val results = realmQuery.like("name", "$lowerCaseQuery*", Case.INSENSITIVE).findAll()
+        val results = realmQuery.like("name", "*$lowerCaseQuery*", Case.INSENSITIVE).findAll()
 //        val results = realmQuery.contains("name", lowerCaseQuery, Case.INSENSITIVE).like("name", "$lowerCaseQuery*", Case.INSENSITIVE).findAll()
 //        val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
         var size = 10
