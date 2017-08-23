@@ -21,9 +21,9 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.widget.SimpleCursorAdapter
 import android.widget.ListView
 
-class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
+class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 
-    private val TAG = "SearchCardActivity"
+    private val TAG = "SearchableCardActivity"
 
     lateinit var mListView: ListView // ListView that displays when user clicks go
     lateinit var mCursorAdapter: SimpleCursorAdapter
@@ -55,6 +55,7 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
                 intArrayOf(android.R.id.text1), 0)
 
         mListView.adapter = mCursorAdapter
+
         handleIntent(intent)
     }
 
@@ -80,7 +81,6 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
     private fun displayResults(query: String) {
         val data = Bundle()
         data.putString("query", query)
-
         /* Invoke onCreateLoader() in non-UI thread
         supportLoaderManager.initLoader(1, data, this)
         Use restart to change the data of the query since we're using the same Activity */
@@ -89,18 +89,15 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 
     // Show the dropdown when the user returns from CardDetailActivity
     override fun onRestart() {
+        super.onRestart()
         val searchView = findViewById(R.id.action_search)
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
-
-        Log.d(TAG, "ON RESTART")
         autoCompleteTextView.showDropDown()
-        super.onRestart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search_cards, menu)
         val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
-
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.onActionViewExpanded()

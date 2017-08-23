@@ -33,7 +33,7 @@
 
         <!-- Searchable Activity -->
         <activity
-            android:name="com.lucidity.haolu.duelking.SearchCardActivity"
+            android:name="com.lucidity.haolu.duelking.SearchableCardActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.SearchSuggestion">
             <intent-filter>
