@@ -170,8 +170,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         private val TAG = "LoadImageHeaderTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
         private var mImageUrl = ""
-        private var cardBgColor = "#252525"
-        private var cardTextColor = "#FFFFFF"
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -185,23 +183,10 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val cardUrl = BASE_URL + cardNamePath
 
             try {
-
                 Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
-
                 val document = Jsoup.connect(cardUrl).get()
                 // <table class = cardtable>
-
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
-
-                // Get the header table
-//                val color = cardTable.getElementsByClass("cardtable-header")[0].attr("style")
-
-//                cardBgColor = "#" + color.substring(19, 20) + color.substring(19, 20) +
-//                        color.substring(20, 21) + color.substring(20, 21) +
-//                        color.substring(21, 22) + color.substring(21, 22)
-//                cardTextColor = "#000" + color.substring(32, 35)
-
-
                 // <a href = ... >
                 mImageUrl = cardTable.select("tr")[1].
                         getElementsByClass("cardtable-cardimage")[0].
@@ -239,20 +224,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         collapseToolbar.setContentScrimColor(dominant.rgb)
                         activity.window.statusBarColor = dominant.rgb
                     }
-
-//                    Palette.from(bitmap)
-//                            .setRegion(25, 25, 35, 35)
-//                            .generate( {
-//                                val swatch = it.dominantSwatch
-//                                if (swatch != null) {
-//                                    // Set the background color of a layout based on the vibrant color
-//                                    collapseToolbar.setContentScrimColor(swatch.rgb)
-//                                    activity.window.statusBarColor = swatch.rgb
-//                                    // Update the title TextView with the proper text color
-////                            titleView.setTextColor(vibrant!!.getTitleTextColor())
-//                                }
-//                            })
-//                }
                 }
             }
             Picasso.with(context).load(mImageUrl).into(target)
@@ -268,8 +239,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
             }
-
-
         }
     }
 
