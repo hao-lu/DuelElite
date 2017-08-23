@@ -30,11 +30,10 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private val TAG = "CardDetailActivity"
 
-    private var mCardName: String = ""
-
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
     private lateinit var mViewPager: ViewPager
     private lateinit var mUri: Uri
+    private var mCardName: String = "" // Used for Intent to web browser to open Wikia page
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,21 +44,8 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         // Enable and show back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        // Remove the big title
         collapse_toolbar.isTitleEnabled = false
 
-        // Show image
-//        image_header.setOnClickListener {
-//            val fragment = ImageDialogFragment()
-//            val fm = supportFragmentManager
-//            val ft = fm.beginTransaction()
-//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//            ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
-//
-//        }
-
-        supportFragmentManager
         // Needed for CursorLoader to get data
         mUri = intent.data
 
@@ -97,15 +83,11 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_card_detail, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
         if (id == R.id.action_open_wikia) {
@@ -126,7 +108,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>?) {
-        //To change body of created functions use File | Settings | File Templates.
+        // supportLoaderManager.restartLoader()
     }
 
     // Loads the cursor with the data from the intent
@@ -170,10 +152,15 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
+    /**
+     * Gets the mImageUrl for the card
+     */
     private class LoadImageHeaderTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "LoadImageHeaderTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
-        private var imageUrl = ""
+        private var mImageUrl = ""
+        private var cardBgColor = "#252525"
+        private var cardTextColor = "#FFFFFF"
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -185,7 +172,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val encoder = URLEncoder.encode(cardName!!, "UTF-8")
             val cardNamePath = encoder.replace("+", "_")
             val cardUrl = BASE_URL + cardNamePath
-            Log.d(TAG, TAG)
 
             try {
 
@@ -194,11 +180,19 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 val document = Jsoup.connect(cardUrl).get()
                 // <table class = cardtable>
 
-//                val cardTable: Element = document.select("table").first()
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
 
+                // Get the header table
+                val color = cardTable.getElementsByClass("cardtable-header")[0].attr("style")
+
+//                cardBgColor = "#" + color.substring(19, 20) + color.substring(19, 20) +
+//                        color.substring(20, 21) + color.substring(20, 21) +
+//                        color.substring(21, 22) + color.substring(21, 22)
+//                cardTextColor = "#000" + color.substring(32, 35)
+
+
                 // <a href = ... >
-                imageUrl = cardTable.select("tr")[1].
+                mImageUrl = cardTable.select("tr")[1].
                         getElementsByClass("cardtable-cardimage")[0].
                         select("a[href]")[0].
                         attr("href").toString()
@@ -208,8 +202,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
 
             catch (e: Exception) {
-                Log.d(TAG, "ee")
-//                e.printStackTrace()
+                e.printStackTrace()
             }
             // no internet connection error
             // no webpage error
@@ -218,13 +211,15 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
+            // Load image header with card image
             val activity = context as AppCompatActivity
             val imageHeader = activity.findViewById(R.id.image_header) as ImageView
-            Picasso.with(context).load(imageUrl).into(imageHeader)
+            Picasso.with(context).load(mImageUrl).into(imageHeader)
 
+            // Load fragment when image is clicked
             imageHeader.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString("imageUrl", imageUrl)
+                bundle.putString("mImageUrl", mImageUrl)
 
                 val fragment = ImageDialogFragment()
                 fragment.arguments = bundle
@@ -232,9 +227,16 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
             }
+
+//            val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
+//            collapseToolbar.setContentScrimColor(Color.parseColor(cardBgColor))
+
         }
     }
 
+    /**
+     * Dismiss fragment when clicked on
+     */
     fun dismissImageFragment(view: View) {
         supportFragmentManager.popBackStack()
     }

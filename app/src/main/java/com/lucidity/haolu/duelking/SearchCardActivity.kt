@@ -25,22 +25,8 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 
     private val TAG = "SearchCardActivity"
 
-    lateinit var mListView: ListView
+    lateinit var mListView: ListView // ListView that displays when user clicks go
     lateinit var mCursorAdapter: SimpleCursorAdapter
-
-    private class SearchQuery : AsyncTask<String, Void, Void>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
-
-        override fun doInBackground(vararg params: String?): Void {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun onPostExecute(result: Void?) {
-            super.onPostExecute(result)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +44,10 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
             // This appends the rowId to the path content://com.lucidity.haolu.duelking.CardSuggestionProvider/cards/#
             val data = Uri.withAppendedPath(CardSuggestionProvider.CONTENT_URI, id.toString())
             cardDetailIntent.setData(data)
-            val cardName = view.findViewById(android.R.id.text1) as TextView
-
-            Log.d(TAG, "HERE +THIS ONE " +cardName.text.toString())
-//            cardDetailIntent.putExtra("cardName", cardName.text.toString())
             startActivity(cardDetailIntent)
         }
 
+        // Set the cursor from loader to a simple list (mListView)
         mCursorAdapter = SimpleCursorAdapter(this,
                 android.R.layout.simple_list_item_1,
                 null,
@@ -72,7 +55,6 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
                 intArrayOf(android.R.id.text1), 0)
 
         mListView.adapter = mCursorAdapter
-
         handleIntent(intent)
     }
 
@@ -99,9 +81,9 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         val data = Bundle()
         data.putString("query", query)
 
-        // Invoke onCreateLoader() in non-UI thread
-//        supportLoaderManager.initLoader(1, data, this)
-        // Use restart to change the data of the query since we're using the same Activity
+        /* Invoke onCreateLoader() in non-UI thread
+        supportLoaderManager.initLoader(1, data, this)
+        Use restart to change the data of the query since we're using the same Activity */
         supportLoaderManager.restartLoader(1, data, this)
     }
 
@@ -141,36 +123,6 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
                 autoCompleteTextView.dropDownWidth = screenWidth
             }
         }
-
-//        autoCompleteTextView.imeOptions = EditorInfo.IME_ACTION_DONE
-
-//        autoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
-//            if (v.id == R.id.search_src_text && !hasFocus) {
-////                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-////                imm.hideSoftInputFromWindow(v.windowToken, 0)
-//                autoCompleteTextView.requestFocus()
-//                autoCompleteTextView.showDropDown()
-//            }
-//        }
-//
-//        autoCompleteTextView.setOnEditorActionListener { v, actionId, event -> {}}
-
-//        autoCompleteTextView.setOnEditorActionListener(object: TextView.OnEditorActionListener {
-//            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-//                if (actionId == EditorInfo.IME_ACTION_DONE)
-//                    return true
-//                else if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                    imm.hideSoftInputFromWindow(v?.windowToken, 0)
-//                    autoCompleteTextView.clearFocus()
-//                    searchView.clearFocus()
-//                    return true
-//                }
-//
-//                return false
-//            }
-//        })
-
         return true
     }
 
@@ -185,7 +137,8 @@ class SearchCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>?) {
-         //To change body of created functions use File | Settings | File Templates.
+        // supportLoaderManager.restartLoader()
+        // Invokes onLoadFinished again
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {

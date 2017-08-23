@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import java.net.URLEncoder
@@ -31,12 +30,15 @@ class TipsFragment : Fragment() {
         return rootView
     }
 
+    /**
+     * Parse the tips in a list
+     */
+
     private class ParseTipsTask(val context: Context): AsyncTask<String, Void, Void>() {
         private val TAG = "ParseTipsTask"
-
         private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Tips:"
 
-        private val activity = context as Activity
+        private val mActivity = context as Activity
         private var mTipsList: ArrayList<String> = arrayListOf()
 
         override fun onPreExecute() {
@@ -70,8 +72,6 @@ class TipsFragment : Fragment() {
 
             catch (httpStatusException: HttpStatusException) {
                 Log.d(TAG, "httpStatusException")
-//                activity.runOnUiThread { activity.findViewById(R.id.progressbar_tips).visibility = TextView.GONE }
-//                activity.runOnUiThread { activity.findViewById(R.id.text_no_tips).visibility = TextView.VISIBLE }
             }
 
             catch (e: Exception) {
@@ -87,25 +87,20 @@ class TipsFragment : Fragment() {
             super.onPostExecute(result)
 
             if ((context as Activity).findViewById(R.id.progressbar_tips) != null) {
-                val progressBar = (context as Activity).findViewById(R.id.progressbar_tips) as ProgressBar
+                val progressBar = mActivity.findViewById(R.id.progressbar_tips) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
-
-                // Lb the world chalice priestess
                 if (mTipsList.size != 0) {
                     Log.d(TAG, mTipsList.size.toString())
                     val simpleAdapter = TipsRecyclerViewAdapter(mTipsList)
-                    val layoutManger = LinearLayoutManager(activity)
-                    val tipList = activity.findViewById(R.id.tips_recycler_view) as RecyclerView
-                    val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+                    val layoutManger = LinearLayoutManager(mActivity)
+                    val tipList = mActivity.findViewById(R.id.tips_recycler_view) as RecyclerView
+                    val itemDecoration = DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL)
                     tipList.addItemDecoration(itemDecoration)
                     tipList.layoutManager = layoutManger
                     tipList.adapter = simpleAdapter
                 } else {
-//                    val noTipsText = (context as Activity).findViewById(R.id.text_no_tips) as TextView
-//                    noTipsText.visibility = TextView.VISIBLE
-
-                    val noTipsText = (context as Activity).findViewById(R.id.empty_no_tips) as LinearLayout
-                    noTipsText.visibility = View.VISIBLE
+                    val noTips = mActivity.findViewById(R.id.empty_no_tips) as LinearLayout
+                    noTips.visibility = View.VISIBLE
                 }
             }
         }

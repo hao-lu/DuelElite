@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 
+/**
+ * The RecyclerView adapter used in LogActivity
+ */
+
 class LogRecyclerViewAdapter(val mLog: LifePointCalculator.Log) : RecyclerView.Adapter<LogRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,21 +30,19 @@ class LogRecyclerViewAdapter(val mLog: LifePointCalculator.Log) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.setVariable(BR.log, mLog.log[position])
-//        val playerBar = holder.itemView.findViewById(R.id.cardView_log) as CardView
+        holder.binding.setVariable(BR.mLog, mLog.mLog[position])
         val turnLp = holder.itemView.findViewById(R.id.text_turnLp) as TextView
         val imageOperation = holder.itemView.findViewById(R.id.image_operation) as ImageView
         val context = holder.itemView.context
-        if (mLog.log[position].operation == "+") {
+        if (mLog.mLog[position].mOperation == "+") {
             turnLp.setTextColor(ContextCompat.getColor(context, R.color.colorGain))
             imageOperation.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_24dp))
         }
-//            playerBar.setCardBackgroundColor(red)
         holder.binding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
-        return mLog.log.size
+        return mLog.mLog.size
     }
 
 

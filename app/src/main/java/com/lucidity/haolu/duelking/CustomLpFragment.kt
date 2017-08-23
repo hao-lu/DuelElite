@@ -8,6 +8,11 @@ import android.support.v4.app.DialogFragment
 import android.os.Bundle
 import android.view.*
 
+
+/**
+ * DialogFragment for custom lp entries from the user
+ */
+
 class CustomLpFragment : DialogFragment() {
 
     interface CustomLpDialogListener {
@@ -24,7 +29,6 @@ class CustomLpFragment : DialogFragment() {
             // Instantiate the NoticeDialogListener so we can send events to the host
             mListener = activity as CustomLpDialogListener
         } catch (e: ClassCastException) {
-            // The activity doesn't implement the interface, throw exception
             throw ClassCastException(activity.toString() + " must implement CustomLpDialogListener")
         }
 
@@ -35,12 +39,12 @@ class CustomLpFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = AlertDialog.Builder(context)
-        dialog.setView(activity.layoutInflater.inflate(R.layout.fragment_custom_lp, null))
-        dialog.setTitle("Enter life points")
+        val dialogLp = AlertDialog.Builder(context)
+        dialogLp.setView(activity.layoutInflater.inflate(R.layout.fragment_custom_lp, null))
+        dialogLp.setTitle("Enter life points")
                 .setPositiveButton("Set", DialogInterface.OnClickListener { dialog, which -> mListener.onDialogPositiveClick(this)})
                 .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> mListener.onDialogNegativeClick(this) })
-        return dialog.create()
+        return dialogLp.create()
     }
 
     // Called after onCreateDialog

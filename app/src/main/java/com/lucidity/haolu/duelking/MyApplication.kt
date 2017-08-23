@@ -9,7 +9,9 @@ import java.io.InputStream
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-// Used to initialize Realm database
+/**
+ * Used to initialize Realm on application start
+ */
 class MyApplication : Application() {
 
     override fun onCreate() {
@@ -20,9 +22,6 @@ class MyApplication : Application() {
             Log.d("MyApplication", "FILE NOT FOUND")
             copyBundledRealmFile(this.resources.openRawResource(R.raw.tcg), "tcg.realm")
         }
-//        else {
-//        Log.d("MyApplication", "FILE FOUND")
-//        }
 
         // Config the Realm
         Realm.init(this)

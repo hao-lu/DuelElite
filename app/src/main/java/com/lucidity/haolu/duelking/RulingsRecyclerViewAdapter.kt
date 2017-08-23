@@ -8,6 +8,11 @@ import android.view.View
 import kotlinx.android.synthetic.main.ruling_item_row.view.*
 import android.widget.TextView
 
+/**
+ * RecyclerView adapter for RulingFragment, which splits the rulings into different sections
+ * The RecyclerView in RulingFragment is a RecyclerView of TableLayouts
+ */
+
 class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOrItem>>) : RecyclerView.Adapter<RulingsRecyclerViewAdapter.ViewHolder>() {
 
     data class HeaderOrItem(val type: Types, val data: String) {
@@ -41,15 +46,13 @@ class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOr
                         text.setTypeface(text.typeface, Typeface.BOLD)
                         text.text = item.data
                     }
-//                    HeaderOrItem.Types.TABLE -> {
-//                    }
+
                     else -> {
                         text.textSize = 14f
                         text.text = "• " + item.data
                     }
 
                 }
-//                text.text = item.data
                 itemView.table.addView(row)
             }
         }

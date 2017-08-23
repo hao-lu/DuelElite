@@ -28,6 +28,10 @@ class DetailsFragment : Fragment() {
         return rootView
     }
 
+    /**
+     * AsyncTask parses the details from the CARD_DETAIL_TYPES and adds them into a table
+     *
+     */
     private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseDetailsTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
@@ -69,9 +73,6 @@ class DetailsFragment : Fragment() {
                 Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
 
                 val document = Jsoup.connect(cardUrl).get()
-                // <table class = cardtable>
-
-//                val cardTable: Element = document.select("table").first()
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
 
                 // <a href = ... >
@@ -90,7 +91,7 @@ class DetailsFragment : Fragment() {
                     val header = tr.select("th").text()
                     val value = tr.select("td").text()
 
-                    // Different status for formats TCG, OCG
+                    // Different status for formats TCG, OCG so add newline
                     if (header == "Statuses" && tr.select("th").attr("rowspan") != "")
                         diffStatuses = tr.select("th").attr("rowspan").toString().toInt()
 
@@ -111,7 +112,6 @@ class DetailsFragment : Fragment() {
                         mCardDetailsList.add(Pair("Description", desc))
                     }
 
-//                    if (header == "Ritual Spell Card required")
                     addData(Pair(header, value))
                 }
             }
@@ -126,7 +126,7 @@ class DetailsFragment : Fragment() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             if ((context as Activity).findViewById(R.id.progressbar_details) != null) {
-                val progressBar = (context as Activity).findViewById(R.id.progressbar_details) as ProgressBar
+                val progressBar = context.findViewById(R.id.progressbar_details) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 for (detail in mCardDetailsList) {
                     if (detail.first != "ImageUrl") {
@@ -135,17 +135,19 @@ class DetailsFragment : Fragment() {
                         val cardValue = row.findViewById(R.id.text_card_value) as TextView
                         cardHeader.text = detail.first
                         cardValue.text = detail.second
-                        val card_information = (context as Activity).findViewById(R.id.table_card_details) as TableLayout
+                        val card_information = context.findViewById(R.id.table_card_details) as TableLayout
                         card_information.addView(row)
                     }
                 }
             }
-//            val activity = context as Activity
-//            val image = activity.findViewById(R.id.image_header) as ImageView
-//            Picasso.with(context).load(mCardDetailsList[0].second).into(image)
         }
 
-        // Check if the data matches the card details we care for
+        /**
+         * Adds the data to our list by checking if the header matches an attribute in
+         * CARD_DETAIL_TYPES.
+         *
+         * @param p Pair of data for the header and data, e.g., (Card Type, Monster)
+         */
         private fun addData(p: Pair<String, String>) {
             for (s in CARD_DETAIL_TYPES) {
                 if (p.first == s) mCardDetailsList.add(p)

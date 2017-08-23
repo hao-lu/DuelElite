@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 
+/**
+ * Simulates a dice roll using rand()
+ */
+
 class DiceFragment : Fragment() {
 
     private val TAG = "DiceFragment"

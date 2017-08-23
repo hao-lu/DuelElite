@@ -6,13 +6,24 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.text.DecimalFormat
 
+
+/**
+ * Model class for a life point calculator for a duel
+ */
+
 class LifePointCalculator : BaseObservable() {
 
-    // List of mLog items
-    data class Log(var log: MutableList<LifePointCalculator.LogItem>) : Parcelable {
+    private val START_LP = 8000
+
+    /**
+     * List of mLog items
+     * Parcelable to pass to LogActivity
+     *
+     */
+    data class Log(var mLog: MutableList<LifePointCalculator.LogItem>) : Parcelable {
 
         fun add(l: LifePointCalculator.LogItem) {
-            log.add(l)
+            mLog.add(l)
         }
 
         companion object {
@@ -29,12 +40,15 @@ class LifePointCalculator : BaseObservable() {
         override fun describeContents() = 0
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
-            dest.writeTypedList(log)
+            dest.writeTypedList(mLog)
         }
     }
 
-    // Log item, which contains player, operation, the cumulatedLp for that turn, and totalLP
-    data class LogItem(val player: String, val operation: String, val turnLP: Int, val totalLP: Int) : Parcelable {
+    /**
+     * Log item containing: mPlayer, mOperation, cumulatedLP, totalLp
+     */
+
+    data class LogItem(val mPlayer: String, val mOperation: String, val mTurnLp: Int, val mTotalLp: Int) : Parcelable {
 
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<LogItem> = object : Parcelable.Creator<LogItem> {
@@ -53,86 +67,87 @@ class LifePointCalculator : BaseObservable() {
         override fun describeContents() = 0
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
-            dest.writeString(player)
-            dest.writeString(operation)
-            dest.writeInt(turnLP)
-            dest.writeInt(totalLP)
+            dest.writeString(mPlayer)
+            dest.writeString(mOperation)
+            dest.writeInt(mTurnLp)
+            dest.writeInt(mTotalLp)
         }
 
     }
 
     @get:Bindable
-    var playerOneLp: Int = 8000
+    var mPlayerOneLp: Int = START_LP
         set(value) {
             field = value
-            notifyPropertyChanged(BR.playerOneLp)
+            notifyPropertyChanged(BR.mPlayerOneLp)
         }
 
     @get:Bindable
-    var playerTwoLp: Int = 8000
+    var mPlayerTwoLp: Int = START_LP
         set(value) {
             field = value
-            notifyPropertyChanged(BR.playerTwoLp)
+            notifyPropertyChanged(BR.mPlayerTwoLp)
         }
 
     @get:Bindable
-    var cumulatedLp: Int = 0
+    var mCumulatedLp: Int = 0
         set(value) {
             field = value
-            notifyPropertyChanged(BR.cumulatedLp)
+            notifyPropertyChanged(BR.mCumulatedLp)
         }
 
     @get:Bindable
-    var log: Log = Log(mutableListOf())
+    var mLog: Log = Log(mutableListOf())
         set(value) {
             field = value
-            notifyPropertyChanged(BR.log)
+            notifyPropertyChanged(BR.mLog)
         }
 
     val LP_FORMAT: DecimalFormat = DecimalFormat("0")
-    var halve: Boolean = false
+    var mHalve: Boolean = false
 
     fun updateLP(operation: Boolean, isPlayerOne: Boolean) {
-        if (!halve) {
+        if (!mHalve) {
             if (isPlayerOne) {
-                if (operation) playerOneLp += cumulatedLp else playerOneLp -= cumulatedLp
+                if (operation) mPlayerOneLp += mCumulatedLp else mPlayerOneLp -= mCumulatedLp
             } else {
-                if (operation) playerTwoLp += cumulatedLp else playerTwoLp -= cumulatedLp
+                if (operation) mPlayerTwoLp += mCumulatedLp else mPlayerTwoLp -= mCumulatedLp
             }
         }
          else {
             if (isPlayerOne) {
-                playerOneLp /= 2
-                cumulatedLp = playerOneLp
+                mPlayerOneLp /= 2
+                mCumulatedLp = mPlayerOneLp
             }
             else {
-                playerTwoLp /= 2
-                cumulatedLp = playerTwoLp
+                mPlayerTwoLp /= 2
+                mCumulatedLp = mPlayerTwoLp
             }
         }
 
-        if (playerOneLp < 0) playerOneLp = 0
-        if (playerTwoLp < 0) playerTwoLp = 0
+        // Check for negative lp
+        if (mPlayerOneLp < 0) mPlayerOneLp = 0
+        if (mPlayerTwoLp < 0) mPlayerTwoLp = 0
 
         log(operation, isPlayerOne)
         // reset after updating life points
-        halve = false
-        cumulatedLp = 0
+        mHalve = false
+        mCumulatedLp = 0
     }
 
     fun updateCumulatedLP(lp: Int) {
-        cumulatedLp += lp
+        mCumulatedLp += lp
     }
 
     fun resetCumulatedLP() {
-        cumulatedLp = 0
+        mCumulatedLp = 0
     }
 
     fun reset() {
-        playerOneLp = 8000
-        playerTwoLp = 8000
-        cumulatedLp = 0
-        log.log.clear()
+        mPlayerOneLp = START_LP
+        mPlayerTwoLp = START_LP
+        mCumulatedLp = 0
+        mLog.mLog.clear()
     }
 
     private fun log(operation: Boolean, isPlayerOne: Boolean) {
@@ -142,19 +157,14 @@ class LifePointCalculator : BaseObservable() {
         if (operation) op = "+" else op = "-"
         if (isPlayerOne) {
             player = "Player 1"
-            lp = playerOneLp
+            lp = mPlayerOneLp
         }
         else {
             player = "Player 2"
-            lp = playerTwoLp
+            lp = mPlayerTwoLp
         }
-        if (cumulatedLp != 0)
-            log.add(LifePointCalculator.LogItem(player, op, cumulatedLp, lp))
+        if (mCumulatedLp != 0)
+            mLog.add(LifePointCalculator.LogItem(player, op, mCumulatedLp, lp))
     }
 
-    fun printLog() {
-        for (l in log.log) {
-            println(l)
-        }
-    }
 }

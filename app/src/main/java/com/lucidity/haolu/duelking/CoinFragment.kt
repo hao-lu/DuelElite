@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 
+/**
+ * Simulates a coin flip with rand()
+ */
+
 class CoinFragment : Fragment() {
 
     private val TAG = "CoinFragment"

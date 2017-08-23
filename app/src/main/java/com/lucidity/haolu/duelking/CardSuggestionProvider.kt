@@ -62,23 +62,21 @@ class CardSuggestionProvider : ContentProvider() {
 
     // Get the cursor with the suggestions
     private fun getSuggestions(query: String): Cursor {
-//        val lowerCaseQuery = query.toLowerCase()
-        // SUGGEST_COLUMN_INTENT_DATA_ID appends the path to content://com.example.haolu.duelmaster.CardSuggestionProvider/cards/#
-        // Need _id column, the column names have to match (suggest_text_1)
-        // Need the suggest_column_intent_data_id to launch intent on click suggestion
+        /* SUGGEST_COLUMN_INTENT_DATA_ID appends the path to content://com.example.haolu.duelmaster.CardSuggestionProvider/cards/#
+        Need _id column, the column names have to match (suggest_text_1)
+        Need the suggest_column_intent_data_id to launch intent on click suggestion */
         val columns = arrayOf("_ID", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID)
-
+        // RealmQuery.like(): ? matches a single unicode char e.g. space
         val lowerCaseQuery = query.toLowerCase().replace(" ", "?")
         // blue eyes = blue?eyes*
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
         val results = realmQuery.like("name", "*$lowerCaseQuery*", Case.INSENSITIVE).findAll()
-//        val results = realmQuery.contains("name", lowerCaseQuery, Case.INSENSITIVE).like("name", "$lowerCaseQuery*", Case.INSENSITIVE).findAll()
 //        val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
         var size = 10
         if (results.size < 10) size = results.size
         val subList = results.subList(0, size)
-//
+
         val matrixCursor = MatrixCursor(columns)
         for (r in subList) {
             val rowData = arrayOf(r.id, r.name, r.id)
@@ -98,15 +96,11 @@ class CardSuggestionProvider : ContentProvider() {
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
         val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
-        var size = results.size
-//        if (results.size < 10) size = results.size
-        val subList = results.subList(0, size)
         val matrixCursor = MatrixCursor(columns)
-        for (r in subList) {
+        for (r in results) {
             val rowData = arrayOf(r.id, r.name)
             matrixCursor.addRow(rowData)
         }
-
         mRealm.close()
         return matrixCursor
     }
