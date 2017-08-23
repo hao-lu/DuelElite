@@ -62,6 +62,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/flip_and_roll">
         </activity>
+        
 
     </application>
 
