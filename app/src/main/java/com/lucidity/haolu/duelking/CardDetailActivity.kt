@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.content.CursorLoader
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -11,19 +14,27 @@ import android.support.v7.widget.Toolbar
 import android.support.v4.view.ViewPager
 import android.support.v4.app.FragmentTransaction
 import android.os.Bundle
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.app.*
 import android.support.v4.app.LoaderManager.LoaderCallbacks
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.Loader
+import android.support.v7.graphics.Palette
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.activity_card_detail.*
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.net.URLEncoder
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
@@ -183,7 +194,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
 
                 // Get the header table
-                val color = cardTable.getElementsByClass("cardtable-header")[0].attr("style")
+//                val color = cardTable.getElementsByClass("cardtable-header")[0].attr("style")
 
 //                cardBgColor = "#" + color.substring(19, 20) + color.substring(19, 20) +
 //                        color.substring(20, 21) + color.substring(20, 21) +
@@ -196,12 +207,10 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         getElementsByClass("cardtable-cardimage")[0].
                         select("a[href]")[0].
                         attr("href").toString()
-            }
-            catch (httpStatus: HttpStatusException) {
+                Log.d(TAG, mImageUrl)
+            } catch (httpStatus: HttpStatusException) {
                 Log.d(TAG, "HTTPstatus")
-            }
-
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
             // no internet connection error
@@ -214,12 +223,44 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // Load image header with card image
             val activity = context as AppCompatActivity
             val imageHeader = activity.findViewById(R.id.image_header) as ImageView
-            Picasso.with(context).load(mImageUrl).into(imageHeader)
+            val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
+//            Picasso.with(context).load(mImageUrl).into(imageHeader)
+
+            val target = object : Target {
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+
+                override fun onBitmapFailed(errorDrawable: Drawable?) {}
+
+                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                    imageHeader.setImageBitmap(bitmap)
+                    val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
+                    val dominant = swatch.dominantSwatch
+                    if (dominant != null) {
+                        collapseToolbar.setContentScrimColor(dominant.rgb)
+                        activity.window.statusBarColor = dominant.rgb
+                    }
+
+//                    Palette.from(bitmap)
+//                            .setRegion(25, 25, 35, 35)
+//                            .generate( {
+//                                val swatch = it.dominantSwatch
+//                                if (swatch != null) {
+//                                    // Set the background color of a layout based on the vibrant color
+//                                    collapseToolbar.setContentScrimColor(swatch.rgb)
+//                                    activity.window.statusBarColor = swatch.rgb
+//                                    // Update the title TextView with the proper text color
+////                            titleView.setTextColor(vibrant!!.getTitleTextColor())
+//                                }
+//                            })
+//                }
+                }
+            }
+            Picasso.with(context).load(mImageUrl).into(target)
 
             // Load fragment when image is clicked
             imageHeader.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString("mImageUrl", mImageUrl)
+                bundle.putString("imageUrl", mImageUrl)
 
                 val fragment = ImageDialogFragment()
                 fragment.arguments = bundle
@@ -228,8 +269,6 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
             }
 
-//            val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
-//            collapseToolbar.setContentScrimColor(Color.parseColor(cardBgColor))
 
         }
     }

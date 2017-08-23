@@ -36,5 +36,8 @@
     <string name="flip_and_roll"><![CDATA[Flip & Roll]]></string>
     <string name="action_start_pause">Start/Pause</string>
     <string name="action_open_wikia_page">Open Wikia Page</string>
+    <string name="start_lp">8000</string>
+    <string name="duel_time">40:00</string>
+    <string name="custom_lp_hint">1255</string>
 
 </resources>

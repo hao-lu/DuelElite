@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            val intent = Intent(this, SearchCardActivity::class.java)
+            val intent = Intent(this, SearchableCardActivity::class.java)
             startActivity(intent)
         }
 //

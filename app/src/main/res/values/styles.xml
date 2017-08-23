@@ -16,7 +16,7 @@
         <item name="android:colorBackground">@color/colorGrayBg</item>
     </style>
 
-    <!-- SearchCardActivity AutoCompleteDropDown Theme -->
+    <!-- SearchableCardActivity AutoCompleteDropDown Theme -->
     <style name="AppTheme.SearchSuggestion" parent="AppTheme.NoActionBar">
         <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>
