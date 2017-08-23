@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/text_table_ruling"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:layout_marginBottom="2dp"
-        tools:text="This card can be searched by Dark Sage, Ancient Gear Drill, Alchemic Magician, Angmarl the Fiendish Monarch and Left Arm Offering"/>
+        android:textSize="14sp"/>
 
 </LinearLayout>
