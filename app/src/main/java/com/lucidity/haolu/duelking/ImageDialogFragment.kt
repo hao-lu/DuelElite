@@ -12,11 +12,10 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.WindowManager
 
-
-
 class ImageDialogFragment : DialogFragment() {
 
-    lateinit var mImageUrl: String
+    private lateinit var mImageUrl: String
+    private var mStatusBarColor = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_dialog_image, container, false)
@@ -49,6 +48,7 @@ class ImageDialogFragment : DialogFragment() {
         val window = activity.window
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        mStatusBarColor = window.statusBarColor
         window.statusBarColor = ContextCompat.getColor(context, android.R.color.black)
     }
 
@@ -58,6 +58,7 @@ class ImageDialogFragment : DialogFragment() {
         val window = activity.window
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(context, R.color.colorYugiDarkerBlack)
+//        window.statusBarColor = ContextCompat.getColor(context, R.color.colorYugiDarkerBlack)
+        window.statusBarColor = mStatusBarColor
     }
 }

@@ -36,6 +36,7 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import kotlin.system.measureTimeMillis
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
@@ -170,6 +171,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         private val TAG = "LoadImageHeaderTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
         private var mImageUrl = ""
+        private lateinit var mTarget: Target
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -211,7 +213,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
 //            Picasso.with(context).load(mImageUrl).into(imageHeader)
 
-            val target = object : Target {
+            mTarget = object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
                 override fun onBitmapFailed(errorDrawable: Drawable?) {}
@@ -220,13 +222,14 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                     imageHeader.setImageBitmap(bitmap)
                     val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
                     val dominant = swatch.dominantSwatch
+                    if (dominant == null) Log.d(TAG, "DOMINANT NULL")
                     if (dominant != null) {
                         collapseToolbar.setContentScrimColor(dominant.rgb)
                         activity.window.statusBarColor = dominant.rgb
                     }
                 }
             }
-            Picasso.with(context).load(mImageUrl).into(target)
+            Picasso.with(context).load(mImageUrl).into(mTarget)
 
             // Load fragment when image is clicked
             imageHeader.setOnClickListener {
