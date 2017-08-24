@@ -11,13 +11,12 @@
     <string name="search_hint">Search for cards...</string>
 
     <!-- Menu Options for MainActivity -->
-    <string name="action_start">Start</string>
-    <string name="action_pause">Pause</string>
+    <string name="action_search">Search</string>
     <string name="action_reset">Reset</string>
 
     <!-- Text for Buttons in MainActivity-->
-    <string name="one_hundred_button">100</string>
-    <string name="two_hundred_button">200</string>
+    <string name="one_hundred">100</string>
+    <string name="two_hundred">200</string>
     <string name="five_hundred">500</string>
     <string name="one_thousand">1000</string>
     <string name="two_thousand">2000</string>
@@ -39,5 +38,6 @@
     <string name="start_lp">8000</string>
     <string name="duel_time">40:00</string>
     <string name="custom_lp_hint">1255</string>
+    <string name="round_over">Round Over</string>
 
 </resources>

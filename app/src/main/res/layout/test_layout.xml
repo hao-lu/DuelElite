@@ -1,66 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+    <data>
+        <variable
+            name="LPCalculator"
+            type="com.lucidity.haolu.duelking.LifePointCalculator" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context="com.lucidity.haolu.duelking.CardDetailActivity">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.lucidity.haolu.duelking.MainActivity"
+        tools:showIn="@layout/activity_main">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/card_detail_appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView_player_one_lp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/colorYugiBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/cardView_player_two_lp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="0dp">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapse_toolbar"
+            <View
+                android:id="@+id/bar_player_one"
                 android:layout_width="match_parent"
-                android:layout_height="256dp"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:titleEnabled="false"
-                app:title="HELLO WORLD">
+                android:layout_height="match_parent"
+                android:background="@color/colorYugiYellow"/>
 
-                <ImageView
-                    android:id="@+id/image_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax" />
+            <TextView
+                android:id="@+id/text_player_one_lp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/start_lp"
+                android:textColor="@android:color/white"
+                android:textSize="40sp" />
+        </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="top"
-                    android:layout_marginBottom="48dp"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView_player_two_lp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/colorYugiBlack"
+            app:layout_constraintLeft_toRightOf="@+id/cardView_player_one_lp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="0dp">
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom" />
+            <View
+                android:layout_gravity="end"
+                android:id="@+id/bar_player_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorYugiRed"/>
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+            <TextView
+                android:id="@+id/text_player_two_lp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/start_lp"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/white"
+                android:textSize="40sp" />
+        </android.support.v7.widget.CardView>
 
-        </android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView_utility"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView_player_two_lp"
+            app:cardCornerRadius="0dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true">
+
+                <ImageButton
+                    android:id="@+id/imageBtn_duel_time"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_timer_24dp"
+                    android:background="@drawable/ripple_effect"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/editText_cumulated_lp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:onClick="timerClicked" />
+
+                <TextView
+                    android:id="@+id/text_duel_time"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="@string/duel_time"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/editText_cumulated_lp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="invisible"
+                    android:onClick="timerClicked"
+                    android:background="@drawable/ripple_effect"/>
+
+                <EditText
+                    android:id="@+id/editText_cumulated_lp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:hint="1750"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/text_duel_time"
+                    app:layout_constraintRight_toLeftOf="@+id/imageBtn_rng"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:maxLength="6"/>
+
+                <ImageButton
+                    android:id="@+id/imageBtn_rng"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ripple_effect"
+                    android:src="@drawable/ic_dice_2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/editText_cumulated_lp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="rngButtonClicked"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView_utility"
+            app:cardCornerRadius="0dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/player_one_buttons"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageButton
+                        style="@style/ButtonStyle"
+                        android:src="@drawable/ic_add_24dp"
+                        android:tag="plus"
+                        android:onClick="playerButtonClicked"/>
+
+                    <ImageButton
+                        style="@style/ButtonStyle"
+                        android:src="@drawable/ic_remove_24dp"
+                        android:tag="minus"
+                        android:onClick="playerButtonClicked"/>
+                </LinearLayout>
 
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                <LinearLayout
+                    android:id="@+id/player_two_buttons"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    </android.support.design.widget.CoordinatorLayout>
+                    <ImageButton
+                        style="@style/ButtonStyle"
+                        android:src="@drawable/ic_add_24dp"
+                        android:tag="plus"
+                        android:onClick="playerButtonClicked"/>
+
+                    <ImageButton
+                        style="@style/ButtonStyle"
+                        android:src="@drawable/ic_remove_24dp"
+                        android:tag="minus"
+                        android:onClick="playerButtonClicked"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/player_one_buttons"
+                    app:layout_constraintRight_toLeftOf="@+id/player_two_buttons"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/button_one_hundred"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="numberButtonClicked"
+                        android:text="@string/one_hundred" />
+
+                    <Button
+                        android:id="@+id/button_two_hundred"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="numberButtonClicked"
+                        android:text="@string/two_hundred" />
+
+                    <Button
+                        android:id="@+id/button_five_hundred"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="numberButtonClicked"
+                        android:text="@string/five_hundred" />
+
+                    <Button
+                        android:id="@+id/button_one_thousand"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="numberButtonClicked"
+                        android:text="@string/one_thousand" />
+
+                    <Button
+                        android:id="@+id/button_two_thousand"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="numberButtonClicked"
+                        android:text="@string/two_thousand" />
+
+                    <Button
+                        android:id="@+id/button_halve"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:onClick="halfButtonClicked"
+                        android:text="@string/halve" />
+
+
+                    <Button
+                        android:id="@+id/button_log_lp"
+                        style="@style/ButtonStyle2"
+                        android:background="@drawable/ripple_effect"
+                        android:text="@string/log"
+                        android:onClick="logButtonClicked"/>
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>

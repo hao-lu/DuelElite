@@ -104,10 +104,9 @@ class LifePointCalculator : BaseObservable() {
         }
 
     val LP_FORMAT: DecimalFormat = DecimalFormat("0")
-    var mHalve: Boolean = false
 
-    fun updateLP(operation: Boolean, isPlayerOne: Boolean) {
-        if (!mHalve) {
+    fun updateLP(operation: Boolean, isPlayerOne: Boolean, halve: Boolean) {
+        if (!halve) {
             if (isPlayerOne) {
                 if (operation) mPlayerOneLp += mCumulatedLp else mPlayerOneLp -= mCumulatedLp
             } else {
@@ -116,11 +115,14 @@ class LifePointCalculator : BaseObservable() {
         }
          else {
             if (isPlayerOne) {
-                mPlayerOneLp /= 2
+                val halfLp = mPlayerOneLp / 2
+                if (operation) mPlayerOneLp += halfLp else mPlayerOneLp -= halfLp
+                // For logging
                 mCumulatedLp = mPlayerOneLp
             }
             else {
-                mPlayerTwoLp /= 2
+                val halfLp = mPlayerTwoLp / 2
+                if (operation) mPlayerTwoLp += halfLp else mPlayerTwoLp -= halfLp
                 mCumulatedLp = mPlayerTwoLp
             }
         }
@@ -131,7 +133,6 @@ class LifePointCalculator : BaseObservable() {
 
         log(operation, isPlayerOne)
         // reset after updating life points
-        mHalve = false
         mCumulatedLp = 0
     }
 
