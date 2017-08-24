@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager
 import android.support.v4.app.FragmentTransaction
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.app.*
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.content.ContextCompat
@@ -106,6 +107,14 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val encoder = URLEncoder.encode(mCardName, "UTF-8")
             val cardNamePath = encoder.replace("+", "_")
             val cardUrl = "http://yugioh.wikia.com/wiki/" + cardNamePath
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(cardUrl)
+            startActivity(i)
+        }
+
+        else if (id == R.id.action_open_ygoPrices) {
+            val encoder = URLEncoder.encode(mCardName, "UTF-8")
+            val cardUrl = "https://yugiohprices.com/card_price?name=" + encoder
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(cardUrl)
             startActivity(i)
@@ -211,7 +220,8 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val activity = context as AppCompatActivity
             val imageHeader = activity.findViewById(R.id.image_header) as ImageView
             val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
-//            Picasso.with(context).load(mImageUrl).into(imageHeader)
+            val tabs = activity.findViewById(R.id.tabs) as TabLayout
+            Picasso.with(context).load(mImageUrl).into(imageHeader)
 
             mTarget = object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
@@ -219,13 +229,17 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 override fun onBitmapFailed(errorDrawable: Drawable?) {}
 
                 override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    imageHeader.setImageBitmap(bitmap)
+//                    imageHeader.setImageBitmap(bitmap)
                     val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
                     val dominant = swatch.dominantSwatch
                     if (dominant == null) Log.d(TAG, "DOMINANT NULL")
                     if (dominant != null) {
                         collapseToolbar.setContentScrimColor(dominant.rgb)
                         activity.window.statusBarColor = dominant.rgb
+                    }
+                    val color = swatch.lightVibrantSwatch
+                    if (color != null) {
+                        tabs.setSelectedTabIndicatorColor(color.rgb)
                     }
                 }
             }
