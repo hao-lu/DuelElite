@@ -8,7 +8,6 @@ import android.support.v4.app.DialogFragment
 import android.os.Bundle
 import android.view.*
 
-
 /**
  * DialogFragment for custom lp entries from the user
  */
