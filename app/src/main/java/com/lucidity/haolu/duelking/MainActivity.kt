@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -100,8 +101,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
         if (id == R.id.action_search) {
             val intent = Intent(this, SearchableCardActivity::class.java)
             startActivity(intent)
-        }
-        else if (id == R.id.action_reset)
+        } else if (id == R.id.action_reset)
             reset()
         return super.onOptionsItemSelected(item)
     }
@@ -119,8 +119,8 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
 
         try {
             mLpCalculator.mCumulatedLp += editText.text.toString().toInt()
+        } catch (nfe: NumberFormatException) {
         }
-        catch (nfe: NumberFormatException) {}
         val newLp = mLpCalculator.mCumulatedLp
         animateValue(currLp, newLp, editText_cumulated_lp)
     }
@@ -156,18 +156,25 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
             text.text = it.animatedValue.toString()
             // Show hint
             if (it.animatedValue.toString() == "0") editText_cumulated_lp.setText("", TextView.BufferType.EDITABLE)
-            // Animate the bar
-            if (it.animatedValue.toString().toInt() < 8000) {
+            // Animate the bar, use integer so there's truncation
+//            if (it.animatedValue.toString().toInt() in 0..8025) {
+            if (it.animatedValue.toString().toInt() <= 8000) {
                 if (text.id == R.id.text_player_one_lp) {
                     val ans = it.animatedValue.toString().toDouble() / 8000 * width
                     val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)
                     bar_player_one.layoutParams = ll
+//                    Log.d(TAG, it.animatedValue.toString())
                 } else if (text.id == R.id.text_player_two_lp) {
                     val ans = it.animatedValue.toString().toDouble() / 8000 * width
                     val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)
                     ll.gravity = Gravity.END
                     bar_player_two.layoutParams = ll
                 }
+            }
+            else {
+                val ll = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                if (text.id == R.id.text_player_one_lp) bar_player_one.layoutParams = ll
+                else if (text.id == R.id.text_player_two_lp) bar_player_two.layoutParams = ll
             }
         }
         animator.start()
@@ -185,8 +192,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
             mTimer.start()
             mIsTimerRunnning = true
             Snackbar.make(view, "Timer started", Snackbar.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
             mIsTimerRunnning = false
             Snackbar.make(view, "Timer paused", Snackbar.LENGTH_SHORT).show()
         }
@@ -218,7 +224,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
         }
 
         // Check which button was clicked + or -
-        if (view.tag == "plus")  add = true
+        if (view.tag == "plus") add = true
         val parentView = view.parent as View
 
         if (parentView.id == R.id.player_one_buttons) {
@@ -226,8 +232,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
             currPlayer = text_player_one_lp
             mLpCalculator.updateLP(add, true, halve)
             newLp = mLpCalculator.mPlayerOneLp
-        }
-        else {
+        } else {
             currLp = mLpCalculator.mPlayerTwoLp
             currPlayer = text_player_two_lp
             mLpCalculator.updateLP(add, false, halve)
@@ -241,12 +246,11 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
 
         if (mLpCalculator.mPlayerOneLp == 0 && mLpCalculator.mPlayerTwoLp != 0) {
             val snackBar = Snackbar.make(view, "Player 2 has won", Snackbar.LENGTH_LONG)
-                    .setAction("RESET", { reset()} )
+                    .setAction("RESET", { reset() })
                     .setActionTextColor(Color.WHITE)
             snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYugiBlue))
             snackBar.show()
-        }
-        else if (mLpCalculator.mPlayerTwoLp == 0 && mLpCalculator.mPlayerOneLp != 0) {
+        } else if (mLpCalculator.mPlayerTwoLp == 0 && mLpCalculator.mPlayerOneLp != 0) {
             val snackBar = Snackbar.make(view, "Player 1 has won", Snackbar.LENGTH_LONG)
                     .setAction("RESET", { reset() })
                     .setActionTextColor(Color.WHITE)
@@ -261,6 +265,11 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
     // Halve the life points
     fun halfButtonClicked(view: View) {
         editText_cumulated_lp.setText("HALVE", TextView.BufferType.EDITABLE)
+    }
+
+    fun clearButtonClicked(view: View) {
+        editText_cumulated_lp.setText("", TextView.BufferType.EDITABLE)
+        mLpCalculator.mCumulatedLp = 0
     }
 
     // Launch mLog activity

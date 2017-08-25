@@ -12,8 +12,12 @@
 
     <color name="colorYugiYellow">#d2c86f</color>
     <color name="colorYugiRed">#9c396c</color>
+    <color name="colorYugiBlue">#374096</color>
     <color name="colorYugiBlack">#2f2f2f</color>
     <color name="colorYugiDarkerBlack">#252525</color>
-    <color name="colorYugiBlue">#374096</color>
+
+    <!--<color name="colorYugiYellow">#d2c86f</color>-->
+    <!--<color name="colorYugiRed">#9c396c</color>-->
+    <!--<color name="colorYugiBlue">#374096</color>-->
 
 </resources>

@@ -180,7 +180,7 @@
 
                     <ImageButton
                         style="@style/ButtonStyle"
-                        android:src="@drawable/ic_remove_24dp"
+                        android:src="@drawable/ic_minus_24dp"
                         android:tag="minus"
                         android:onClick="playerButtonClicked"/>
                 </LinearLayout>
@@ -203,7 +203,7 @@
 
                     <ImageButton
                         style="@style/ButtonStyle"
-                        android:src="@drawable/ic_remove_24dp"
+                        android:src="@drawable/ic_minus_24dp"
                         android:tag="minus"
                         android:onClick="playerButtonClicked"/>
                 </LinearLayout>
