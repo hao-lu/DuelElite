@@ -1,10 +1,10 @@
 package com.lucidity.haolu.duelking
 
-import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -17,6 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
+import java.net.UnknownHostException
 
 
 /**
@@ -46,7 +47,7 @@ class RulingsFragment : Fragment() {
 
         // ArrayList of ArrayList to section different headers, i.e., TCG Rulings vs OCG Rulings
         private var mRulingsList = ArrayList<ArrayList<RulingsRecyclerViewAdapter.HeaderOrItem>>()
-        private val mActivity = context as Activity
+        private val mActivity = context as AppCompatActivity
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -81,6 +82,8 @@ class RulingsFragment : Fragment() {
 
             } catch (httpStatusException: HttpStatusException) {
                 Log.d(TAG, "httpStatusException")
+            } catch (unknownHostException: UnknownHostException) {
+                    Log.d(TAG, "No Internet")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -93,15 +96,13 @@ class RulingsFragment : Fragment() {
             super.onPostExecute(result)
 
             // Fixes bug when internet is slow and the user switches viewpager quicker, checks for null
-            if ((context as Activity).findViewById(R.id.progressbar_rulings) != null) {
-                val progressBar = (context as Activity).findViewById(R.id.progressbar_rulings) as ProgressBar
+            if (mActivity.findViewById(R.id.progressbar_rulings) != null) {
+                val progressBar = mActivity.findViewById(R.id.progressbar_rulings) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mRulingsList.size != 0) {
                     val simpleAdapter = RulingsRecyclerViewAdapter(mRulingsList)
                     val layoutManger = LinearLayoutManager(mActivity)
                     val tipList = mActivity.findViewById(R.id.tcg_ruling_rv) as RecyclerView
-//                val itemDecoration = DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL)
-//                tipList.addItemDecoration(itemDecoration)
                     tipList.layoutManager = layoutManger
                     tipList.adapter = simpleAdapter
                 } else {

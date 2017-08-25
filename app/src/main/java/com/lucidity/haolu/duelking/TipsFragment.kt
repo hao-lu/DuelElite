@@ -1,10 +1,10 @@
 package com.lucidity.haolu.duelking
 
-import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,6 +17,7 @@ import android.widget.ProgressBar
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import java.net.URLEncoder
+import java.net.UnknownHostException
 
 class TipsFragment : Fragment() {
 
@@ -38,7 +39,7 @@ class TipsFragment : Fragment() {
         private val TAG = "ParseTipsTask"
         private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Tips:"
 
-        private val mActivity = context as Activity
+        private val mActivity = context as AppCompatActivity
         private var mTipsList: ArrayList<String> = arrayListOf()
 
         override fun onPreExecute() {
@@ -69,11 +70,12 @@ class TipsFragment : Fragment() {
                 }
 
             }
-
             catch (httpStatusException: HttpStatusException) {
-                Log.d(TAG, "httpStatusException")
+                Log.d(TAG, "No webpage")
             }
-
+            catch (unknownHostException: UnknownHostException) {
+                Log.d(TAG, "No Internet")
+            }
             catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -86,7 +88,7 @@ class TipsFragment : Fragment() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
 
-            if ((context as Activity).findViewById(R.id.progressbar_tips) != null) {
+            if (mActivity.findViewById(R.id.progressbar_tips) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_tips) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mTipsList.size != 0) {

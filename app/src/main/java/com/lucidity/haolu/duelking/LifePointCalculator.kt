@@ -118,12 +118,12 @@ class LifePointCalculator : BaseObservable() {
                 val halfLp = mPlayerOneLp / 2
                 if (operation) mPlayerOneLp += halfLp else mPlayerOneLp -= halfLp
                 // For logging
-                mCumulatedLp = mPlayerOneLp
+                mCumulatedLp = halfLp
             }
             else {
                 val halfLp = mPlayerTwoLp / 2
                 if (operation) mPlayerTwoLp += halfLp else mPlayerTwoLp -= halfLp
-                mCumulatedLp = mPlayerTwoLp
+                mCumulatedLp = halfLp
             }
         }
 
@@ -152,18 +152,9 @@ class LifePointCalculator : BaseObservable() {
     }
 
     private fun log(operation: Boolean, isPlayerOne: Boolean) {
-        var op = ""
-        var player = ""
-        var lp = 0
-        if (operation) op = "+" else op = "-"
-        if (isPlayerOne) {
-            player = "Player 1"
-            lp = mPlayerOneLp
-        }
-        else {
-            player = "Player 2"
-            lp = mPlayerTwoLp
-        }
+        val op: String = if (operation) "+" else "-"
+        val player: String = if (isPlayerOne) "Player 1" else "Player 2"
+        val lp: Int = if (isPlayerOne) mPlayerOneLp else mPlayerTwoLp
         if (mCumulatedLp != 0)
             mLog.add(LifePointCalculator.LogItem(player, op, mCumulatedLp, lp))
     }

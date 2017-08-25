@@ -1,11 +1,11 @@
 package com.lucidity.haolu.duelking
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.CursorLoader
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
@@ -18,7 +18,6 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.*
 import android.support.v4.app.LoaderManager.LoaderCallbacks
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.Loader
 import android.support.v7.graphics.Palette
 import android.util.Log
@@ -32,12 +31,8 @@ import kotlinx.android.synthetic.main.activity_card_detail.*
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.net.URLEncoder
-import kotlin.system.measureTimeMillis
+import java.net.UnknownHostException
 
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
@@ -181,6 +176,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         private val BASE_URL = "http://yugioh.wikia.com/wiki/"
         private var mImageUrl = ""
         private lateinit var mTarget: Target
+        private val mActivity = context as AppCompatActivity
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -194,7 +190,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             val cardUrl = BASE_URL + cardNamePath
 
             try {
-                Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
+                Log.d(TAG, "QUERY : " + cardNamePath.replace(" ", "_"))
                 val document = Jsoup.connect(cardUrl).get()
                 // <table class = cardtable>
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
@@ -204,57 +200,60 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         select("a[href]")[0].
                         attr("href").toString()
                 Log.d(TAG, mImageUrl)
-            } catch (httpStatus: HttpStatusException) {
-                Log.d(TAG, "HTTPstatus")
+            } catch (httpStatusException: HttpStatusException) {
+                Log.d(TAG, "No webpage")
+            } catch (unknownHostException: UnknownHostException) {
+                mActivity.runOnUiThread {  Toast.makeText(context, "No internet connection. Connect to the internet and try again.", Toast.LENGTH_LONG).show() }
+                Log.d(TAG, "No Internet")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            // no internet connection error
-            // no webpage error
             return null
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            // Load image header with card image
-            val activity = context as AppCompatActivity
-            val imageHeader = activity.findViewById(R.id.image_header) as ImageView
-            val collapseToolbar = activity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
-            val tabs = activity.findViewById(R.id.tabs) as TabLayout
-            Picasso.with(context).load(mImageUrl).into(imageHeader)
+            if (mImageUrl != "") {
+                // Load image header with card image
+//                val mActivity = context as AppCompatActivity
+                val imageHeader = mActivity.findViewById(R.id.image_header) as ImageView
+                val collapseToolbar = mActivity.findViewById(R.id.collapse_toolbar) as CollapsingToolbarLayout
+                val tabs = mActivity.findViewById(R.id.tabs) as TabLayout
+                Picasso.with(context).load(mImageUrl).into(imageHeader)
 
-            mTarget = object : Target {
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                mTarget = object : Target {
+                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
-                override fun onBitmapFailed(errorDrawable: Drawable?) {}
+                    override fun onBitmapFailed(errorDrawable: Drawable?) {}
 
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                    override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
 //                    imageHeader.setImageBitmap(bitmap)
-                    val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
-                    val dominant = swatch.dominantSwatch
-                    if (dominant == null) Log.d(TAG, "DOMINANT NULL")
-                    if (dominant != null) {
-                        collapseToolbar.setContentScrimColor(dominant.rgb)
-                        activity.window.statusBarColor = dominant.rgb
-                    }
-                    val color = swatch.lightVibrantSwatch
-                    if (color != null) {
-                        tabs.setSelectedTabIndicatorColor(color.rgb)
+                        val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
+                        val dominant = swatch.dominantSwatch
+                        if (dominant == null) Log.d(TAG, "DOMINANT NULL")
+                        if (dominant != null) {
+                            collapseToolbar.setContentScrimColor(dominant.rgb)
+                            mActivity.window.statusBarColor = dominant.rgb
+                        }
+                        val color = swatch.lightVibrantSwatch
+                        if (color != null) {
+                            tabs.setSelectedTabIndicatorColor(color.rgb)
+                        }
                     }
                 }
-            }
-            Picasso.with(context).load(mImageUrl).into(mTarget)
+                Picasso.with(context).load(mImageUrl).into(mTarget)
 
-            // Load fragment when image is clicked
-            imageHeader.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("imageUrl", mImageUrl)
+                // Load fragment when image is clicked
+                imageHeader.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString("imageUrl", mImageUrl)
 
-                val fragment = ImageDialogFragment()
-                fragment.arguments = bundle
-                val ft = activity.supportFragmentManager.beginTransaction()
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+                    val fragment = ImageDialogFragment()
+                    fragment.arguments = bundle
+                    val ft = mActivity.supportFragmentManager.beginTransaction()
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    ft.replace(android.R.id.content, fragment).addToBackStack(null).commit()
+                }
             }
         }
     }

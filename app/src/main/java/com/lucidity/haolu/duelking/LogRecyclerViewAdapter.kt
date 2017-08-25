@@ -2,6 +2,7 @@ package com.lucidity.haolu.duelking
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
+import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -34,9 +35,11 @@ class LogRecyclerViewAdapter(val mLog: LifePointCalculator.Log) : RecyclerView.A
         val turnLp = holder.itemView.findViewById(R.id.text_turnLp) as TextView
         val imageOperation = holder.itemView.findViewById(R.id.image_operation) as ImageView
         val context = holder.itemView.context
+        imageOperation.setColorFilter(ContextCompat.getColor(context, R.color.colorLose))
         if (mLog.mLog[position].mOperation == "+") {
             turnLp.setTextColor(ContextCompat.getColor(context, R.color.colorGain))
             imageOperation.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_24dp))
+            imageOperation.setColorFilter(ContextCompat.getColor(context, R.color.colorGain))
         }
         holder.binding.executePendingBindings()
     }
