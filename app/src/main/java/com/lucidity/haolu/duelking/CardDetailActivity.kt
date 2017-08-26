@@ -233,12 +233,13 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         if (dominant == null) Log.d(TAG, "DOMINANT NULL")
                         if (dominant != null) {
                             collapseToolbar.setContentScrimColor(dominant.rgb)
+                            tabs.setSelectedTabIndicatorColor(dominant.rgb)
                             mActivity.window.statusBarColor = dominant.rgb
                         }
-                        val color = swatch.lightVibrantSwatch
-                        if (color != null) {
-                            tabs.setSelectedTabIndicatorColor(color.rgb)
-                        }
+//                        val color = swatch.lightVibrantSwatch
+//                        if (color != null) {
+//                            tabs.setSelectedTabIndicatorColor(color.rgb)
+//                        }
                     }
                 }
                 Picasso.with(context).load(mImageUrl).into(mTarget)

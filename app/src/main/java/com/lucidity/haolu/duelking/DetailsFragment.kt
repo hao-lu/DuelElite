@@ -114,7 +114,19 @@ class DetailsFragment : Fragment() {
                         val desc = tr.select("table")[1].select("tr")[2].text()
                         mCardDetailsList.add(Pair("Description", desc))
                     }
-                    addData(Pair(header, value))
+
+                    // Formatted Card effects types
+                    if (header == "Card effect types") {
+                        val split = value.split(Regex(" "))
+                        var formatted = split[0]
+                        for (s in 1 until split.size) {
+                            if (split[s][0] == split[s][0].toLowerCase()) formatted += " " + split[s]
+                            else formatted += "\n" + split[s]
+                        }
+                        addData(Pair(header, formatted))
+                    }
+                    else
+                        addData(Pair(header, value))
                 }
             }
             catch (httpStatusException: HttpStatusException) {
