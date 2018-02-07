@@ -7,6 +7,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
+import com.lucidity.haolu.duelking.model.Card
 import io.realm.Case
 import io.realm.Realm
 

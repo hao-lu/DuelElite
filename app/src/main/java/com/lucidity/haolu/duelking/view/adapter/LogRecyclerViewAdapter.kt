@@ -1,8 +1,7 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.adapter
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.lucidity.haolu.duelking.BR
+import com.lucidity.haolu.duelking.model.LifePointCalculator
+import com.lucidity.haolu.duelking.R
 
 /**
  * The RecyclerView adapter used in LogActivity

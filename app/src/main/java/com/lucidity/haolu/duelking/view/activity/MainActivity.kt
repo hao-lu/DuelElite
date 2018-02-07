@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.activity
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -13,12 +13,15 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.lucidity.haolu.duelking.BR
+import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.databinding.ActivityMainBinding
+import com.lucidity.haolu.duelking.model.LifePointCalculator
+import com.lucidity.haolu.duelking.view.fragment.CustomLpFragment
 import kotlinx.android.synthetic.main.content_main.*
 import io.realm.Realm
 import java.util.concurrent.TimeUnit

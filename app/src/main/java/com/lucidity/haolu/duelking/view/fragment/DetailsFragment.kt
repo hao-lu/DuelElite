@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TextView
+import com.lucidity.haolu.duelking.R
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element

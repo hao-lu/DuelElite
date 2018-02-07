@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.adapter
 
 import com.squareup.picasso.Picasso
 import android.databinding.BindingAdapter

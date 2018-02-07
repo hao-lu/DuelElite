@@ -1,6 +1,5 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.activity
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.CursorLoader
@@ -25,6 +24,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.view.fragment.DetailsFragment
+import com.lucidity.haolu.duelking.view.fragment.ImageDialogFragment
+import com.lucidity.haolu.duelking.view.fragment.RulingsFragment
+import com.lucidity.haolu.duelking.view.fragment.TipsFragment
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.activity_card_detail.*

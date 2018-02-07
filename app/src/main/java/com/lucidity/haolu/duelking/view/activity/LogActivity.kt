@@ -1,9 +1,12 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.model.LifePointCalculator
+import com.lucidity.haolu.duelking.view.adapter.LogRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_log.*
 
 class LogActivity : AppCompatActivity() {

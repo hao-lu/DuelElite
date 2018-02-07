@@ -15,7 +15,7 @@
 
         <!-- MainActivity -->
         <activity
-            android:name="com.lucidity.haolu.duelking.MainActivity"
+            android:name="com.lucidity.haolu.duelking.view.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
@@ -27,13 +27,13 @@
         </activity>
 
         <!-- Log Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.LogActivity"
+        <activity android:name="com.lucidity.haolu.duelking.view.activity.LogActivity"
             android:label="@string/title_log_activity">
         </activity>
 
         <!-- Searchable Activity -->
         <activity
-            android:name="com.lucidity.haolu.duelking.SearchableCardActivity"
+            android:name="com.lucidity.haolu.duelking.view.activity.SearchableCardActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.SearchSuggestion">
             <intent-filter>
@@ -46,7 +46,7 @@
 
         <!-- Activity that shows the details of the cards -->
         <activity
-            android:name="com.lucidity.haolu.duelking.CardDetailActivity"
+            android:name="com.lucidity.haolu.duelking.view.activity.CardDetailActivity"
             android:label="@string/title_activity_card_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -58,7 +58,7 @@
             android:exported="false"/>
 
         <!-- Rng Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.RngActivity"
+        <activity android:name="com.lucidity.haolu.duelking.view.activity.RngActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/flip_and_roll">
         </activity>

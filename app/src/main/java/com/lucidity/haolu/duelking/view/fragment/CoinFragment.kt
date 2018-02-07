@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
+import com.lucidity.haolu.duelking.R
 
 /**
  * Simulates a coin flip with rand()

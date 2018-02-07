@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.model
 
 import io.realm.RealmObject
 import io.realm.annotations.Required

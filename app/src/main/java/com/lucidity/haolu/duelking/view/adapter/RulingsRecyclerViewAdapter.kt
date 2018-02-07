@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.adapter
 
 import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.View
 import kotlinx.android.synthetic.main.ruling_item_row.view.*
 import android.widget.TextView
+import com.lucidity.haolu.duelking.R
 
 /**
  * RecyclerView adapter for RulingFragment, which splits the rulings into different sections

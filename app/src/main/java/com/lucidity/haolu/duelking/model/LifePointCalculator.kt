@@ -1,9 +1,10 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.model
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.os.Parcel
 import android.os.Parcelable
+import com.lucidity.haolu.duelking.BR
 import java.text.DecimalFormat
 
 
@@ -20,9 +21,9 @@ class LifePointCalculator : BaseObservable() {
      * Parcelable to pass to LogActivity
      *
      */
-    data class Log(var mLog: MutableList<LifePointCalculator.LogItem>) : Parcelable {
+    data class Log(var mLog: MutableList<LogItem>) : Parcelable {
 
-        fun add(l: LifePointCalculator.LogItem) {
+        fun add(l: LogItem) {
             mLog.add(l)
         }
 
@@ -156,7 +157,7 @@ class LifePointCalculator : BaseObservable() {
         val player: String = if (isPlayerOne) "Player 1" else "Player 2"
         val lp: Int = if (isPlayerOne) mPlayerOneLp else mPlayerTwoLp
         if (mCumulatedLp != 0)
-            mLog.add(LifePointCalculator.LogItem(player, op, mCumulatedLp, lp))
+            mLog.add(LogItem(player, op, mCumulatedLp, lp))
     }
 
 }

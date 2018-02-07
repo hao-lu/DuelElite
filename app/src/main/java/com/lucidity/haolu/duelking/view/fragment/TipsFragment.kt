@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.view.adapter.TipsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import java.net.URLEncoder

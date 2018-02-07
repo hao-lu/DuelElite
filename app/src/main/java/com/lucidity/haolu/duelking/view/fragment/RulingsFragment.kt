@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.view.adapter.RulingsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
@@ -122,14 +124,10 @@ class RulingsFragment : Fragment() {
             // Removes the superscripts (foot notes)
             val text = c.text().replace(Regex("((References: )*\\[.*?\\])"), "")
             if (c.`is`("h2"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.H2, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H2, text))
             // Subheader
             else if (c.`is`("h3"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.H3, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H3, text))
             // Div has children (red / green box)
             else if (c.`is`("div")) {
                 val grandChildren = c.children()
@@ -139,9 +137,7 @@ class RulingsFragment : Fragment() {
             }
             // Item
             else if (c.`is`("ul"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.UL, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.UL, text))
         }
     }
 

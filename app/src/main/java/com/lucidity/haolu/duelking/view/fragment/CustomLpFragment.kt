@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.support.v4.app.DialogFragment
 import android.os.Bundle
 import android.view.*
+import com.lucidity.haolu.duelking.R
 
 /**
  * DialogFragment for custom lp entries from the user
