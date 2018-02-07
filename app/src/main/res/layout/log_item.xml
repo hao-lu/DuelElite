@@ -6,7 +6,7 @@
     <data>
         <variable
             name="mLog"
-            type="com.lucidity.haolu.duelking.LifePointCalculator.LogItem" />
+            type="com.lucidity.haolu.duelking.model.LifePointCalculator" />
     </data>
 
     <android.support.constraint.ConstraintLayout

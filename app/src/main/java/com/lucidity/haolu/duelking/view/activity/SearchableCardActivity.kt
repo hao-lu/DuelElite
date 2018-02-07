@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.activity
 
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
@@ -7,11 +7,9 @@ import android.content.*
 import android.database.Cursor
 import android.graphics.Rect
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_search_card.*
 import android.widget.*
@@ -20,6 +18,8 @@ import android.content.Intent
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.widget.SimpleCursorAdapter
 import android.widget.ListView
+import com.lucidity.haolu.duelking.CardSuggestionProvider
+import com.lucidity.haolu.duelking.R
 
 class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 

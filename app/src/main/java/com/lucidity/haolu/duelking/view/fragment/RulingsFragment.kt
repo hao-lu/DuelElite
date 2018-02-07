@@ -1,10 +1,10 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -13,10 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.view.adapter.RulingsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
+import java.net.UnknownHostException
 
 
 /**
@@ -46,7 +49,7 @@ class RulingsFragment : Fragment() {
 
         // ArrayList of ArrayList to section different headers, i.e., TCG Rulings vs OCG Rulings
         private var mRulingsList = ArrayList<ArrayList<RulingsRecyclerViewAdapter.HeaderOrItem>>()
-        private val mActivity = context as Activity
+        private val mActivity = context as AppCompatActivity
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -81,6 +84,8 @@ class RulingsFragment : Fragment() {
 
             } catch (httpStatusException: HttpStatusException) {
                 Log.d(TAG, "httpStatusException")
+            } catch (unknownHostException: UnknownHostException) {
+                    Log.d(TAG, "No Internet")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -93,15 +98,13 @@ class RulingsFragment : Fragment() {
             super.onPostExecute(result)
 
             // Fixes bug when internet is slow and the user switches viewpager quicker, checks for null
-            if ((context as Activity).findViewById(R.id.progressbar_rulings) != null) {
-                val progressBar = (context as Activity).findViewById(R.id.progressbar_rulings) as ProgressBar
+            if (mActivity.findViewById(R.id.progressbar_rulings) != null) {
+                val progressBar = mActivity.findViewById(R.id.progressbar_rulings) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mRulingsList.size != 0) {
                     val simpleAdapter = RulingsRecyclerViewAdapter(mRulingsList)
                     val layoutManger = LinearLayoutManager(mActivity)
                     val tipList = mActivity.findViewById(R.id.tcg_ruling_rv) as RecyclerView
-//                val itemDecoration = DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL)
-//                tipList.addItemDecoration(itemDecoration)
                     tipList.layoutManager = layoutManger
                     tipList.adapter = simpleAdapter
                 } else {
@@ -121,14 +124,10 @@ class RulingsFragment : Fragment() {
             // Removes the superscripts (foot notes)
             val text = c.text().replace(Regex("((References: )*\\[.*?\\])"), "")
             if (c.`is`("h2"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.H2, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H2, text))
             // Subheader
             else if (c.`is`("h3"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.H3, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H3, text))
             // Div has children (red / green box)
             else if (c.`is`("div")) {
                 val grandChildren = c.children()
@@ -138,9 +137,7 @@ class RulingsFragment : Fragment() {
             }
             // Item
             else if (c.`is`("ul"))
-                rulingList.add(RulingsRecyclerViewAdapter.
-                        HeaderOrItem(RulingsRecyclerViewAdapter.
-                                HeaderOrItem.Types.UL, text))
+                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.UL, text))
         }
     }
 

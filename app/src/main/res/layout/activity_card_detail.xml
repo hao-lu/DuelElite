@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.lucidity.haolu.duelking.CardDetailActivity">
+        tools:context="com.lucidity.haolu.duelking.view.activity.CardDetailActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/card_detail_appbar"
@@ -48,7 +48,8 @@
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                    app:tabIndicatorColor="@color/colorYugiBlack"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

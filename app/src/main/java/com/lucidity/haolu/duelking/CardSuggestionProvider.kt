@@ -7,6 +7,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
+import com.lucidity.haolu.duelking.model.Card
 import io.realm.Case
 import io.realm.Realm
 
@@ -71,11 +72,11 @@ class CardSuggestionProvider : ContentProvider() {
         // blue eyes = blue?eyes*
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
-        val results = realmQuery.like("name", "*$lowerCaseQuery*", Case.INSENSITIVE).findAll()
+        val results = realmQuery.like("name", "$lowerCaseQuery*", Case.INSENSITIVE).findAll()
 //        val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
-        var size = 10
-        if (results.size < 10) size = results.size
-        val subList = results.subList(0, size)
+        var suggestionSize = 10
+        if (results.size < suggestionSize) suggestionSize = results.size
+        val subList = results.subList(0, suggestionSize)
 
         val matrixCursor = MatrixCursor(columns)
         for (r in subList) {
@@ -95,7 +96,8 @@ class CardSuggestionProvider : ContentProvider() {
 
         val mRealm = Realm.getDefaultInstance()
         val realmQuery = mRealm.where(Card::class.java)
-        val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
+//        val results = realmQuery.beginsWith("name", lowerCaseQuery, Case.INSENSITIVE).findAll()
+        val results = realmQuery.like("name", "*$lowerCaseQuery*", Case.INSENSITIVE).findAll()
         val matrixCursor = MatrixCursor(columns)
         for (r in results) {
             val rowData = arrayOf(r.id, r.name)

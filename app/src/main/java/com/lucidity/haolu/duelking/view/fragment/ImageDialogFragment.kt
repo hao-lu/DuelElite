@@ -1,4 +1,4 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
 import android.app.Dialog
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.view.Window
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.WindowManager
+import com.lucidity.haolu.duelking.R
 
 class ImageDialogFragment : DialogFragment() {
 

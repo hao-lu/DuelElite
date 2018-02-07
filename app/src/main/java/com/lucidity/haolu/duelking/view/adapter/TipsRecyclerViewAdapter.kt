@@ -1,9 +1,10 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import com.lucidity.haolu.duelking.R
 import kotlinx.android.synthetic.main.tip_item_row.view.*
 
 class TipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapter<TipsRecyclerViewAdapter.ViewHolder>() {

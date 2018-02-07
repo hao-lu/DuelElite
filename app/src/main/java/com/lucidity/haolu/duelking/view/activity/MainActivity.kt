@@ -1,32 +1,34 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.activity
 
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.ToggleButton
-import com.lucidity.haolu.duelking.databinding.AppBarMainBinding
+import android.util.DisplayMetrics
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+import com.lucidity.haolu.duelking.BR
+import com.lucidity.haolu.duelking.R
+import com.lucidity.haolu.duelking.databinding.ActivityMainBinding
+import com.lucidity.haolu.duelking.model.LifePointCalculator
+import com.lucidity.haolu.duelking.view.fragment.CustomLpFragment
 import kotlinx.android.synthetic.main.content_main.*
 import io.realm.Realm
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CustomLpFragment.CustomLpDialogListener {
+class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListener {
+
+    private val TAG = "MainActivity"
 
     /**
      * Allows the CountDownTimer to be Pauseable.
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         override fun onFinish() {
-            text_duel_time.text = "Round Over"
+            text_duel_time.text = resources.getString(R.string.round_over)
         }
     }
 
@@ -55,44 +57,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val DUEL_TIME_TEXT = "40:00"
     private val DUEL_TIME = 2400000L
 
-    private var mTimeRemaining = 2400000L
+    private var mTimeRemaining = DUEL_TIME
     private var mTimer = CountDownTimerPauseable(mTimeRemaining, 1000)
     private var mIsTimerRunnning = false
 
     private var mLpCalculator = LifePointCalculator()
     private var mRealm = Realm.getDefaultInstance()
+    private var mValueAnimator = ValueAnimator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: AppBarMainBinding = DataBindingUtil.setContentView(this, R.layout.app_bar_main)
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        val fab = findViewById(R.id.fab) as FloatingActionButton
-        fab.setOnClickListener { view ->
-            val intent = Intent(this, SearchableCardActivity::class.java)
-            startActivity(intent)
-        }
-//
-//        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-//        val toggle = ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-//        drawer.setDrawerListener(toggle)
-//        toggle.syncState()
 
-//        val navigationView = findViewById(R.id.nav_view) as NavigationView
-//        navigationView.setNavigationItemSelectedListener(this)
         binding.contentMain.setVariable(BR.LPCalculator, mLpCalculator)
         binding.contentMain.executePendingBindings()
+
+        // Allows the user to user number buttons to add onto custom input
+        editText_cumulated_lp.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mLpCalculator.mCumulatedLp = editText_cumulated_lp.text.toString().toInt()
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText_cumulated_lp.windowToken, 0)
+                editText_cumulated_lp.clearFocus()
+                return@setOnEditorActionListener true
+            }
+            // Return false to dismiss keyboard
+            return@setOnEditorActionListener false
+        }
     }
 
     override fun onBackPressed() {
-//        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START)
-//        } else {
-//            super.onBackPressed()
-//        }
-
         if (fragmentManager.backStackEntryCount > 0) fragmentManager.popBackStack()
         else super.onBackPressed()
     }
@@ -105,23 +101,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.action_reset)
+        if (id == R.id.action_search) {
+            val intent = Intent(this, SearchableCardActivity::class.java)
+            startActivity(intent)
+        } else if (id == R.id.action_reset)
             reset()
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        val id = item.itemId
-
-        if (id == R.id.nav_calculator) {
-            // Handle the camera action
-        } else if (id == R.id.nav_search) {
-        }
-
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawer.closeDrawer(GravityCompat.START)
-        return true
     }
 
     override fun onDestroy() {
@@ -137,10 +122,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         try {
             mLpCalculator.mCumulatedLp += editText.text.toString().toInt()
+        } catch (nfe: NumberFormatException) {
         }
-        catch (nfe: NumberFormatException) {}
         val newLp = mLpCalculator.mCumulatedLp
-        animateValue(currLp, newLp, text_cumulated_lp)
+        animateValue(currLp, newLp, editText_cumulated_lp)
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
@@ -152,30 +137,65 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         text_player_one_lp.text = START_LP
         text_player_two_lp.text = START_LP
         text_duel_time.text = DUEL_TIME_TEXT
-        text_cumulated_lp.text = "0"
+        editText_cumulated_lp.setText("", TextView.BufferType.EDITABLE)
         mTimer.cancel()
         mTimeRemaining = DUEL_TIME
         mIsTimerRunnning = false
-        addOrSubtractToggle.isChecked = false
-        addOrSubtractToggle.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorLose))
+        text_duel_time.visibility = TextView.INVISIBLE
+        imageBtn_duel_time.visibility = ImageButton.VISIBLE
+
+        val ll = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        bar_player_one.layoutParams = ll
+        bar_player_two.layoutParams = ll
     }
 
-    private fun animateValue(currLp: Int, newLp: Int, text: TextView) {
+    private fun animateValue(currLp: Int, newLp: Int, text: TextView): ValueAnimator {
         val animator = ValueAnimator.ofInt(currLp, newLp)
         animator.duration = 500
-        animator.addUpdateListener { text.text = it.animatedValue.toString() }
+        animator.addUpdateListener {
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            val width = displayMetrics.widthPixels
+            text.text = it.animatedValue.toString()
+            // Show hint
+            if (it.animatedValue.toString() == "0") editText_cumulated_lp.setText("", TextView.BufferType.EDITABLE)
+            // Animate the bar, use integer so there's truncation
+//            if (it.animatedValue.toString().toInt() in 0..8025) {
+            if (it.animatedValue.toString().toInt() <= 8000) {
+                if (text.id == R.id.text_player_one_lp) {
+                    val ans = it.animatedValue.toString().toDouble() / 8000 * width
+                    val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)
+                    bar_player_one.layoutParams = ll
+//                    Log.d(TAG, it.animatedValue.toString())
+                } else if (text.id == R.id.text_player_two_lp) {
+                    val ans = it.animatedValue.toString().toDouble() / 8000 * width
+                    val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)
+                    ll.gravity = Gravity.END
+                    bar_player_two.layoutParams = ll
+                }
+            }
+            else {
+                val ll = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                if (text.id == R.id.text_player_one_lp) bar_player_one.layoutParams = ll
+                else if (text.id == R.id.text_player_two_lp) bar_player_two.layoutParams = ll
+            }
+        }
         animator.start()
+        return animator
     }
 
     fun timerClicked(view: View) {
+        if (view.id == R.id.imageBtn_duel_time) {
+            view.visibility = ImageButton.INVISIBLE
+            text_duel_time.visibility = TextView.VISIBLE
+        }
         mTimer.cancel()
         if (!mIsTimerRunnning) {
             mTimer = CountDownTimerPauseable(mTimeRemaining, 1000)
             mTimer.start()
             mIsTimerRunnning = true
             Snackbar.make(view, "Timer started", Snackbar.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
             mIsTimerRunnning = false
             Snackbar.make(view, "Timer paused", Snackbar.LENGTH_SHORT).show()
         }
@@ -186,7 +206,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Update the mCumulatedLp
         if (view is TextView) mLpCalculator.mCumulatedLp += view.text.toString().toInt()
         val newLp = mLpCalculator.mCumulatedLp
-        animateValue(currLp, newLp, text_cumulated_lp)
+        mValueAnimator = animateValue(currLp, newLp, editText_cumulated_lp)
     }
 
     // Update the mPlayer life points (gain/lose)
@@ -194,58 +214,65 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val currLp: Int
         val newLp: Int
         val currPlayer: TextView
-        val cumulateLp = mLpCalculator.mCumulatedLp
+        var cumulateLp = mLpCalculator.mCumulatedLp
+        var add = false // add button or subtract
+        val editText = editText_cumulated_lp.text.toString()
+        var halve = false
+        if (editText == "HALVE") halve = true
 
-        if (view.id == R.id.button_player_one) {
+        // Custom input in EditText
+        if (!mValueAnimator.isRunning && editText != "HALVE" && editText != "") {
+            mLpCalculator.mCumulatedLp = editText.toInt()
+            cumulateLp = editText.toInt()
+        }
+
+        // Check which button was clicked + or -
+        if (view.tag == "plus") add = true
+        val parentView = view.parent as View
+
+        if (parentView.id == R.id.player_one_buttons) {
             currLp = mLpCalculator.mPlayerOneLp
             currPlayer = text_player_one_lp
-            mLpCalculator.updateLP(addOrSubtractToggle.isChecked, true)
+            mLpCalculator.updateLP(add, true, halve)
             newLp = mLpCalculator.mPlayerOneLp
-        }
-        else {
+        } else {
             currLp = mLpCalculator.mPlayerTwoLp
             currPlayer = text_player_two_lp
-            mLpCalculator.updateLP(addOrSubtractToggle.isChecked, false)
+            mLpCalculator.updateLP(add, false, halve)
             newLp = mLpCalculator.mPlayerTwoLp
         }
 
-        // Animate mPlayer losing life points
+        // Animate currPlayer losing life points
         animateValue(currLp, newLp, currPlayer)
         // Animate decreasing of cumulated lp
-        animateValue(cumulateLp, 0, text_cumulated_lp)
+        animateValue(cumulateLp, 0, editText_cumulated_lp)
 
         if (mLpCalculator.mPlayerOneLp == 0 && mLpCalculator.mPlayerTwoLp != 0) {
             val snackBar = Snackbar.make(view, "Player 2 has won", Snackbar.LENGTH_LONG)
-                    .setAction("RESET", { reset()} )
+                    .setAction("RESET", { reset() })
                     .setActionTextColor(Color.WHITE)
             snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYugiBlue))
             snackBar.show()
-        }
-        else if (mLpCalculator.mPlayerTwoLp == 0 && mLpCalculator.mPlayerOneLp != 0) {
+        } else if (mLpCalculator.mPlayerTwoLp == 0 && mLpCalculator.mPlayerOneLp != 0) {
             val snackBar = Snackbar.make(view, "Player 1 has won", Snackbar.LENGTH_LONG)
                     .setAction("RESET", { reset() })
                     .setActionTextColor(Color.WHITE)
             snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYugiBlue))
             snackBar.show()
         }
+
+        // Remove focus from EditText
+        cardView_utility.requestFocus()
     }
 
     // Halve the life points
     fun halfButtonClicked(view: View) {
-        text_cumulated_lp.text = "HALVE"
-        mLpCalculator.mHalve = true
+        editText_cumulated_lp.setText("HALVE", TextView.BufferType.EDITABLE)
     }
 
-    fun customButtomClicked(view: View) {
-        val dialog = CustomLpFragment()
-        dialog.show(supportFragmentManager, "CustomLpFragment")
-    }
-
-    // Clear the mCumulatedLp
     fun clearButtonClicked(view: View) {
-        mLpCalculator.mHalve = false
+        editText_cumulated_lp.setText("", TextView.BufferType.EDITABLE)
         mLpCalculator.mCumulatedLp = 0
-        text_cumulated_lp.text = mLpCalculator.mCumulatedLp.toString()
     }
 
     // Launch mLog activity
@@ -258,13 +285,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun rngButtonClicked(view: View) {
         val intent = Intent(this, RngActivity::class.java)
         startActivity(intent)
-    }
-
-    fun toggleButtonClicked(view: View) {
-        val toggleButton = view as ToggleButton
-        if (toggleButton.isChecked) addOrSubtractToggle
-                .setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGain))
-        else addOrSubtractToggle
-                .setTextColor(ContextCompat.getColor(applicationContext, R.color.colorLose))
     }
 }

@@ -1,9 +1,10 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.model
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.os.Parcel
 import android.os.Parcelable
+import com.lucidity.haolu.duelking.BR
 import java.text.DecimalFormat
 
 
@@ -20,9 +21,9 @@ class LifePointCalculator : BaseObservable() {
      * Parcelable to pass to LogActivity
      *
      */
-    data class Log(var mLog: MutableList<LifePointCalculator.LogItem>) : Parcelable {
+    data class Log(var mLog: MutableList<LogItem>) : Parcelable {
 
-        fun add(l: LifePointCalculator.LogItem) {
+        fun add(l: LogItem) {
             mLog.add(l)
         }
 
@@ -104,10 +105,9 @@ class LifePointCalculator : BaseObservable() {
         }
 
     val LP_FORMAT: DecimalFormat = DecimalFormat("0")
-    var mHalve: Boolean = false
 
-    fun updateLP(operation: Boolean, isPlayerOne: Boolean) {
-        if (!mHalve) {
+    fun updateLP(operation: Boolean, isPlayerOne: Boolean, halve: Boolean) {
+        if (!halve) {
             if (isPlayerOne) {
                 if (operation) mPlayerOneLp += mCumulatedLp else mPlayerOneLp -= mCumulatedLp
             } else {
@@ -116,12 +116,15 @@ class LifePointCalculator : BaseObservable() {
         }
          else {
             if (isPlayerOne) {
-                mPlayerOneLp /= 2
-                mCumulatedLp = mPlayerOneLp
+                val halfLp = mPlayerOneLp / 2
+                if (operation) mPlayerOneLp += halfLp else mPlayerOneLp -= halfLp
+                // For logging
+                mCumulatedLp = halfLp
             }
             else {
-                mPlayerTwoLp /= 2
-                mCumulatedLp = mPlayerTwoLp
+                val halfLp = mPlayerTwoLp / 2
+                if (operation) mPlayerTwoLp += halfLp else mPlayerTwoLp -= halfLp
+                mCumulatedLp = halfLp
             }
         }
 
@@ -131,7 +134,6 @@ class LifePointCalculator : BaseObservable() {
 
         log(operation, isPlayerOne)
         // reset after updating life points
-        mHalve = false
         mCumulatedLp = 0
     }
 
@@ -151,20 +153,11 @@ class LifePointCalculator : BaseObservable() {
     }
 
     private fun log(operation: Boolean, isPlayerOne: Boolean) {
-        var op = ""
-        var player = ""
-        var lp = 0
-        if (operation) op = "+" else op = "-"
-        if (isPlayerOne) {
-            player = "Player 1"
-            lp = mPlayerOneLp
-        }
-        else {
-            player = "Player 2"
-            lp = mPlayerTwoLp
-        }
+        val op: String = if (operation) "+" else "-"
+        val player: String = if (isPlayerOne) "Player 1" else "Player 2"
+        val lp: Int = if (isPlayerOne) mPlayerOneLp else mPlayerTwoLp
         if (mCumulatedLp != 0)
-            mLog.add(LifePointCalculator.LogItem(player, op, mCumulatedLp, lp))
+            mLog.add(LogItem(player, op, mCumulatedLp, lp))
     }
 
 }

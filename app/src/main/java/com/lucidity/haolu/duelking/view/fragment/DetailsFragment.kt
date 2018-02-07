@@ -1,10 +1,10 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu.duelking.view.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +12,12 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TextView
+import com.lucidity.haolu.duelking.R
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
+import java.net.UnknownHostException
 
 class DetailsFragment : Fragment() {
 
@@ -56,6 +59,7 @@ class DetailsFragment : Fragment() {
                 "ImageUrl")
 
         private var mCardDetailsList: MutableList<Pair<String, String>> = mutableListOf()
+        private val mActivity = context as AppCompatActivity
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -70,7 +74,7 @@ class DetailsFragment : Fragment() {
 
             try {
 
-                Log.d(TAG, "QUERY : " + cardNamePath?.replace(" ", "_"))
+                Log.d(TAG, "QUERY : " + cardNamePath.replace(" ", "_"))
 
                 val document = Jsoup.connect(cardUrl).get()
                 val cardTable: Element = document.getElementsByClass("cardtable").first()
@@ -112,21 +116,36 @@ class DetailsFragment : Fragment() {
                         mCardDetailsList.add(Pair("Description", desc))
                     }
 
-                    addData(Pair(header, value))
+                    // Formatted Card effects types
+                    if (header == "Card effect types") {
+                        val split = value.split(Regex(" "))
+                        var formatted = split[0]
+                        for (s in 1 until split.size) {
+                            if (split[s][0] == split[s][0].toLowerCase()) formatted += " " + split[s]
+                            else formatted += "\n" + split[s]
+                        }
+                        addData(Pair(header, formatted))
+                    }
+                    else
+                        addData(Pair(header, value))
                 }
+            }
+            catch (httpStatusException: HttpStatusException) {
+                Log.d(TAG, "No webpage")
+            }
+            catch (unknownHostException: UnknownHostException) {
+                Log.d(TAG, "No Internet")
             }
             catch (e: Exception) {
                 e.printStackTrace()
             }
-            // no internet connection error
-            // no webpage error
             return null
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            if ((context as Activity).findViewById(R.id.progressbar_details) != null) {
-                val progressBar = context.findViewById(R.id.progressbar_details) as ProgressBar
+            if (mActivity.findViewById(R.id.progressbar_details) != null) {
+                val progressBar = mActivity.findViewById(R.id.progressbar_details) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 for (detail in mCardDetailsList) {
                     if (detail.first != "ImageUrl") {
@@ -135,7 +154,7 @@ class DetailsFragment : Fragment() {
                         val cardValue = row.findViewById(R.id.text_card_value) as TextView
                         cardHeader.text = detail.first
                         cardValue.text = detail.second
-                        val card_information = context.findViewById(R.id.table_card_details) as TableLayout
+                        val card_information = mActivity.findViewById(R.id.table_card_details) as TableLayout
                         card_information.addView(row)
                     }
                 }
