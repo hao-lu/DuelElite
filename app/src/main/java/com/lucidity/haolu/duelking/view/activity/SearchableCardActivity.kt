@@ -17,6 +17,7 @@ import android.content.Intent
 
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.widget.SimpleCursorAdapter
+import android.view.View
 import android.widget.ListView
 import com.lucidity.haolu.duelking.CardSuggestionProvider
 import com.lucidity.haolu.duelking.R
@@ -90,7 +91,7 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
     // Show the dropdown when the user returns from CardDetailActivity
     override fun onRestart() {
         super.onRestart()
-        val searchView = findViewById(R.id.action_search)
+        val searchView = findViewById<SearchView>(R.id.action_search)
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
         autoCompleteTextView.showDropDown()
     }
@@ -106,7 +107,7 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         searchView.maxWidth = Int.MAX_VALUE
 
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
-        val dropDownAnchor = searchView.findViewById(autoCompleteTextView.dropDownAnchor)
+        val dropDownAnchor = searchView.findViewById<View>(autoCompleteTextView.dropDownAnchor)
         // Need to add a listener to AutoCompleteTextView, AutoCompleteTextView's offset are calculated in SearchView each time bound is changed
         if (dropDownAnchor != null) {
             dropDownAnchor.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->

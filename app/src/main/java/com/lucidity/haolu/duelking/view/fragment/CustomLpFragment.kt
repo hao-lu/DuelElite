@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.support.v4.app.DialogFragment
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import com.lucidity.haolu.duelking.R
 
 /**
@@ -49,7 +50,7 @@ class CustomLpFragment : DialogFragment() {
 
     // Called after onCreateDialog
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val editText = container?.findViewById(R.id.edit_custom)
+        val editText = container?.findViewById<EditText>(R.id.edit_custom)
         // Open the keyboard for the user
         editText?.requestFocus()
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)

@@ -28,7 +28,7 @@ class TipsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_tips, container, false)
         val cardName = arguments.getString("cardName")
-        rootView.findViewById(R.id.progressbar_tips).visibility = View.VISIBLE
+        rootView.findViewById<ProgressBar>(R.id.progressbar_tips).visibility = View.VISIBLE
         ParseTipsTask(context).execute(cardName)
         return rootView
     }
@@ -90,7 +90,7 @@ class TipsFragment : Fragment() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
 
-            if (mActivity.findViewById(R.id.progressbar_tips) != null) {
+            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_tips) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_tips) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mTipsList.size != 0) {

@@ -33,7 +33,7 @@ class RulingsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_rulings, container, false)
         val cardName = arguments.getString("cardName")
-        rootView.findViewById(R.id.progressbar_rulings).visibility = View.VISIBLE
+        rootView.findViewById<ProgressBar>(R.id.progressbar_rulings).visibility = View.VISIBLE
         ParseRulingsTask(context).execute(cardName)
         return rootView
     }
@@ -98,7 +98,7 @@ class RulingsFragment : Fragment() {
             super.onPostExecute(result)
 
             // Fixes bug when internet is slow and the user switches viewpager quicker, checks for null
-            if (mActivity.findViewById(R.id.progressbar_rulings) != null) {
+            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_rulings) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_rulings) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mRulingsList.size != 0) {

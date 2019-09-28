@@ -26,7 +26,7 @@ class DetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_details, container, false)
         val cardName = arguments.getString("cardName")
-        rootView.findViewById(R.id.progressbar_details).visibility = View.VISIBLE
+        rootView.findViewById<ProgressBar>(R.id.progressbar_details).visibility = View.VISIBLE
         ParseDetailsTask(context).execute(cardName)
         return rootView
     }
@@ -144,7 +144,7 @@ class DetailsFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            if (mActivity.findViewById(R.id.progressbar_details) != null) {
+            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_details) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_details) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 for (detail in mCardDetailsList) {

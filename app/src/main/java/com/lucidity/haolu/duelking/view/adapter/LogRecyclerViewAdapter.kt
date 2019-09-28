@@ -23,7 +23,7 @@ class LogRecyclerViewAdapter(val mLog: LifePointCalculator.Log) : RecyclerView.A
 
         val binding: ViewDataBinding
         init {
-            binding = DataBindingUtil.bind(view)
+            binding = DataBindingUtil.bind(view)!!
         }
     }
 

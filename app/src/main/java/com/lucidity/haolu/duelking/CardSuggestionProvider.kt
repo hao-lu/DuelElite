@@ -118,7 +118,7 @@ class CardSuggestionProvider : ContentProvider() {
         val result = realmQuery.equalTo("id", rowId).findFirst()
 
         val matrixCursor = MatrixCursor(columns)
-        val rowData = arrayOf(result.id, result.name)
+        val rowData = arrayOf(result!!.id, result.name)
         matrixCursor.addRow(rowData)
 
         mRealm.close()
