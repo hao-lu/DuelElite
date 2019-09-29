@@ -1,7 +1,7 @@
 package com.lucidity.haolu.duelking.view.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.view.fragment.CoinFragment
 import com.lucidity.haolu.duelking.view.fragment.DiceFragment

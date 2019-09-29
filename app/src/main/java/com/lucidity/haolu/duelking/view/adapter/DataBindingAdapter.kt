@@ -1,7 +1,7 @@
 package com.lucidity.haolu.duelking.view.adapter
 
 import com.squareup.picasso.Picasso
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.ImageView
 
 @BindingAdapter("bind:imageUrl")
