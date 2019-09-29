@@ -134,12 +134,12 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 		return CursorLoader(baseContext, uri, null, null , arrayOf(args?.getString("query")), null)
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
         // supportLoaderManager.restartLoader()
         // Invokes onLoadFinished again
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         mCursorAdapter.swapCursor(data)
     }
 }

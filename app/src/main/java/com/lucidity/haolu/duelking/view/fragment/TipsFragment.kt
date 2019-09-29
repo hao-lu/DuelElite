@@ -25,11 +25,11 @@ class TipsFragment : Fragment() {
 
     private val TAG = "TipsFragment"
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_tips, container, false)
-        val cardName = arguments.getString("cardName")
+        val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_tips).visibility = View.VISIBLE
-        ParseTipsTask(context).execute(cardName)
+        ParseTipsTask(context!!).execute(cardName)
         return rootView
     }
 

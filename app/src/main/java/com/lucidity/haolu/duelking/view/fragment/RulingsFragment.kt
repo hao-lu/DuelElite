@@ -30,11 +30,11 @@ class RulingsFragment : Fragment() {
 
     private val TAG = "RulingsFragment"
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_rulings, container, false)
-        val cardName = arguments.getString("cardName")
+        val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_rulings).visibility = View.VISIBLE
-        ParseRulingsTask(context).execute(cardName)
+        ParseRulingsTask(context!!).execute(cardName)
         return rootView
     }
 

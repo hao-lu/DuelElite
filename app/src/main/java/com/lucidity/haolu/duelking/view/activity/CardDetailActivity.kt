@@ -41,6 +41,7 @@ import java.net.UnknownHostException
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private val TAG = "CardDetailActivity"
+    private val LOADER_ID = 20190928
 
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
     private lateinit var mViewPager: ViewPager
@@ -69,7 +70,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Invokes onCreateLoader()
-        supportLoaderManager.initLoader(0, null, this)
+        supportLoaderManager.initLoader(LOADER_ID, null, this)
 
     }
 
@@ -127,7 +128,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         return super.onSupportNavigateUp()
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
         // supportLoaderManager.restartLoader()
     }
 
@@ -138,7 +139,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     // After the cursor has been loaded with the name, the actionBar title can be set and the
     // fragments can get the name and begin to work
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         if (data!!.moveToFirst()) {
             val cardName = data.getString(data.getColumnIndex(data.getColumnName(1)))
             Log.d(TAG, data.getString(data.getColumnIndex(data.getColumnName(1))))
@@ -146,6 +147,8 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mCardName = cardName
             setupViewPagerandTabLayout(cardName)
             LoadImageHeaderTask(this).execute(cardName)
+            // Remove loader from adding more pagers
+            supportLoaderManager.destroyLoader(LOADER_ID)
         }
     }
 
@@ -232,7 +235,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
                     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
 //                    imageHeader.setImageBitmap(bitmap)
-                        val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
+                        val swatch = Palette.from(bitmap!!).setRegion(25, 25, 35, 35).generate()
                         val dominant = swatch.dominantSwatch
                         if (dominant == null) Log.d(TAG, "DOMINANT NULL")
                         if (dominant != null) {
