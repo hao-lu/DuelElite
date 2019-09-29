@@ -45,7 +45,7 @@ class RulingsFragment : Fragment() {
 
     private class ParseRulingsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseRulingsTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Rulings:"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/Card_Rulings:"
 
         // ArrayList of ArrayList to section different headers, i.e., TCG Rulings vs OCG Rulings
         private var mRulingsList = ArrayList<ArrayList<RulingsRecyclerViewAdapter.HeaderOrItem>>()

@@ -38,7 +38,7 @@ class DetailsFragment : Fragment() {
      */
     private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseDetailsTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/"
         private val CARD_DETAIL_TYPES = arrayOf(
                 "Card type",
                 "Property",

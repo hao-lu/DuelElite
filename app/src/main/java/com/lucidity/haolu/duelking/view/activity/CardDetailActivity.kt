@@ -106,7 +106,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         if (id == R.id.action_open_wikia) {
             val encoder = URLEncoder.encode(mCardName, "UTF-8")
             val cardNamePath = encoder.replace("+", "_")
-            val cardUrl = "http://yugioh.wikia.com/wiki/" + cardNamePath
+            val cardUrl = "https://yugioh.wikia.com/wiki/" + cardNamePath
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(cardUrl)
             startActivity(i)
@@ -180,7 +180,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     private class LoadImageHeaderTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "LoadImageHeaderTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/"
         private var mImageUrl = ""
         private lateinit var mTarget: Target
         private val mActivity = context as AppCompatActivity

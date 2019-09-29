@@ -39,7 +39,7 @@ class TipsFragment : Fragment() {
 
     private class ParseTipsTask(val context: Context): AsyncTask<String, Void, Void>() {
         private val TAG = "ParseTipsTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Tips:"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/Card_Tips:"
 
         private val mActivity = context as AppCompatActivity
         private var mTipsList: ArrayList<String> = arrayListOf()
