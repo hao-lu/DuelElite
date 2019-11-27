@@ -2,28 +2,31 @@ package com.lucidity.haolu.duelking.view.activity
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.CursorLoader
+import androidx.loader.content.CursorLoader
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.support.v4.view.ViewPager
-import android.support.v4.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.FragmentTransaction
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.TabLayout
-import android.support.v4.app.*
-import android.support.v4.app.LoaderManager.LoaderCallbacks
-import android.support.v4.content.Loader
-import android.support.v7.graphics.Palette
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
+import androidx.core.app.*
+import androidx.loader.app.LoaderManager.LoaderCallbacks
+import androidx.loader.content.Loader
+import androidx.palette.graphics.Palette
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.view.fragment.DetailsFragment
 import com.lucidity.haolu.duelking.view.fragment.ImageDialogFragment
@@ -41,6 +44,7 @@ import java.net.UnknownHostException
 class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private val TAG = "CardDetailActivity"
+    private val LOADER_ID = 20190928
 
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
     private lateinit var mViewPager: ViewPager
@@ -69,7 +73,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Invokes onCreateLoader()
-        supportLoaderManager.initLoader(0, null, this)
+        supportLoaderManager.initLoader(LOADER_ID, null, this)
 
     }
 
@@ -105,7 +109,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         if (id == R.id.action_open_wikia) {
             val encoder = URLEncoder.encode(mCardName, "UTF-8")
             val cardNamePath = encoder.replace("+", "_")
-            val cardUrl = "http://yugioh.wikia.com/wiki/" + cardNamePath
+            val cardUrl = "https://yugioh.wikia.com/wiki/" + cardNamePath
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(cardUrl)
             startActivity(i)
@@ -127,7 +131,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         return super.onSupportNavigateUp()
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
         // supportLoaderManager.restartLoader()
     }
 
@@ -138,7 +142,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     // After the cursor has been loaded with the name, the actionBar title can be set and the
     // fragments can get the name and begin to work
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         if (data!!.moveToFirst()) {
             val cardName = data.getString(data.getColumnIndex(data.getColumnName(1)))
             Log.d(TAG, data.getString(data.getColumnIndex(data.getColumnName(1))))
@@ -146,6 +150,8 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mCardName = cardName
             setupViewPagerandTabLayout(cardName)
             LoadImageHeaderTask(this).execute(cardName)
+            // Remove loader from adding more pagers
+            supportLoaderManager.destroyLoader(LOADER_ID)
         }
     }
 
@@ -177,7 +183,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     private class LoadImageHeaderTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "LoadImageHeaderTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/"
         private var mImageUrl = ""
         private lateinit var mTarget: Target
         private val mActivity = context as AppCompatActivity
@@ -232,7 +238,7 @@ class CardDetailActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
                     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
 //                    imageHeader.setImageBitmap(bitmap)
-                        val swatch = Palette.from(bitmap).setRegion(25, 25, 35, 35).generate()
+                        val swatch = Palette.from(bitmap!!).setRegion(25, 25, 35, 35).generate()
                         val dominant = swatch.dominantSwatch
                         if (dominant == null) Log.d(TAG, "DOMINANT NULL")
                         if (dominant != null) {

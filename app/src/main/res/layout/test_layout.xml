@@ -10,14 +10,14 @@
             type="com.lucidity.haolu.duelking.model.LifePointCalculator" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.lucidity.haolu.duelking.view.activity.MainActivity"
         tools:showIn="@layout/activity_main">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardView_player_one_lp"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -42,9 +42,9 @@
                 android:text="@string/start_lp"
                 android:textColor="@android:color/white"
                 android:textSize="40sp" />
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardView_player_two_lp"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -71,9 +71,9 @@
                 android:textAlignment="textEnd"
                 android:textColor="@android:color/white"
                 android:textSize="40sp" />
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardView_utility"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -83,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView_player_two_lp"
             app:cardCornerRadius="0dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:descendantFocusability="beforeDescendants"
@@ -143,11 +143,11 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:onClick="rngButtonClicked"/>
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView_utility"
             app:cardCornerRadius="0dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -267,9 +267,9 @@
                         android:text="@string/log"
                         android:onClick="logButtonClicked"/>
                 </LinearLayout>
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

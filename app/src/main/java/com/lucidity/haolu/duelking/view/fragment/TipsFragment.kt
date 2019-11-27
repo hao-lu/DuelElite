@@ -3,11 +3,11 @@ package com.lucidity.haolu.duelking.view.fragment
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,11 +25,11 @@ class TipsFragment : Fragment() {
 
     private val TAG = "TipsFragment"
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_tips, container, false)
-        val cardName = arguments.getString("cardName")
-        rootView.findViewById(R.id.progressbar_tips).visibility = View.VISIBLE
-        ParseTipsTask(context).execute(cardName)
+        val cardName = arguments!!.getString("cardName")
+        rootView.findViewById<ProgressBar>(R.id.progressbar_tips).visibility = View.VISIBLE
+        ParseTipsTask(context!!).execute(cardName)
         return rootView
     }
 
@@ -39,7 +39,7 @@ class TipsFragment : Fragment() {
 
     private class ParseTipsTask(val context: Context): AsyncTask<String, Void, Void>() {
         private val TAG = "ParseTipsTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/Card_Tips:"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/Card_Tips:"
 
         private val mActivity = context as AppCompatActivity
         private var mTipsList: ArrayList<String> = arrayListOf()
@@ -90,7 +90,7 @@ class TipsFragment : Fragment() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
 
-            if (mActivity.findViewById(R.id.progressbar_tips) != null) {
+            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_tips) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_tips) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mTipsList.size != 0) {

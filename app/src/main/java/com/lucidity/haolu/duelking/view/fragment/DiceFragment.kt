@@ -1,7 +1,7 @@
 package com.lucidity.haolu.duelking.view.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +17,12 @@ class DiceFragment : Fragment() {
 
     private val TAG = "DiceFragment"
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater?.inflate(R.layout.fragment_dice, container, false)
         return rootView
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val image = view?.findViewById(R.id.image_dice) as ImageButton
         val pulse = AnimationUtils.loadAnimation(context, R.anim.pulse)
         image.setOnClickListener {

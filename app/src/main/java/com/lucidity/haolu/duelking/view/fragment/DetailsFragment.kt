@@ -3,14 +3,15 @@ package com.lucidity.haolu.duelking.view.fragment
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
 import com.lucidity.haolu.duelking.R
 import org.jsoup.HttpStatusException
@@ -23,11 +24,11 @@ class DetailsFragment : Fragment() {
 
     private val TAG = "DetailsFragment"
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_details, container, false)
-        val cardName = arguments.getString("cardName")
-        rootView.findViewById(R.id.progressbar_details).visibility = View.VISIBLE
-        ParseDetailsTask(context).execute(cardName)
+        val cardName = arguments!!.getString("cardName")
+        rootView.findViewById<ProgressBar>(R.id.progressbar_details).visibility = View.VISIBLE
+        ParseDetailsTask(context!!).execute(cardName)
         return rootView
     }
 
@@ -37,7 +38,7 @@ class DetailsFragment : Fragment() {
      */
     private class ParseDetailsTask(val context: Context) : AsyncTask<String, Void, Void>() {
         private val TAG = "ParseDetailsTask"
-        private val BASE_URL = "http://yugioh.wikia.com/wiki/"
+        private val BASE_URL = "https://yugioh.wikia.com/wiki/"
         private val CARD_DETAIL_TYPES = arrayOf(
                 "Card type",
                 "Property",
@@ -144,18 +145,18 @@ class DetailsFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            if (mActivity.findViewById(R.id.progressbar_details) != null) {
+            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_details) != null) {
                 val progressBar = mActivity.findViewById(R.id.progressbar_details) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 for (detail in mCardDetailsList) {
                     if (detail.first != "ImageUrl") {
-                        val row = View.inflate(context, R.layout.table_row_detail, null)
+                        val row = View.inflate(context, R.layout.table_row_detail, null) as TableRow
                         val cardHeader = row.findViewById(R.id.text_card_header) as TextView
                         val cardValue = row.findViewById(R.id.text_card_value) as TextView
                         cardHeader.text = detail.first
                         cardValue.text = detail.second
-                        val card_information = mActivity.findViewById(R.id.table_card_details) as TableLayout
-                        card_information.addView(row)
+                        val cardInformation = mActivity.findViewById(R.id.table_card_details) as TableLayout
+                        cardInformation.addView(row)
                     }
                 }
             }

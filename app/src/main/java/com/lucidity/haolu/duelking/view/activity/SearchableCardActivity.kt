@@ -1,22 +1,23 @@
 package com.lucidity.haolu.duelking.view.activity
 
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.Loader
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
 import android.app.SearchManager
 import android.content.*
 import android.database.Cursor
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_search_card.*
 import android.widget.*
 import android.content.Intent
 
-import android.support.v4.app.LoaderManager.LoaderCallbacks
-import android.support.v4.widget.SimpleCursorAdapter
+import androidx.loader.app.LoaderManager.LoaderCallbacks
+import androidx.cursoradapter.widget.SimpleCursorAdapter
+import android.view.View
 import android.widget.ListView
 import com.lucidity.haolu.duelking.CardSuggestionProvider
 import com.lucidity.haolu.duelking.R
@@ -48,7 +49,7 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         }
 
         // Set the cursor from loader to a simple list (mListView)
-        mCursorAdapter = SimpleCursorAdapter(this,
+        mCursorAdapter = androidx.cursoradapter.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_list_item_1,
                 null,
                 arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1),
@@ -90,7 +91,7 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
     // Show the dropdown when the user returns from CardDetailActivity
     override fun onRestart() {
         super.onRestart()
-        val searchView = findViewById(R.id.action_search)
+        val searchView = findViewById<SearchView>(R.id.action_search)
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
         autoCompleteTextView.showDropDown()
     }
@@ -106,7 +107,7 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
         searchView.maxWidth = Int.MAX_VALUE
 
         val autoCompleteTextView = searchView.findViewById(R.id.search_src_text) as AutoCompleteTextView
-        val dropDownAnchor = searchView.findViewById(autoCompleteTextView.dropDownAnchor)
+        val dropDownAnchor = searchView.findViewById<View>(autoCompleteTextView.dropDownAnchor)
         // Need to add a listener to AutoCompleteTextView, AutoCompleteTextView's offset are calculated in SearchView each time bound is changed
         if (dropDownAnchor != null) {
             dropDownAnchor.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
@@ -130,15 +131,15 @@ class SearchableCardActivity : AppCompatActivity(), LoaderCallbacks<Cursor>{
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         val uri = CardSuggestionProvider.CONTENT_URI
-		return CursorLoader(baseContext, uri, null, null , arrayOf(args?.getString("query")), null)
+		return androidx.loader.content.CursorLoader(baseContext, uri, null, null, arrayOf(args?.getString("query")), null)
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
         // supportLoaderManager.restartLoader()
         // Invokes onLoadFinished again
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         mCursorAdapter.swapCursor(data)
     }
 }
