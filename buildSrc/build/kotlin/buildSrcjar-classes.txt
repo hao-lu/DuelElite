@@ -1,0 +1,1 @@
+D:\Projects\DuelElite\buildSrc\build\classes\kotlin\main\AndroidX.class;D:\Projects\DuelElite\buildSrc\build\classes\kotlin\main\Dependencies.class;D:\Projects\DuelElite\buildSrc\build\classes\kotlin\main\GradlePlugin.class;D:\Projects\DuelElite\buildSrc\build\classes\kotlin\main\Tests.class;D:\Projects\DuelElite\buildSrc\build\classes\kotlin\main\Versions.class

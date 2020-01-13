@@ -5,11 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Versions.COMPILE_SDK
     defaultConfig {
         applicationId "com.lucidity.haolu.duelking"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion Versions.MIN_SDK
+        targetSdkVersion Versions.TARGET_SDK
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -31,24 +31,27 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Kotlin
+    implementation Dependencies.KOTLIN_STDLIB_JDK7
 
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.palette:palette:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // AndroidX
+    implementation AndroidX.APPCOMPAT
+    implementation AndroidX.CARDVIEW
+    implementation AndroidX.CONSTRAINTLAYOUT
+    implementation AndroidX.LEGACY_SUPPORT_V4
+    implementation AndroidX.MATERIAL
+    implementation AndroidX.PALETTE
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation Tests.JUNIT
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'org.jsoup:jsoup:1.10.3'
-
+    // 3rd-party
+    implementation Dependencies.JSOUP
+    implementation Dependencies.PICASSO
+    implementation Dependencies.RETROFIT
 }
 
 repositories {
     mavenCentral()
     google()
+    jcenter()
 }
