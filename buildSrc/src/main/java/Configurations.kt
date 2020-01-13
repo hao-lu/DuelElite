@@ -22,6 +22,7 @@ object Dependencies {
 object AndroidX {
     const val APPCOMPAT = "androidx.appcompat:appcompat:1.0.0"
     const val CARDVIEW = "androidx.cardview:cardview:1.0.0"
+    const val CORE_KTX = "androidx.core:core-ktx:1.0.0"
     const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
     const val LEGACY_SUPPORT_V4 = "androidx.legacy:legacy-support-v4:1.0.0"
     const val MATERIAL = "com.google.android.material:material:1.0.0"
@@ -29,6 +30,7 @@ object AndroidX {
 }
 
 object Tests {
+    const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.1.1"
+    const val EXT_JUNIT = "androidx.test.ext:junit:1.1.0"
     const val JUNIT = "junit:junit:4.12"
-    const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.1.0"
 }
