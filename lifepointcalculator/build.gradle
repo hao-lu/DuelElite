@@ -29,6 +29,8 @@ dependencies {
 
     // AndroidX
     implementation AndroidX.APPCOMPAT
+    implementation AndroidX.CARDVIEW
+    implementation AndroidX.CONSTRAINTLAYOUT
     implementation AndroidX.CORE_KTX
 
     // Test
