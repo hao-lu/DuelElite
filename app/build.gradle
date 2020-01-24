@@ -48,6 +48,8 @@ dependencies {
     implementation Dependencies.JSOUP
     implementation Dependencies.PICASSO
     implementation Dependencies.RETROFIT
+
+    implementation project(path: ':lifepointcalculator')
 }
 
 repositories {
