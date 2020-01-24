@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="yugi_yellow">#d2c86f</color>
+    <color name="yugi_red">#9c396c</color>
+    <color name="yugi_blue">#374096</color>
+    <color name="yugi_dark_gray">#2f2f2f</color>
+    <color name="yugi_black">#252525</color>
+
+    <color name="colorRipple">#9E9E9E</color>
+
+</resources>

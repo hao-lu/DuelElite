@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_calculator">
+
+    <Button
+        android:id="@+id/button_one_hundred"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/one_hundred" />
+
+    <Button
+        android:id="@+id/button_two_hundred"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/two_hundred" />
+
+    <Button
+        android:id="@+id/button_five_hundred"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/five_hundred" />
+
+    <Button
+        android:id="@+id/button_one_thousand"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/one_thousand" />
+
+    <Button
+        android:id="@+id/button_two_thousand"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/two_thousand" />
+
+    <Button
+        android:id="@+id/button_halve"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/halve" />
+
+    <Button
+        android:id="@+id/button_clear"
+        style="@style/ButtonStyle2"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/clear" />
+
+</LinearLayout>
