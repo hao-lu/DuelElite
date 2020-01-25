@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
     // CustomLpDialogListener interface functions
     override fun onDialogPositiveClick(dialog: DialogFragment) {
         val currLp = mLpCalculator.mCumulatedLp
-        val editText = dialog.dialog.findViewById(R.id.edit_custom) as EditText
+        val editText = dialog.dialog?.findViewById(R.id.edit_custom) as EditText
         // Checking for integer overflow
 
         try {

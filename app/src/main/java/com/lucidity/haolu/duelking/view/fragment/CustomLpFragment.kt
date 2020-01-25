@@ -23,7 +23,7 @@ class CustomLpFragment : DialogFragment() {
 
     lateinit var mListener: CustomLpDialogListener
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host activity implements the callback interface
         try {
@@ -53,7 +53,7 @@ class CustomLpFragment : DialogFragment() {
         val editText = container?.findViewById<EditText>(R.id.edit_custom)
         // Open the keyboard for the user
         editText?.requestFocus()
-        dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

@@ -20,9 +20,9 @@ object Dependencies {
 }
 
 object AndroidX {
-    const val APPCOMPAT = "androidx.appcompat:appcompat:1.0.0"
-    const val CARDVIEW = "androidx.cardview:cardview:1.0.0"
-    const val CORE_KTX = "androidx.core:core-ktx:1.0.0"
+    const val APPCOMPAT = "androidx.appcompat:appcompat:1.1.0"
+    const val CORE = "androidx.core:core:1.1.0"
+    const val CORE_KTX = "androidx.core:core-ktx:1.1.0"
     const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
     const val LEGACY_SUPPORT_V4 = "androidx.legacy:legacy-support-v4:1.0.0"
     const val MATERIAL = "com.google.android.material:material:1.0.0"

@@ -36,8 +36,9 @@ dependencies {
 
     // AndroidX
     implementation AndroidX.APPCOMPAT
-    implementation AndroidX.CARDVIEW
     implementation AndroidX.CONSTRAINTLAYOUT
+    implementation AndroidX.CORE
+    implementation AndroidX.CORE_KTX
     implementation AndroidX.LEGACY_SUPPORT_V4
     implementation AndroidX.MATERIAL
     implementation AndroidX.PALETTE

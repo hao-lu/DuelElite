@@ -21,6 +21,9 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -29,8 +32,8 @@ dependencies {
 
     // AndroidX
     implementation AndroidX.APPCOMPAT
-    implementation AndroidX.CARDVIEW
     implementation AndroidX.CONSTRAINTLAYOUT
+    implementation AndroidX.CORE
     implementation AndroidX.CORE_KTX
 
     // Test
