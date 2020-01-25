@@ -58,7 +58,8 @@
             android:label="@string/flip_and_roll">
         </activity>
 
-        <activity android:name=".view.activity.BottomNavigationActivity" >
+        <activity android:name=".view.activity.BottomNavigationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
