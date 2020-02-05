@@ -35,6 +35,7 @@ dependencies {
     implementation AndroidX.CONSTRAINTLAYOUT
     implementation AndroidX.CORE
     implementation AndroidX.CORE_KTX
+    implementation AndroidX.LIFECYCLE_EXTENSION
 
     // Test
     testImplementation Tests.JUNIT

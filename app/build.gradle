@@ -40,6 +40,7 @@ dependencies {
     implementation AndroidX.CORE
     implementation AndroidX.CORE_KTX
     implementation AndroidX.LEGACY_SUPPORT_V4
+    implementation AndroidX.LIFECYCLE_EXTENSION
     implementation AndroidX.MATERIAL
     implementation AndroidX.PALETTE
 

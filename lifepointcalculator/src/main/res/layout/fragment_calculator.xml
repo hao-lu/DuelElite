@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel" />
+
+        <variable
+            name="player"
+            type="com.lucidity.haolu.lifepointcalculator.model.Player" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,10 +22,19 @@
             android:id="@+id/v_bar_player_one_lp_background"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/life_point_bar_height"
+            android:background="@android:color/white"
+            android:elevation="@dimen/shadow_elevation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/v_bar_player_one_lp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/life_point_bar_height"
             android:background="@drawable/rect"
             android:backgroundTint="@color/yugi_yellow"
             android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,11 +56,21 @@
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/life_point_bar_height"
             android:layout_marginTop="@dimen/material_margin"
+            android:background="@android:color/white"
+            android:elevation="@dimen/shadow_elevation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
+
+        <View
+            android:id="@+id/v_bar_player_two_lp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/life_point_bar_height"
+            android:layout_marginTop="@dimen/material_margin"
             android:background="@drawable/rect"
             android:backgroundTint="@color/yugi_red"
             android:elevation="@dimen/shadow_elevation"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
 
         <TextView
@@ -109,7 +137,7 @@
 
         <EditText
             android:id="@+id/et_cumulated_lp"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:background="@android:color/transparent"
             android:elevation="@dimen/shadow_elevation"
@@ -167,7 +195,8 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/ib_player_one_minus"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+            app:layout_constraintTop_toTopOf="@id/v_calculator_background"
+            android:onClick="@{() -> viewmodel.onAddClicked(player.ONE)}"/>
 
         <ImageButton
             android:id="@+id/ib_player_one_minus"
@@ -178,7 +207,8 @@
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_one_add" />
+            app:layout_constraintTop_toBottomOf="@id/ib_player_one_add"
+            android:onClick="@{() -> viewmodel.onSubtractClicked(player.ONE)}"/>
 
         <ImageButton
             android:id="@+id/ib_player_two_add"
@@ -189,7 +219,8 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/ib_player_two_minus"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+            app:layout_constraintTop_toTopOf="@id/v_calculator_background"
+            android:onClick="@{() -> viewmodel.onAddClicked(player.TWO)}"/>
 
         <ImageButton
             android:id="@+id/ib_player_two_minus"
@@ -200,12 +231,14 @@
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
+            app:layout_constraintTop_toBottomOf="@id/ib_player_two_add"
+            android:onClick="@{() -> viewmodel.onSubtractClicked(player.TWO)}"/>
 
         <include
+            android:id="@+id/l_input"
             layout="@layout/cumulated_input_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
             android:elevation="@dimen/shadow_elevation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
