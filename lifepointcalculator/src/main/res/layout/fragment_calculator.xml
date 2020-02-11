@@ -104,6 +104,7 @@
             android:layout_height="@dimen/zero_dp"
             android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
+            android:onClick="@{() -> viewmodel.onTimerClicked()}"
             android:src="@drawable/ic_timer"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
             app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
@@ -115,14 +116,15 @@
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:elevation="@dimen/shadow_elevation"
-            android:text="40:00"
+            android:gravity="center"
+            android:onClick="@{() -> viewmodel.onTimerClicked()}"
             android:textSize="20sp"
             android:visibility="invisible"
+            android:background="@drawable/ripple_effect"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/et_cumulated_lp"
+            app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
             app:layout_constraintStart_toStartOf="@id/v_utility_background"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
         <ImageView
             android:id="@+id/iv_player_one_last_lp_indicator"
@@ -131,12 +133,12 @@
             android:elevation="@dimen/shadow_elevation"
             android:src="@drawable/ic_arrow_drop_down"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/et_cumulated_lp"
+            app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
             app:layout_constraintStart_toEndOf="@id/ib_duel_time"
             app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
-        <EditText
-            android:id="@+id/et_cumulated_lp"
+        <TextView
+            android:id="@+id/tv_action_lp"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:background="@android:color/transparent"
@@ -160,7 +162,7 @@
             android:src="@drawable/ic_arrow_drop_up"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
             app:layout_constraintEnd_toStartOf="@id/ib_history"
-            app:layout_constraintStart_toEndOf="@id/et_cumulated_lp"
+            app:layout_constraintStart_toEndOf="@id/tv_action_lp"
             app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
         <ImageButton
@@ -192,11 +194,11 @@
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
+            android:onClick="@{() -> viewmodel.onAddClicked(player.ONE)}"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/ib_player_one_minus"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background"
-            android:onClick="@{() -> viewmodel.onAddClicked(player.ONE)}"/>
+            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
 
         <ImageButton
             android:id="@+id/ib_player_one_minus"
@@ -204,11 +206,11 @@
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
+            android:onClick="@{() -> viewmodel.onSubtractClicked(player.ONE)}"
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_one_add"
-            android:onClick="@{() -> viewmodel.onSubtractClicked(player.ONE)}"/>
+            app:layout_constraintTop_toBottomOf="@id/ib_player_one_add" />
 
         <ImageButton
             android:id="@+id/ib_player_two_add"
@@ -216,11 +218,11 @@
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
+            android:onClick="@{() -> viewmodel.onAddClicked(player.TWO)}"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/ib_player_two_minus"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background"
-            android:onClick="@{() -> viewmodel.onAddClicked(player.TWO)}"/>
+            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
 
         <ImageButton
             android:id="@+id/ib_player_two_minus"
@@ -228,15 +230,15 @@
             android:layout_height="0dp"
             android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
+            android:onClick="@{() -> viewmodel.onSubtractClicked(player.TWO)}"
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_two_add"
-            android:onClick="@{() -> viewmodel.onSubtractClicked(player.TWO)}"/>
+            app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
 
         <include
             android:id="@+id/l_input"
-            layout="@layout/cumulated_input_layout"
+            layout="@layout/layout_normal_input"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:elevation="@dimen/shadow_elevation"

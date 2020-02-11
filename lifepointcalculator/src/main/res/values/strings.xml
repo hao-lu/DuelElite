@@ -12,4 +12,18 @@
     <string name="log">LOG</string>
 
     <string name="start_lp">8000</string>
+
+    <string name="one_literal">1</string>
+    <string name="two_literal">2</string>
+    <string name="three_literal">3</string>
+    <string name="four_literal">4</string>
+    <string name="five_literal">5</string>
+    <string name="six_literal">6</string>
+    <string name="seven_literal">7</string>
+    <string name="eight_literal">8</string>
+    <string name="nine_literal">9</string>
+    <string name="double_zero_literal">00</string>
+    <string name="zero_literal">0</string>
+    <string name="c_literal">C</string>
+
 </resources>

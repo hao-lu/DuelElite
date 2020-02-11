@@ -1,5 +1,6 @@
 package com.lucidity.haolu.lifepointcalculator.view
 
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,12 +14,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
-import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
+import com.lucidity.haolu.lifepointcalculator.viewmodel.CumulatedCalculatorViewModel
+import com.lucidity.haolu.lifepointcalculator.viewmodel.NormalCalculatorViewModel
 
 class CalculatorFragment : Fragment() {
 
     private lateinit var binding: FragmentCalculatorBinding
-    private lateinit var viewmodel: CalculatorViewModel
+//    private lateinit var viewmodel: CumulatedCalculatorViewModel
+    private lateinit var viewmodel: NormalCalculatorViewModel
 
     private val ANIMATION_DURATION: Long = 500
 
@@ -28,7 +31,8 @@ class CalculatorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewmodel = ViewModelProvider(this).get(CalculatorViewModel::class.java)
+//        viewmodel = ViewModelProvider(this).get(CumulatedCalculatorViewModel::class.java)
+        viewmodel = ViewModelProvider(this).get(NormalCalculatorViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -36,7 +40,7 @@ class CalculatorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentCalculatorBinding>(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_calculator,
             container,
@@ -49,36 +53,55 @@ class CalculatorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeCumulatedLp()
+//        observeCumulatedViewModel()
+        observeNormalViewModel()
+        observeBaseViewModel()
     }
 
-    private fun observeCumulatedLp() {
-        viewmodel.cumulatedLp.observe(viewLifecycleOwner, Observer {
-            if (it == -1) {
-                binding.etCumulatedLp.setText(R.string.halve)
-            } else {
-                animateValue(viewmodel.previousCumulatedLp, it, binding.etCumulatedLp)
-            }
+    private fun observeNormalViewModel() {
+        viewmodel.actionLp.observe(viewLifecycleOwner, Observer {
+                binding.tvActionLp.text = it.toString()
         })
+    }
 
-        viewmodel.playerOneLp.observe(viewLifecycleOwner, Observer {
-            animateValue(viewmodel.previousPlayerLp, it, binding.tvPlayerOneLp)
+//    private fun observeCumulatedViewModel() {
+//        viewmodel.actionLp.observe(viewLifecycleOwner, Observer {
+//            animateValue(viewmodel.previousActionLp, it, binding.tvActionLp)
+//        })
+//
+//        viewmodel.isHalve.observe(viewLifecycleOwner, Observer {
+//            binding.tvActionLp.setText(R.string.halve)
+//        })
+//    }
+
+    // TODO: clean up
+    private fun observeBaseViewModel() {
+        viewmodel.playerOneLp.observe(viewLifecycleOwner, Observer { currentPlayerLp ->
+            animateValue(viewmodel.previousPlayerLp, currentPlayerLp, binding.tvPlayerOneLp)
             animateLpBar(
                 viewmodel.previousPlayerLp,
-                it,
+                currentPlayerLp,
                 binding.vBarPlayerOneLp,
                 binding.vBarPlayerOneLpBackground.width
             )
+            animateValue(viewmodel.previousActionLp, 0, binding.tvActionLp)
         })
 
-        viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer {
-            animateValue(viewmodel.previousPlayerLp, it, binding.tvPlayerTwoLp)
+        viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer { currentPlayerLp ->
+            animateValue(viewmodel.previousPlayerLp, currentPlayerLp, binding.tvPlayerTwoLp)
             animateLpBar(
                 viewmodel.previousPlayerLp,
-                it,
+                currentPlayerLp,
                 binding.vBarPlayerTwoLp,
                 binding.vBarPlayerOneLpBackground.width
             )
+            animateValue(viewmodel.previousActionLp, 0, binding.tvActionLp)
+        })
+
+        viewmodel.timer.duelTime.observe(viewLifecycleOwner, Observer {
+            binding.ibDuelTime.visibility = View.INVISIBLE
+            binding.tvDuelTime.visibility = View.VISIBLE
+            binding.tvDuelTime.text = it
         })
     }
 
@@ -88,7 +111,16 @@ class CalculatorFragment : Fragment() {
             this.addUpdateListener {
                 text.text = it.animatedValue.toString()
             }
+//            this.addListener {
+//                doOnEnd {  }
+//            }
+//            this.addListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationEnd(animation: Animator) {
+//
+//                }
+//            })
         }.start()
+
     }
 
     private fun animateLpBar(currLp: Int, newLp: Int, view: View, width: Int) {
@@ -102,7 +134,6 @@ class CalculatorFragment : Fragment() {
                     ans >= width -> view.layoutParams.width = width
                     else -> view.layoutParams.width = ans.toInt()
                 }
-
                 view.requestLayout()
             }
         }.start()

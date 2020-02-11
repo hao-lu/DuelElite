@@ -3,73 +3,38 @@ package com.lucidity.haolu.lifepointcalculator.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
+import com.lucidity.haolu.lifepointcalculator.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.model.Player
 
-class CalculatorViewModel : ViewModel() {
+abstract class CalculatorViewModel : ViewModel() {
 
-    private val calculator = LifePointCalculator()
+    private val DUEL_TIME = 2400000L
+    private val INTERVAL_TIME = 1000L
+    val timer = PausableCountDownTimer(DUEL_TIME, INTERVAL_TIME)
 
-    private val _cumulatedLp: MutableLiveData<Int> = MutableLiveData()
-    val cumulatedLp: LiveData<Int> = _cumulatedLp
-
-    private val _playerOneLp: MutableLiveData<Int> = MutableLiveData()
+    protected val _playerOneLp: MutableLiveData<Int> = MutableLiveData()
     val playerOneLp: LiveData<Int> = _playerOneLp
-
-    private val _playerTwoLp: MutableLiveData<Int> = MutableLiveData()
+    protected val _playerTwoLp: MutableLiveData<Int> = MutableLiveData()
     val playerTwoLp: LiveData<Int> = _playerTwoLp
+    protected val _actionLp: MutableLiveData<Int> = MutableLiveData()
+    val actionLp: LiveData<Int> = _actionLp
+    protected var _previousPlayerLp: Int = 0
+    val previousPlayerLp
+        get() = _previousPlayerLp
+    protected var _previousActionLp: Int = 0
+    val previousActionLp
+        get() = _previousActionLp
 
-    var previousCumulatedLp: Int = 0
-        private set
+    abstract fun onNumberClicked(num: String)
+    abstract fun onAddClicked(player: Player)
+    abstract fun onSubtractClicked(player: Player)
+    abstract fun onClearClicked()
 
-    var previousPlayerLp: Int = 0
-        private set
-
-    fun reset() {
-        calculator.reset()
-        previousCumulatedLp = calculator.getCumulatedTurnLp()
-        previousPlayerLp = calculator.getPlayerOneLp()
+    open fun reset() {
+        timer.cancel()
     }
 
-    fun onPresetNumberClicked(lp: String) {
-        previousCumulatedLp = calculator.getCumulatedTurnLp()
-        calculator.addCumulatedTurnLp(lp.toInt())
-        _cumulatedLp.value = calculator.getCumulatedTurnLp()
-    }
-
-    fun onAddClicked(player: Player) {
-        setPreviousLps(player)
-        calculator.addLp(player)
-        updateLpView(player)
-    }
-
-    fun onSubtractClicked(player: Player) {
-        setPreviousLps(player)
-        if (calculator.isCumulatedHalve()) calculator.halveLp(player) else calculator.subtractLp(player)
-        updateLpView(player)
-    }
-
-    private fun updateLpView(player: Player) {
-        if (player == Player.ONE) _playerOneLp.value = calculator.getPlayerOneLp()
-        else _playerTwoLp.value = calculator.getPlayerTwoLp()
-        _cumulatedLp.value = calculator.getCumulatedTurnLp()
-    }
-
-    fun onHalveClicked() {
-        calculator.setCumulatedToHalve()
-        _cumulatedLp.value = calculator.getCumulatedTurnLp()
-    }
-
-    fun onClearClicked() {
-        calculator.clearCumulatedTurnLp()
-        previousCumulatedLp = calculator.getCumulatedTurnLp()
-        _cumulatedLp.value = calculator.getCumulatedTurnLp()
-    }
-
-    // Used to decrement animation of life points
-    private fun setPreviousLps(player: Player) {
-        previousPlayerLp = if (player == Player.ONE) calculator.getPlayerOneLp()
-        else calculator.getPlayerTwoLp()
-        previousCumulatedLp = if (calculator.isCumulatedHalve()) 0 else calculator.getCumulatedTurnLp()
+    fun onTimerClicked() {
+        if (timer.isRunning) timer.pause() else timer.start()
     }
 }
