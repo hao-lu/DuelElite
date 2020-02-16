@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel" />
@@ -115,12 +117,12 @@
             android:id="@+id/tv_duel_time"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
+            android:background="@drawable/ripple_effect"
             android:elevation="@dimen/shadow_elevation"
             android:gravity="center"
             android:onClick="@{() -> viewmodel.onTimerClicked()}"
             android:textSize="20sp"
             android:visibility="invisible"
-            android:background="@drawable/ripple_effect"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
             app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
             app:layout_constraintStart_toStartOf="@id/v_utility_background"
@@ -132,10 +134,12 @@
             android:layout_height="wrap_content"
             android:elevation="@dimen/shadow_elevation"
             android:src="@drawable/ic_arrow_drop_down"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
             app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
             app:layout_constraintStart_toEndOf="@id/ib_duel_time"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            app:layout_constraintTop_toTopOf="@id/v_utility_background"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_action_lp"
@@ -145,7 +149,6 @@
             android:elevation="@dimen/shadow_elevation"
             android:gravity="center"
             android:hint="1750"
-            android:inputType="number"
             android:maxLength="6"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -160,10 +163,12 @@
             android:layout_height="wrap_content"
             android:elevation="@dimen/shadow_elevation"
             android:src="@drawable/ic_arrow_drop_up"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
             app:layout_constraintEnd_toStartOf="@id/ib_history"
             app:layout_constraintStart_toEndOf="@id/tv_action_lp"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            app:layout_constraintTop_toTopOf="@id/v_utility_background"
+            tools:visibility="visible" />
 
         <ImageButton
             android:id="@+id/ib_history"
@@ -238,7 +243,7 @@
 
         <include
             android:id="@+id/l_input"
-            layout="@layout/layout_normal_input"
+            layout="@layout/layout_accumulated_input"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:elevation="@dimen/shadow_elevation"

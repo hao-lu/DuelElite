@@ -1,6 +1,6 @@
 package com.lucidity.haolu.lifepointcalculator.model
-
-abstract class LifePointCalculator {
+ 
+class LifePointCalculator {
 
     companion object {
         const val START_LP = 8000
@@ -8,10 +8,10 @@ abstract class LifePointCalculator {
         const val MAX_LIFE_POINT = 999999
     }
 
-    protected var _playerOneLp = START_LP
+    private var _playerOneLp = START_LP
     val playerOneLp
         get() = _playerOneLp
-    protected var _playerTwoLp = START_LP
+    private var _playerTwoLp = START_LP
     val playerTwoLp
         get() = _playerTwoLp
 
@@ -35,10 +35,15 @@ abstract class LifePointCalculator {
     private fun subtract(currLp: Int, turnLp: Int) =
             if (currLp - turnLp < MIN_LIFE_POINT) MIN_LIFE_POINT else currLp - turnLp
 
-    open fun reset() {
+    fun reset() {
         _playerOneLp = START_LP
         _playerTwoLp = START_LP
     }
+
+    fun getPlayerLifePoint(player: Player): Int {
+        return if (player == Player.ONE) playerOneLp else playerTwoLp
+    }
+
 }
 
 enum class Player {

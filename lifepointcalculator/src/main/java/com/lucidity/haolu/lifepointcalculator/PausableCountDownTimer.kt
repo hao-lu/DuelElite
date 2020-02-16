@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import java.util.concurrent.TimeUnit
 
 class PausableCountDownTimer(
-    private val startTime: Long,
-    private val intervalTime: Long
+    private val startTime: Long = 2400000L,
+    private val intervalTime: Long = 1000L
 ) {
     private lateinit var timer: CountDownTimer
     private val _duelTime: MutableLiveData<String> = MutableLiveData()
@@ -16,6 +16,8 @@ class PausableCountDownTimer(
         private set
     var remainingTime: Long = startTime
         private set
+    var formattedRemainingTime: String = formatTimeToHourMinute(startTime)
+        private set
 
     fun start() {
         if (!isRunning) {
@@ -23,6 +25,7 @@ class PausableCountDownTimer(
                 override fun onTick(millisUntilFinished: Long) {
                     remainingTime = millisUntilFinished
                     _duelTime.value = formatTimeToHourMinute(millisUntilFinished)
+                    formattedRemainingTime = _duelTime.value.toString()
                 }
 
                 override fun onFinish() {

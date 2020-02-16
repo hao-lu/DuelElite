@@ -221,56 +221,56 @@
 
                     <Button
                         android:id="@+id/button_one_hundred"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="numberButtonClicked"
                         android:text="@string/one_hundred" />
 
                     <Button
                         android:id="@+id/button_two_hundred"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="numberButtonClicked"
                         android:text="@string/two_hundred" />
 
                     <Button
                         android:id="@+id/button_five_hundred"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="numberButtonClicked"
                         android:text="@string/five_hundred" />
 
                     <Button
                         android:id="@+id/button_one_thousand"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="numberButtonClicked"
                         android:text="@string/one_thousand" />
 
                     <Button
                         android:id="@+id/button_two_thousand"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="numberButtonClicked"
                         android:text="@string/two_thousand" />
 
                     <Button
                         android:id="@+id/button_halve"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="halfButtonClicked"
                         android:text="@string/halve" />
 
                     <Button
                         android:id="@+id/button_clear"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:onClick="clearButtonClicked"
                         android:text="CLEAR" />
 
                     <Button
                         android:id="@+id/button_log_lp"
-                        style="@style/Button.Cumulated"
+                        style="@style/Button.Accumulated"
                         android:background="@drawable/ripple_effect"
                         android:text="@string/log"
                         android:onClick="logButtonClicked"/>

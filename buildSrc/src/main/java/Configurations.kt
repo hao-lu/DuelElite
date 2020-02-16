@@ -27,6 +27,8 @@ object AndroidX {
     const val LEGACY_SUPPORT_V4 = "androidx.legacy:legacy-support-v4:1.0.0"
     const val LIFECYCLE_EXTENSION = "androidx.lifecycle:lifecycle-extensions:2.2.0"
     const val MATERIAL = "com.google.android.material:material:1.0.0"
+    const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment:2.2.1"
+    const val NAVIGATION_UI = "androidx.navigation:navigation-ui:2.2.1"
     const val PALETTE = "androidx.palette:palette:1.0.0"
 }
 

@@ -36,6 +36,8 @@ dependencies {
     implementation AndroidX.CORE
     implementation AndroidX.CORE_KTX
     implementation AndroidX.LIFECYCLE_EXTENSION
+    implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_UI
 
     // Test
     testImplementation Tests.JUNIT
