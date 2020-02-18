@@ -29,7 +29,7 @@ class LogRecyclerViewAdapter(val mLog: LifePointCalculator.Log) : RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.log_item, parent, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.log_item_new, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -9,7 +9,6 @@
     <string name="halve">HALVE</string>
     <string name="custom">Custom</string>
     <string name="clear">CLEAR</string>
-    <string name="log">LOG</string>
     <string name="empty"></string>
 
     <string name="start_lp">8000</string>
@@ -26,5 +25,12 @@
     <string name="double_zero_literal">00</string>
     <string name="zero_literal">0</string>
     <string name="c_literal">C</string>
+    
+    <string name="player">PLAYER</string>
+    <string name="action_lp">ACTION LP</string>
+    <string name="total_lp">TOTAL LP</string>
+    <string name="time">TIME</string>
+
+    <string name="title_log">Log</string>
 
 </resources>

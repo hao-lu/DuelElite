@@ -11,6 +11,7 @@ import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.databinding.ActivityBottomNavigationBinding
 import com.lucidity.haolu.duelking.view.BottomNavigationViewModel
 import com.lucidity.haolu.lifepointcalculator.view.CalculatorFragment
+import com.lucidity.haolu.lifepointcalculator.view.LogFragment
 
 class BottomNavigationActivity : AppCompatActivity() {
 
@@ -55,6 +56,10 @@ class BottomNavigationActivity : AppCompatActivity() {
                 }
                 R.id.navigation_random -> {
                     supportFragmentManager.popBackStack()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, LogFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 R.id.navigation_search -> {
