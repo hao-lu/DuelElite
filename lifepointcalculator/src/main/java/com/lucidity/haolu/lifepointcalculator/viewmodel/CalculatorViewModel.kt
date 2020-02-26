@@ -12,7 +12,7 @@ import com.lucidity.haolu.lifepointcalculator.model.Player
 
 class CalculatorViewModel : ViewModel() {
 
-    private val calculator = LifePointCalculator()
+    val calculator = LifePointCalculator()
 //    val log: MutableList<LifePointLogItem> = mutableListOf()
     val log: LifePointLog = LifePointLog(mutableListOf())
     val timer = PausableCountDownTimer()
@@ -67,7 +67,8 @@ class CalculatorViewModel : ViewModel() {
             val previousLp = calculator.getPlayerLifePoint(player)
             calculator.addLp(player, lp.second)
             val currLp = calculator.getPlayerLifePoint(player)
-            updateLpView(player, previousLp, currLp, R.drawable.ic_arrow_drop_up)
+            updatePlayerLpView(player, previousLp, currLp)
+            updateActionLpView()
             logLp(player.name, currLp - previousLp, currLp, timer.formattedRemainingTime)
         }
     }
@@ -82,7 +83,8 @@ class CalculatorViewModel : ViewModel() {
                 calculator.subtractLp(player, lp.second)
             }
             val currLp = calculator.getPlayerLifePoint(player)
-            updateLpView(player, previousLp, currLp, R.drawable.ic_arrow_drop_down)
+            updatePlayerLpView(player, previousLp, currLp)
+            updateActionLpView()
             logLp(player.name, currLp - previousLp, currLp, timer.formattedRemainingTime)
         }
     }
@@ -97,7 +99,10 @@ class CalculatorViewModel : ViewModel() {
 
     fun reset() {
         calculator.reset()
+        log.reset()
         timer.cancel()
+        updatePlayerLpView(Player.ONE, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
+        updatePlayerLpView(Player.TWO, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
     }
 
     fun onTimerClicked() {
@@ -109,16 +114,21 @@ class CalculatorViewModel : ViewModel() {
         onClearClicked()
     }
 
-    private fun updateLpView(player: Player, previousLp: Int, currLp: Int, drawableId: Int) {
+    private fun updatePlayerLpView(player: Player, previousLp: Int, currLp: Int) {
         if (player == Player.ONE) _playerOneLp.value = Pair(previousLp, currLp)
         else _playerTwoLp.value = Pair(previousLp, currLp)
+    }
+
+    private fun updateActionLpView() {
         val previousActionLp = if (_actionLp.value?.second == null) 0 else _actionLp.value?.second!!
         _actionLp.value = Pair(previousActionLp, 0)
     }
 
     private fun logLp(player: String, actionLp: Int, totalLp: Int, time: String) {
-        log.add(LifePointLogItem(player, actionLp, totalLp, time))
-        _actionLpHint.value = log.getLatestEntry()
+        if (actionLp != 0) {
+            log.add(LifePointLogItem(player, actionLp, totalLp, time))
+            _actionLpHint.value = log.getLatestEntry()
+        }
     }
 
     enum class CalculatorInput {

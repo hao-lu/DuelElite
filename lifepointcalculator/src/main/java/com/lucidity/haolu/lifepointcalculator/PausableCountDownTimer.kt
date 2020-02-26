@@ -18,6 +18,8 @@ class PausableCountDownTimer(
         private set
     var formattedRemainingTime: String = formatTimeToHourMinute(startTime)
         private set
+    val isStarted: Boolean
+        get() = remainingTime != startTime
 
     fun start() {
         if (!isRunning) {

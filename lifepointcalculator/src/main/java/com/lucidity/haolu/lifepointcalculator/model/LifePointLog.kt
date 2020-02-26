@@ -13,6 +13,8 @@ data class LifePointLog(private val log: MutableList<LifePointLogItem>) : Parcel
 
     fun getLatestEntry() = log.last()
 
+    fun reset() = log.clear()
+
     constructor(source: Parcel) : this(
         source.createTypedArrayList(LifePointLogItem.CREATOR)
     )

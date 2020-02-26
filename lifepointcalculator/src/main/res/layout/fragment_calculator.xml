@@ -148,7 +148,7 @@
             android:background="@android:color/transparent"
             android:elevation="@dimen/shadow_elevation"
             android:gravity="center"
-            android:hint="1750"
+            android:hint="@string/action_lp_hint"
             android:maxLength="6"
             android:textAlignment="center"
             android:textSize="30sp"

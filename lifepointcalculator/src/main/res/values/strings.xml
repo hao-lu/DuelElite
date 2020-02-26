@@ -32,5 +32,6 @@
     <string name="time">TIME</string>
 
     <string name="title_log">Log</string>
+    <string name="action_lp_hint">0000</string>
 
 </resources>
