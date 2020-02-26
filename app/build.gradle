@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion Versions.COMPILE_SDK
@@ -42,6 +43,8 @@ dependencies {
     implementation AndroidX.LEGACY_SUPPORT_V4
     implementation AndroidX.LIFECYCLE_EXTENSION
     implementation AndroidX.MATERIAL
+    implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_UI
     implementation AndroidX.PALETTE
 
     testImplementation Tests.JUNIT

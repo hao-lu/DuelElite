@@ -64,10 +64,10 @@ class TipsFragment : Fragment() {
                 val context = article.getElementById("mw-content-text")
                 val children = context.children()
                 for (c in children) {
-//                    if (c.`is`("ul")) Log.d(TAG, c.text())
+//                    if (c.`is`("ul")) LifePointLog.d(TAG, c.text())
                     if (c.text() == "Traditional Format" || c.text() == "List")
                         break
-//                    Log.d(TAG, c.text())
+//                    LifePointLog.d(TAG, c.text())
                     if (c.`is`("ul")) mTipsList.add(c.text())
                 }
 

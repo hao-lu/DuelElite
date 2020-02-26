@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_calculator"
+    app:startDestination="@id/fragment_calculator"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/fragment_calculator"
+        android:name="com.lucidity.haolu.lifepointcalculator.view.CalculatorFragment"
+        android:label="Calculator"
+        tools:layout="@layout/fragment_calculator">
+
+        <action
+            android:id="@+id/action_fragment_calculator_to_fragment_log"
+            app:destination="@id/fragment_log">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_log"
+        android:name="com.lucidity.haolu.lifepointcalculator.view.LogFragment"
+        android:label="Log"
+        tools:layout="@layout/fragment_log">
+        <argument
+            android:name="logArg"
+            app:argType="com.lucidity.haolu.lifepointcalculator.model.LifePointLog"/>
+    </fragment>
+
+</navigation>

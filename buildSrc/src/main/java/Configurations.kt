@@ -9,6 +9,7 @@ object Versions {
 object GradlePlugin {
     const val ANDROID = "com.android.tools.build:gradle:3.5.0"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
+    const val NAVIGATION_SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.1"
     const val REALM = "io.realm:realm-gradle-plugin:5.15.1"
 }
 

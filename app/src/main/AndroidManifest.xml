@@ -21,7 +21,7 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <!-- Log Activity -->
+        <!-- LifePointLog Activity -->
         <activity android:name="com.lucidity.haolu.duelking.view.activity.LogActivity"
             android:label="@string/title_log_activity">
         </activity>

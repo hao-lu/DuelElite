@@ -17,14 +17,14 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tv_player"
             style="@style/TextAppearance.LogTitle"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="@string/player"
             app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
             app:layout_constraintStart_toStartOf="parent"

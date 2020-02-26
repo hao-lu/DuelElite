@@ -3,17 +3,17 @@
     <item
         android:id="@+id/navigation_calculator"
         android:icon="@drawable/ic_calculator"
-        android:title="Calculator" />
+        android:title="@string/title_calculator" />
     <item
-        android:id="@+id/navigation_random"
+        android:id="@+id/navigation_log"
         android:icon="@drawable/ic_dice_2"
-        android:title="Random" />
+        android:title="@string/title_random" />
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search"
-        android:title="Search" />
+        android:title="@string/title_search" />
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:title="@string/title_settings" />
 </menu>

@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(), CustomLpFragment.CustomLpDialogListene
                     val ans = it.animatedValue.toString().toDouble() / 8000 * width
                     val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)
                     bar_player_one.layoutParams = ll
-//                    Log.d(TAG, it.animatedValue.toString())
+//                    LifePointLog.d(TAG, it.animatedValue.toString())
                 } else if (text.id == R.id.text_player_two_lp) {
                     val ans = it.animatedValue.toString().toDouble() / 8000 * width
                     val ll = FrameLayout.LayoutParams(ans.toInt(), FrameLayout.LayoutParams.MATCH_PARENT)

@@ -46,7 +46,7 @@ class LifePointCalculator : BaseObservable() {
     }
 
     /**
-     * Log item containing: mPlayer, mOperation, cumulatedLP, totalLp
+     * LifePointLog item containing: mPlayer, mOperation, cumulatedLP, totalLp
      */
 
     data class LogItem(val mPlayer: String, val mOperation: String, val mTurnLp: Int, val mTotalLp: Int) : Parcelable {

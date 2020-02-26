@@ -41,4 +41,9 @@
     <string name="round_over">Round Over</string>
     <string name="lp_hint">1750</string>
 
+    <string name="title_calculator">Calculator</string>
+    <string name="title_random">Random</string>
+    <string name="title_search">Search</string>
+    <string name="title_settings">Settings</string>
+
 </resources>

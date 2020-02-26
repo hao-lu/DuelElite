@@ -7,25 +7,32 @@ import com.lucidity.haolu.lifepointcalculator.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem
+import com.lucidity.haolu.lifepointcalculator.model.LifePointLog
 import com.lucidity.haolu.lifepointcalculator.model.Player
 
 class CalculatorViewModel : ViewModel() {
 
     private val calculator = LifePointCalculator()
-    private val log: MutableList<LifePointLogItem> = mutableListOf()
-
+//    val log: MutableList<LifePointLogItem> = mutableListOf()
+    val log: LifePointLog = LifePointLog(mutableListOf())
     val timer = PausableCountDownTimer()
-    private val _playerOneLp: MutableLiveData<Triple<Int, Int, Int>> = MutableLiveData()
-    val playerOneLp: LiveData<Triple<Int, Int, Int>> = _playerOneLp
-    private val _playerTwoLp: MutableLiveData<Triple<Int, Int, Int>> = MutableLiveData()
-    val playerTwoLp: LiveData<Triple<Int, Int, Int>> = _playerTwoLp
+
+    private val _playerOneLp: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+    val playerOneLp: LiveData<Pair<Int, Int>> = _playerOneLp
+    private val _playerTwoLp: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+    val playerTwoLp: LiveData<Pair<Int, Int>> = _playerTwoLp
     private val _actionLp: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
     val actionLp: LiveData<Pair<Int, Int>> = _actionLp
-    private val _halve: MutableLiveData<Int> = MutableLiveData()
-    val halve = _halve
+    private val _actionLpHint: MutableLiveData<LifePointLogItem> = MutableLiveData()
+    val actionLpHint: LiveData<LifePointLogItem> = _actionLpHint
+
+    var animate: Boolean = false
+        private set
+    var halve = false
+        private set
 
     fun onNumberClicked(num: String) {
-        _halve.value = R.string.empty
+        halve = false
         when (CalculatorInput.ACCUMULATED) {
             CalculatorInput.NORMAL -> {
                 val appendNum = appendNum(_actionLp.value?.second, num)
@@ -61,20 +68,22 @@ class CalculatorViewModel : ViewModel() {
             calculator.addLp(player, lp.second)
             val currLp = calculator.getPlayerLifePoint(player)
             updateLpView(player, previousLp, currLp, R.drawable.ic_arrow_drop_up)
+            logLp(player.name, currLp - previousLp, currLp, timer.formattedRemainingTime)
         }
     }
 
     fun onSubtractClicked(player: Player) {
         _actionLp.value?.let { lp ->
             val previousLp = calculator.getPlayerLifePoint(player)
-            if (isHalveOrNull(_halve.value)) {
+            if (halve) {
                 calculator.subtractLp(player, previousLp / 2)
+                halve = false
             } else {
                 calculator.subtractLp(player, lp.second)
             }
             val currLp = calculator.getPlayerLifePoint(player)
             updateLpView(player, previousLp, currLp, R.drawable.ic_arrow_drop_down)
-            logLp(player.name, previousLp - currLp, currLp, timer.formattedRemainingTime)
+            logLp(player.name, currLp - previousLp, currLp, timer.formattedRemainingTime)
         }
     }
 
@@ -96,24 +105,33 @@ class CalculatorViewModel : ViewModel() {
     }
 
     fun onHalveClicked() {
+        halve = true
         onClearClicked()
-        _halve.value = R.string.halve
     }
 
     private fun updateLpView(player: Player, previousLp: Int, currLp: Int, drawableId: Int) {
-        if (player == Player.ONE) _playerOneLp.value = Triple(previousLp, currLp, drawableId)
-        else _playerTwoLp.value = Triple(previousLp, currLp, drawableId)
+        if (player == Player.ONE) _playerOneLp.value = Pair(previousLp, currLp)
+        else _playerTwoLp.value = Pair(previousLp, currLp)
         val previousActionLp = if (_actionLp.value?.second == null) 0 else _actionLp.value?.second!!
         _actionLp.value = Pair(previousActionLp, 0)
     }
 
     private fun logLp(player: String, actionLp: Int, totalLp: Int, time: String) {
         log.add(LifePointLogItem(player, actionLp, totalLp, time))
+        _actionLpHint.value = log.getLatestEntry()
     }
 
     enum class CalculatorInput {
         NORMAL,
         ACCUMULATED
+    }
+
+    fun onResume() {
+        animate = true
+    }
+
+    fun onPause() {
+        animate = false
     }
 
 }

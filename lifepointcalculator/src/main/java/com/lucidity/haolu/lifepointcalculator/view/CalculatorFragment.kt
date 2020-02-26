@@ -8,14 +8,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
+import com.lucidity.haolu.lifepointcalculator.model.Player
 import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
+import kotlin.math.abs
 
 class CalculatorFragment : Fragment() {
 
@@ -46,69 +50,117 @@ class CalculatorFragment : Fragment() {
         )
         binding.viewmodel = viewmodel
         binding.lInput.viewmodel = viewmodel
+        binding.ibHistory.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable("LOG_BUNDLE_KEY", viewmodel.log)
+//            val action = CalculatorFragmentDirections.actionFragmentCalculatorToFragmentLog(viewmodel.log)
+            findNavController(this).navigate(
+                R.id.action_fragment_calculator_to_fragment_log,
+                bundle
+            )
+        }
+
         return binding.root
     }
 
+    // move to createview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeNormalViewModel()
-        observeBaseViewModel()
+        observeActionLp()
+        observeActionHint()
+        observeDuelTime()
+        observePlayerOneLp()
+        observePlayerTwoLp()
     }
 
     override fun onResume() {
         super.onResume()
+        viewmodel.onResume()
     }
 
-    private fun observeNormalViewModel() {
+    override fun onPause() {
+        super.onPause()
+        viewmodel.onPause()
+    }
+
+    private fun observeActionLp() {
         viewmodel.actionLp.observe(viewLifecycleOwner, Observer { lp ->
-            if (lp.first == lp.second) {
+            if (viewmodel.animate && lp.first != lp.second) {
+                animateLpValue(lp.first, lp.second, binding.tvActionLp, true)
+            } else if (viewmodel.halve) {
+                binding.tvActionLp.text = resources.getText(R.string.halve)
+            } else if (lp.second == 0) {
                 binding.tvActionLp.text = resources.getText(R.string.empty)
             } else {
-                animateValue(lp.first, lp.second, binding.tvActionLp, true)
+                binding.tvActionLp.text = lp.second.toString()
             }
-        })
-
-        viewmodel.halve.observe(viewLifecycleOwner, Observer { stringId ->
-            binding.tvActionLp.text = resources.getText(stringId)
         })
     }
 
-    // TODO: clean up
-    private fun observeBaseViewModel() {
+    private fun observeActionHint() {
+        viewmodel.actionLpHint.observe(viewLifecycleOwner, Observer { logItem ->
+            binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
+            binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
+            val drawableId = if (logItem.actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
+            val indicatorIcon = if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
+            indicatorIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableId))
+            indicatorIcon.visibility = View.VISIBLE
+            binding.tvActionLp.hint = abs(logItem.actionLp).toString()
+        })
+    }
+
+    private fun observePlayerOneLp() {
         viewmodel.playerOneLp.observe(viewLifecycleOwner, Observer { lp ->
-            animateValue(lp.first, lp.second, binding.tvPlayerOneLp, false)
-            animateLpBar(
-                lp.first,
-                lp.second,
+            animatePlayerLp(
+                lp,
+                binding.tvPlayerOneLp,
                 binding.vBarPlayerOneLp,
                 binding.vBarPlayerOneLpBackground.width
             )
-            binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
-            binding.ivPlayerOneLastLpIndicator.setImageDrawable(ContextCompat.getDrawable(requireContext(), lp.third))
-            binding.ivPlayerOneLastLpIndicator.visibility = View.VISIBLE
-        })
-
-        viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
-            animateValue(lp.first, lp.second, binding.tvPlayerTwoLp, false)
-            animateLpBar(
-                lp.first,
-                lp.second,
-                binding.vBarPlayerTwoLp,
-                binding.vBarPlayerOneLpBackground.width
-            )
-            binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
-            binding.ivPlayerTwoLastLpIndicator.setImageDrawable(ContextCompat.getDrawable(requireContext(), lp.third))
-            binding.ivPlayerTwoLastLpIndicator.visibility = View.VISIBLE
-        })
-
-        viewmodel.timer.duelTime.observe(viewLifecycleOwner, Observer {
-            binding.ibDuelTime.visibility = View.INVISIBLE
-            binding.tvDuelTime.visibility = View.VISIBLE
-            binding.tvDuelTime.text = it
         })
     }
 
-    private fun animateValue(currLp: Int, newLp: Int, text: TextView, clearText: Boolean) {
+    private fun observePlayerTwoLp() {
+        viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
+            animatePlayerLp(
+                lp,
+                binding.tvPlayerTwoLp,
+                binding.vBarPlayerTwoLp,
+                binding.vBarPlayerTwoLpBackground.width
+            )
+        })
+    }
+
+    private fun observeDuelTime() {
+        viewmodel.timer.duelTime.observe(viewLifecycleOwner, Observer { duelTime ->
+            binding.ibDuelTime.visibility = View.INVISIBLE
+            binding.tvDuelTime.visibility = View.VISIBLE
+            binding.tvDuelTime.text = duelTime
+        })
+    }
+
+    private fun calculateLpBarWidth(lp: Int, width: Int) =
+        (lp.toDouble() / LifePointCalculator.START_LP * width).toInt()
+
+    private fun animatePlayerLp(
+        lp: Pair<Int, Int>,
+        lpTextView: TextView,
+        lpBar: View,
+        lpWidth: Int
+    ) {
+        if (viewmodel.animate) {
+            animateLpValue(lp.first, lp.second, lpTextView, false)
+            animateLpBar(lp.first, lp.second, lpBar, lpWidth)
+        } else {
+            lpTextView.text = lp.second.toString()
+            binding.root.doOnLayout {
+                lpBar.layoutParams.width = calculateLpBarWidth(lp.second, lpWidth)
+                lpBar.requestLayout()
+            }
+        }
+    }
+
+    private fun animateLpValue(currLp: Int, newLp: Int, text: TextView, clearText: Boolean) {
         ValueAnimator.ofInt(currLp, newLp).apply {
             this.duration = ANIMATION_DURATION
             this.addUpdateListener {
@@ -116,7 +168,9 @@ class CalculatorFragment : Fragment() {
             }
             this.addUpdateListener { value ->
                 doOnEnd {
-                    if (value.animatedValue.toString().toInt() == 0 && clearText) text.text = resources.getText(R.string.empty)
+                    if (value.animatedValue.toString().toInt() == 0 && clearText) {
+                        text.text = resources.getText(R.string.empty)
+                    }
                 }
             }
         }.start()
@@ -127,7 +181,8 @@ class CalculatorFragment : Fragment() {
             this.duration = ANIMATION_DURATION
             this.addUpdateListener {
                 // Animate the bar, use double or there's truncation with int
-                val ans = (it.animatedValue.toString().toDouble() / LifePointCalculator.START_LP * width)
+                val ans =
+                    (it.animatedValue.toString().toDouble() / LifePointCalculator.START_LP * width)
                 when {
                     ans.toInt() == 0 -> view.visibility = View.GONE
                     ans >= width -> view.layoutParams.width = width
