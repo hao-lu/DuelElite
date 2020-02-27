@@ -1,8 +1,9 @@
-package com.lucidity.haolu.lifepointcalculator
+package com.lucidity.haolu.lifepointcalculator.view.adapter
 
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.lucidity.haolu.lifepointcalculator.R
 
 @BindingAdapter("styleTextByGainOrLoss")
 fun styleTextByGainOrLoss(textView: TextView, lp: Int ) {

@@ -1,4 +1,4 @@
-package com.lucidity.haolu.lifepointcalculator.view
+package com.lucidity.haolu.lifepointcalculator.view.fragment
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -23,6 +23,7 @@ import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.Player
+import com.lucidity.haolu.lifepointcalculator.util.Constants
 import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
 import kotlin.math.abs
 
@@ -34,7 +35,8 @@ class CalculatorFragment : Fragment() {
     private val ANIMATION_DURATION: Long = 500
 
     companion object {
-        fun newInstance() = CalculatorFragment()
+        fun newInstance() =
+            CalculatorFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +59,7 @@ class CalculatorFragment : Fragment() {
         binding.lInput.viewmodel = viewmodel
         binding.ibHistory.setOnClickListener {
             val bundle = Bundle()
-            bundle.putParcelable("LOG_BUNDLE_KEY", viewmodel.log)
-//            val action = CalculatorFragmentDirections.actionFragmentCalculatorToFragmentLog(viewmodel.log)
+            bundle.putParcelable(Constants.BUNDLE_KEY_LIFE_POINT_LOG, viewmodel.log)
             findNavController(this).navigate(
                 R.id.action_fragment_calculator_to_fragment_log,
                 bundle
@@ -67,7 +68,6 @@ class CalculatorFragment : Fragment() {
         return binding.root
     }
 
-    // move to createview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeActionLp()
@@ -98,9 +98,8 @@ class CalculatorFragment : Fragment() {
             } else if (lp.second == 0) { // Clear
                 binding.tvActionLp.text = resources.getText(R.string.empty)
                 val logItem = viewmodel.log.getLatestEntry()
-//                val drawableId = if (logItem.actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
-                val indicatorIcon = if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
-//                indicatorIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableId))
+                val indicatorIcon =
+                    if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
                 indicatorIcon.visibility = View.VISIBLE
             } else {
                 binding.tvActionLp.text = lp.second.toString()
@@ -112,8 +111,10 @@ class CalculatorFragment : Fragment() {
         viewmodel.actionLpHint.observe(viewLifecycleOwner, Observer { logItem ->
             binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
             binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
-            val drawableId = if (logItem.actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
-            val indicatorIcon = if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
+            val drawableId =
+                if (logItem.actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
+            val indicatorIcon =
+                if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
             indicatorIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableId))
             indicatorIcon.visibility = View.VISIBLE
             binding.tvActionLp.hint = abs(logItem.actionLp).toString()
@@ -152,8 +153,8 @@ class CalculatorFragment : Fragment() {
         })
     }
 
-    private fun calculateLpBarWidth(lp: Int, width: Int) =
-        (lp.toDouble() / LifePointCalculator.START_LP * width).toInt()
+    private fun calculateLpBarWidth(lp: Double, width: Int) =
+        (lp / LifePointCalculator.START_LP * width).toInt()
 
     private fun animatePlayerLp(
         lp: Pair<Int, Int>,
@@ -170,7 +171,7 @@ class CalculatorFragment : Fragment() {
         } else {
             lpTextView.text = lp.second.toString()
             binding.root.doOnLayout {
-                lpBar.layoutParams.width = calculateLpBarWidth(lp.second, lpBarBackground.width)
+                lpBar.layoutParams.width = calculateLpBarWidth(lp.second.toDouble(), lpBarBackground.width)
                 lpBar.requestLayout()
             }
         }
@@ -195,14 +196,14 @@ class CalculatorFragment : Fragment() {
     private fun animateLpBar(currLp: Int, newLp: Int, view: View, width: Int) {
         ValueAnimator.ofInt(currLp, newLp).apply {
             this.duration = ANIMATION_DURATION
-            this.addUpdateListener {
+            this.addUpdateListener { valueAnimator ->
                 // Animate the bar, use double or there's truncation with int
-                val ans =
-                    (it.animatedValue.toString().toDouble() / LifePointCalculator.START_LP * width)
+                val animatedValue = valueAnimator.animatedValue.toString()
+                val ans = calculateLpBarWidth(animatedValue.toDouble(), width)
                 when {
-                    ans.toInt() == 0 -> view.visibility = View.GONE
+                    ans == 0 -> view.visibility = View.GONE
                     ans >= width -> view.layoutParams.width = width
-                    else -> view.layoutParams.width = ans.toInt()
+                    else -> view.layoutParams.width = ans
                 }
                 view.requestLayout()
             }
@@ -213,7 +214,6 @@ class CalculatorFragment : Fragment() {
         val snackBar = Snackbar.make(binding.root, "Player 1 has won", 5000)
             .setAction("RESET", { reset() })
             .setActionTextColor(Color.WHITE)
-//        snackBar.view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yugi_blue))
         snackBar.config(requireContext())
         snackBar.show()
     }
@@ -229,7 +229,7 @@ class CalculatorFragment : Fragment() {
         binding.tvDuelTime.visibility = View.INVISIBLE
     }
 
-    // TODO: shared
+    // TODO: shared module
     fun Snackbar.config(context: Context) {
         val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
         val margin = context.resources.getDimension(R.dimen.snackbar_margins).toInt()

@@ -1,4 +1,4 @@
-package com.lucidity.haolu.lifepointcalculator
+package com.lucidity.haolu.lifepointcalculator.util
 
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit
 
 class PausableCountDownTimer(
     private val startTime: Long = 2400000L,
-    private val intervalTime: Long = 1000L
+    private val intervalTime: Long = 1000L,
+    private val finishMessage: String = "Round Over"
 ) {
     private lateinit var timer: CountDownTimer
     private val _duelTime: MutableLiveData<String> = MutableLiveData()
@@ -31,7 +32,7 @@ class PausableCountDownTimer(
                 }
 
                 override fun onFinish() {
-                    _duelTime.value = "Round Over"
+                    _duelTime.value = finishMessage
                 }
             }.start()
             isRunning = true

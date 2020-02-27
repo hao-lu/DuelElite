@@ -8,17 +8,13 @@ class LifePointCalculator {
         const val MAX_LIFE_POINT = 999999
     }
 
-    private var _playerOneLp = START_LP
-    val playerOneLp
-        get() = _playerOneLp
-    private var _playerTwoLp = START_LP
-    val playerTwoLp
-        get() = _playerTwoLp
+    private var playerOneLp = START_LP
+    private var playerTwoLp = START_LP
 
     fun addLp(player: Player, turnLp: Int) {
         when (player) {
-            Player.ONE -> _playerOneLp = add(playerOneLp, turnLp)
-            Player.TWO -> _playerTwoLp = add(playerTwoLp, turnLp)
+            Player.ONE -> playerOneLp = add(playerOneLp, turnLp)
+            Player.TWO -> playerTwoLp = add(playerTwoLp, turnLp)
         }
     }
 
@@ -27,8 +23,8 @@ class LifePointCalculator {
 
     fun subtractLp(player: Player, turnLp: Int) {
         when (player) {
-            Player.ONE -> _playerOneLp = subtract(playerOneLp, turnLp)
-            Player.TWO -> _playerTwoLp = subtract(playerTwoLp, turnLp)
+            Player.ONE -> playerOneLp = subtract(playerOneLp, turnLp)
+            Player.TWO -> playerTwoLp = subtract(playerTwoLp, turnLp)
         }
     }
 
@@ -36,14 +32,13 @@ class LifePointCalculator {
             if (currLp - turnLp < MIN_LIFE_POINT) MIN_LIFE_POINT else currLp - turnLp
 
     fun reset() {
-        _playerOneLp = START_LP
-        _playerTwoLp = START_LP
+        playerOneLp = START_LP
+        playerTwoLp = START_LP
     }
 
     fun getPlayerLifePoint(player: Player): Int {
         return if (player == Player.ONE) playerOneLp else playerTwoLp
     }
-
 }
 
 enum class Player {

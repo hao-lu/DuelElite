@@ -1,4 +1,4 @@
-package com.lucidity.haolu.lifepointcalculator.view
+package com.lucidity.haolu.lifepointcalculator.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lucidity.haolu.lifepointcalculator.LogRecyclerViewAdapter
+import com.lucidity.haolu.lifepointcalculator.view.adapter.LogRecyclerViewAdapter
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentLogBinding
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLog
+import com.lucidity.haolu.lifepointcalculator.util.Constants
 
 
 class LogFragment : Fragment() {
@@ -39,7 +40,7 @@ class LogFragment : Fragment() {
             container,
             false
         )
-        val log = arguments?.getParcelable<LifePointLog>("LOG_BUNDLE_KEY")
+        val log = arguments?.getParcelable<LifePointLog>(Constants.BUNDLE_KEY_LIFE_POINT_LOG)
         binding.rvLog.layoutManager = LinearLayoutManager(requireContext())
         binding.rvLog.adapter = LogRecyclerViewAdapter(log?.getReverseList() ?: emptyList())
         binding.rvLog.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))

@@ -3,7 +3,7 @@ package com.lucidity.haolu.lifepointcalculator.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidity.haolu.lifepointcalculator.PausableCountDownTimer
+import com.lucidity.haolu.lifepointcalculator.util.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem
@@ -13,7 +13,6 @@ import com.lucidity.haolu.lifepointcalculator.model.Player
 class CalculatorViewModel : ViewModel() {
 
     val calculator = LifePointCalculator()
-//    val log: MutableList<LifePointLogItem> = mutableListOf()
     val log: LifePointLog = LifePointLog(mutableListOf())
     val timer = PausableCountDownTimer()
 

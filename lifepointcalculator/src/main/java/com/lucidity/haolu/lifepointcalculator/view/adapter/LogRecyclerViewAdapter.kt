@@ -1,13 +1,13 @@
-package com.lucidity.haolu.lifepointcalculator
+package com.lucidity.haolu.lifepointcalculator.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.lucidity.haolu.lifepointcalculator.databinding.LogItemNewBinding
+import com.lucidity.haolu.lifepointcalculator.BR
+import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem
 
 class LogRecyclerViewAdapter(val log: List<LifePointLogItem>) :
@@ -27,18 +27,6 @@ class LogRecyclerViewAdapter(val log: List<LifePointLogItem>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val entry = log[position]
-//        val context = holder.binding?.tvActionLp?.context
-//        holder.binding?.apply {
-//            if (entry.actionLp < 0) {
-//                tvActionLp.setTextColor(ContextCompat.getColor(context!!, R.color.colorLose))
-//            } else {
-//                tvActionLp.setTextColor(ContextCompat.getColor(context!!, R.color.colorGain))
-//            }
-//            setVariable(BR.log, entry)
-//            executePendingBindings()
-//        }
-
         holder.binding?.apply {
             setVariable(BR.log, log[position])
             executePendingBindings()
