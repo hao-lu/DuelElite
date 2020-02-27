@@ -12,6 +12,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -233,6 +234,10 @@ class CalculatorFragment : Fragment() {
         val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
         val margin = context.resources.getDimension(R.dimen.snackbar_margins).toInt()
         params.setMargins(margin, margin, margin, margin)
+        this.view.setOnApplyWindowInsetsListener { v, insets ->
+            v.updatePadding(bottom = v.paddingBottom - insets.systemWindowInsetBottom)
+            insets
+        }
         this.view.layoutParams = params
         this.view.background = context.getDrawable(R.drawable.bg_snackbar)
         ViewCompat.setElevation(this.view, 6f)

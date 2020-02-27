@@ -20,14 +20,15 @@ class BottomNavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        if (Build.VERSION.SDK_INT >= 27) {
-//            window.decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-//                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-//                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-//        } else {
-//            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
-//        }
+        if (Build.VERSION.SDK_INT >= 27) {
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR // or
+//                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        } else {
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
+        }
 
         binding = DataBindingUtil.setContentView(
             this,

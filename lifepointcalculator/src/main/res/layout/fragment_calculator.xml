@@ -15,242 +15,248 @@
             type="com.lucidity.haolu.lifepointcalculator.model.Player" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
+        android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/v_bar_player_one_lp_background"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/life_point_bar_height"
-            android:background="@android:color/white"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background">
 
-        <View
-            android:id="@+id/v_bar_player_one_lp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/life_point_bar_height"
-            android:background="@drawable/rect"
-            android:backgroundTint="@color/yugi_yellow"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:id="@+id/v_bar_player_one_lp_background"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/life_point_bar_height"
+                android:background="@android:color/white"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_player_one_lp"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:elevation="@dimen/shadow_elevation"
-            android:text="8000"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/life_point_text_size"
-            app:layout_constraintBottom_toBottomOf="@id/v_bar_player_one_lp_background"
-            app:layout_constraintEnd_toEndOf="@id/v_bar_player_one_lp_background"
-            app:layout_constraintStart_toStartOf="@id/v_bar_player_one_lp_background"
-            app:layout_constraintTop_toTopOf="@id/v_bar_player_one_lp_background" />
+            <View
+                android:id="@+id/v_bar_player_one_lp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/life_point_bar_height"
+                android:background="@drawable/rect"
+                android:backgroundTint="@color/yugi_yellow"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/v_bar_player_two_lp_background"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/life_point_bar_height"
-            android:layout_marginTop="@dimen/material_margin"
-            android:background="@android:color/white"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
+            <TextView
+                android:id="@+id/tv_player_one_lp"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:elevation="@dimen/shadow_elevation"
+                android:text="8000"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/life_point_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_one_lp_background"
+                app:layout_constraintEnd_toEndOf="@id/v_bar_player_one_lp_background"
+                app:layout_constraintStart_toStartOf="@id/v_bar_player_one_lp_background"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_one_lp_background" />
 
-        <View
-            android:id="@+id/v_bar_player_two_lp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/life_point_bar_height"
-            android:layout_marginTop="@dimen/material_margin"
-            android:background="@drawable/rect"
-            android:backgroundTint="@color/yugi_red"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
+            <View
+                android:id="@+id/v_bar_player_two_lp_background"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/life_point_bar_height"
+                android:layout_marginTop="@dimen/material_margin"
+                android:background="@android:color/white"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
 
-        <TextView
-            android:id="@+id/tv_player_two_lp"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:elevation="@dimen/shadow_elevation"
-            android:gravity="end"
-            android:text="8000"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/life_point_text_size"
-            app:layout_constraintBottom_toBottomOf="@id/v_bar_player_two_lp_background"
-            app:layout_constraintEnd_toEndOf="@id/v_bar_player_two_lp_background"
-            app:layout_constraintStart_toStartOf="@id/v_bar_player_two_lp_background"
-            app:layout_constraintTop_toTopOf="@id/v_bar_player_two_lp_background" />
+            <View
+                android:id="@+id/v_bar_player_two_lp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/life_point_bar_height"
+                android:layout_marginTop="@dimen/material_margin"
+                android:background="@drawable/rect"
+                android:backgroundTint="@color/yugi_red"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
 
-        <View
-            android:id="@+id/v_utility_background"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/life_point_bar_height"
-            android:layout_marginTop="@dimen/material_margin"
-            android:background="@android:color/white"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_bar_player_two_lp_background" />
+            <TextView
+                android:id="@+id/tv_player_two_lp"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:elevation="@dimen/shadow_elevation"
+                android:gravity="end"
+                android:text="8000"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/life_point_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_two_lp_background"
+                app:layout_constraintEnd_toEndOf="@id/v_bar_player_two_lp_background"
+                app:layout_constraintStart_toStartOf="@id/v_bar_player_two_lp_background"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_two_lp_background" />
 
-        <ImageButton
-            android:id="@+id/ib_duel_time"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:onClick="@{() -> viewmodel.onTimerClicked()}"
-            android:src="@drawable/ic_timer"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
-            app:layout_constraintStart_toStartOf="@id/v_utility_background"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            <View
+                android:id="@+id/v_utility_background"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/life_point_bar_height"
+                android:layout_marginTop="@dimen/material_margin"
+                android:background="@android:color/white"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_bar_player_two_lp_background" />
 
-        <TextView
-            android:id="@+id/tv_duel_time"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:gravity="center"
-            android:onClick="@{() -> viewmodel.onTimerClicked()}"
-            android:textSize="20sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
-            app:layout_constraintStart_toStartOf="@id/v_utility_background"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            <ImageButton
+                android:id="@+id/ib_duel_time"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:onClick="@{() -> viewmodel.onTimerClicked()}"
+                android:src="@drawable/ic_timer"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
+                app:layout_constraintStart_toStartOf="@id/v_utility_background"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
-        <ImageView
-            android:id="@+id/iv_player_one_last_lp_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/shadow_elevation"
-            android:src="@drawable/ic_arrow_drop_down"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
-            app:layout_constraintStart_toEndOf="@id/ib_duel_time"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/tv_duel_time"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:gravity="center"
+                android:onClick="@{() -> viewmodel.onTimerClicked()}"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toStartOf="@id/iv_player_one_last_lp_indicator"
+                app:layout_constraintStart_toStartOf="@id/v_utility_background"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
-        <TextView
-            android:id="@+id/tv_action_lp"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:background="@android:color/transparent"
-            android:elevation="@dimen/shadow_elevation"
-            android:gravity="center"
-            android:hint="@string/action_lp_hint"
-            android:maxLength="6"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/iv_player_two_last_lp_indicator"
-            app:layout_constraintStart_toEndOf="@id/iv_player_one_last_lp_indicator"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            <ImageView
+                android:id="@+id/iv_player_one_last_lp_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/shadow_elevation"
+                android:src="@drawable/ic_arrow_drop_down"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
+                app:layout_constraintStart_toEndOf="@id/ib_duel_time"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background"
+                tools:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/iv_player_two_last_lp_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/shadow_elevation"
-            android:src="@drawable/ic_arrow_drop_up"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toStartOf="@id/ib_history"
-            app:layout_constraintStart_toEndOf="@id/tv_action_lp"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/tv_action_lp"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:background="@android:color/transparent"
+                android:elevation="@dimen/shadow_elevation"
+                android:gravity="center"
+                android:hint="@string/action_lp_hint"
+                android:maxLength="6"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toStartOf="@id/iv_player_two_last_lp_indicator"
+                app:layout_constraintStart_toEndOf="@id/iv_player_one_last_lp_indicator"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
-        <ImageButton
-            android:id="@+id/ib_history"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:src="@drawable/ic_history"
-            app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
-            app:layout_constraintEnd_toEndOf="@id/v_utility_background"
-            app:layout_constraintStart_toEndOf="@id/iv_player_two_last_lp_indicator"
-            app:layout_constraintTop_toTopOf="@id/v_utility_background" />
+            <ImageView
+                android:id="@+id/iv_player_two_last_lp_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/shadow_elevation"
+                android:src="@drawable/ic_arrow_drop_up"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toStartOf="@id/ib_history"
+                app:layout_constraintStart_toEndOf="@id/tv_action_lp"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background"
+                tools:visibility="visible" />
 
-        <View
-            android:id="@+id/v_calculator_background"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/material_margin"
-            android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_utility_background" />
+            <ImageButton
+                android:id="@+id/ib_history"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:src="@drawable/ic_history"
+                app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
+                app:layout_constraintEnd_toEndOf="@id/v_utility_background"
+                app:layout_constraintStart_toEndOf="@id/iv_player_two_last_lp_indicator"
+                app:layout_constraintTop_toTopOf="@id/v_utility_background" />
 
-        <ImageButton
-            android:id="@+id/ib_player_one_add"
-            android:layout_width="@dimen/calculator_add_button_width"
-            android:layout_height="0dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:onClick="@{() -> viewmodel.onAddClicked(player.ONE)}"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toTopOf="@id/ib_player_one_minus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+            <View
+                android:id="@+id/v_calculator_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/material_margin"
+                android:background="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_utility_background" />
 
-        <ImageButton
-            android:id="@+id/ib_player_one_minus"
-            android:layout_width="@dimen/calculator_minus_button_width"
-            android:layout_height="0dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:onClick="@{() -> viewmodel.onSubtractClicked(player.ONE)}"
-            android:src="@drawable/ic_minus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_one_add" />
+            <ImageButton
+                android:id="@+id/ib_player_one_add"
+                android:layout_width="@dimen/calculator_add_button_width"
+                android:layout_height="0dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:onClick="@{() -> viewmodel.onAddClicked(player.ONE)}"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toTopOf="@id/ib_player_one_minus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
 
-        <ImageButton
-            android:id="@+id/ib_player_two_add"
-            android:layout_width="@dimen/calculator_add_button_width"
-            android:layout_height="0dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:onClick="@{() -> viewmodel.onAddClicked(player.TWO)}"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toTopOf="@id/ib_player_two_minus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+            <ImageButton
+                android:id="@+id/ib_player_one_minus"
+                android:layout_width="@dimen/calculator_minus_button_width"
+                android:layout_height="0dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:onClick="@{() -> viewmodel.onSubtractClicked(player.ONE)}"
+                android:src="@drawable/ic_minus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ib_player_one_add" />
 
-        <ImageButton
-            android:id="@+id/ib_player_two_minus"
-            android:layout_width="@dimen/calculator_minus_button_width"
-            android:layout_height="0dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="@dimen/shadow_elevation"
-            android:onClick="@{() -> viewmodel.onSubtractClicked(player.TWO)}"
-            android:src="@drawable/ic_minus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
+            <ImageButton
+                android:id="@+id/ib_player_two_add"
+                android:layout_width="@dimen/calculator_add_button_width"
+                android:layout_height="0dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:onClick="@{() -> viewmodel.onAddClicked(player.TWO)}"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toTopOf="@id/ib_player_two_minus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
 
-        <include
-            android:id="@+id/l_input"
-            layout="@layout/layout_accumulated_input"
-            android:layout_width="@dimen/zero_dp"
-            android:layout_height="@dimen/zero_dp"
-            android:elevation="@dimen/shadow_elevation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
-            app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
-            app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+            <ImageButton
+                android:id="@+id/ib_player_two_minus"
+                android:layout_width="@dimen/calculator_minus_button_width"
+                android:layout_height="0dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="@dimen/shadow_elevation"
+                android:onClick="@{() -> viewmodel.onSubtractClicked(player.TWO)}"
+                android:src="@drawable/ic_minus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/l_input"
+                layout="@layout/layout_accumulated_input"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:elevation="@dimen/shadow_elevation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
+                app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
+                app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
