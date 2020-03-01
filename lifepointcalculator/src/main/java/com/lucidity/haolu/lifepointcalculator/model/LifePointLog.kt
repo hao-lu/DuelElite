@@ -11,7 +11,9 @@ data class LifePointLog(private val log: MutableList<LifePointLogItem>) : Parcel
 
     fun getReverseList() = log.reversed()
 
-    fun getLatestEntry() = log.last()
+    fun getLatestEntry(): LifePointLogItem? {
+        return if (log.isEmpty()) null else log.last()
+    }
 
     fun reset() = log.clear()
 

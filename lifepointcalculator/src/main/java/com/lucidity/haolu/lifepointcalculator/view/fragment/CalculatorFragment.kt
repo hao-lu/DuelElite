@@ -97,10 +97,11 @@ class CalculatorFragment : Fragment() {
                 binding.tvActionLp.text = resources.getText(R.string.halve)
             } else if (lp.second == 0) { // Clear
                 binding.tvActionLp.text = resources.getText(R.string.empty)
-                val logItem = viewmodel.log.getLatestEntry()
-                val indicatorIcon =
-                    if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
-                indicatorIcon.visibility = View.VISIBLE
+                viewmodel.log.getLatestEntry()?.let { logItem ->
+                    val indicatorIcon =
+                        if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
+                    indicatorIcon.visibility = View.VISIBLE
+                }
             } else {
                 binding.tvActionLp.text = lp.second.toString()
             }
@@ -124,6 +125,7 @@ class CalculatorFragment : Fragment() {
     private fun observePlayerOneLp() {
         viewmodel.playerOneLp.observe(viewLifecycleOwner, Observer { lp ->
             animatePlayerLp(
+                resources.getString(R.string.snack_bar_message_player_two_won),
                 lp,
                 binding.tvPlayerOneLp,
                 binding.vBarPlayerOneLp,
@@ -135,6 +137,7 @@ class CalculatorFragment : Fragment() {
     private fun observePlayerTwoLp() {
         viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
             animatePlayerLp(
+                resources.getString(R.string.snack_bar_message_player_one_won),
                 lp,
                 binding.tvPlayerTwoLp,
                 binding.vBarPlayerTwoLp,
@@ -157,13 +160,14 @@ class CalculatorFragment : Fragment() {
         (lp / LifePointCalculator.START_LP * width).toInt()
 
     private fun animatePlayerLp(
+        message: String,
         lp: Pair<Int, Int>,
         lpTextView: TextView,
         lpBar: View,
         lpBarBackground: View
     ) {
         if (lp.second == 0) {
-            showResetSnackbar()
+            showResetSnackbar(message)
         }
         if (viewmodel.animate) {
             animateLpValue(lp.first, lp.second, lpTextView, false)
@@ -210,8 +214,8 @@ class CalculatorFragment : Fragment() {
         }.start()
     }
 
-    private fun showResetSnackbar() {
-        val snackBar = Snackbar.make(binding.root, "Player 1 has won", 5000)
+    private fun showResetSnackbar(text: String) {
+        val snackBar = Snackbar.make(binding.root, text, 5000)
             .setAction("RESET", { reset() })
             .setActionTextColor(Color.WHITE)
         snackBar.config(requireContext())

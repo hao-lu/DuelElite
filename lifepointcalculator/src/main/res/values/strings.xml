@@ -34,4 +34,8 @@
     <string name="title_log">Log</string>
     <string name="action_lp_hint">0000</string>
 
+    <string name="snack_bar_message_player_one_won">Player 1 has won</string>
+    <string name="snack_bar_message_player_two_won">Player 2 has won</string>
+
+
 </resources>

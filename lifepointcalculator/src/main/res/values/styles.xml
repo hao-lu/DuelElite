@@ -6,6 +6,8 @@
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">30sp</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMaxTextSize">30sp</item>
     </style>
 
     <style name="Button.Normal" parent="Widget.AppCompat.Button">
@@ -13,6 +15,8 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:textSize">30sp</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMaxTextSize">30sp</item>
     </style>
 
     <style name="TextAppearance.LogTitle" parent="TextAppearance.AppCompat">

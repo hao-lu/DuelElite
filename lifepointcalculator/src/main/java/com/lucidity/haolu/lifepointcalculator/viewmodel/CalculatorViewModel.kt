@@ -16,6 +16,7 @@ class CalculatorViewModel : ViewModel() {
     val log: LifePointLog = LifePointLog(mutableListOf())
     val timer = PausableCountDownTimer()
 
+    // TODO: make livedata for visibilities
     private val _playerOneLp: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
     val playerOneLp: LiveData<Pair<Int, Int>> = _playerOneLp
     private val _playerTwoLp: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
