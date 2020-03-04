@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
+import com.lucidity.haolu.lifepointcalculator.model.Player
 import com.lucidity.haolu.lifepointcalculator.util.Constants
 import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
 
@@ -133,7 +134,7 @@ class CalculatorFragment : Fragment() {
             binding.root.doOnLayout {
                 binding.vBarPlayerOneLp.layoutParams.width =
                     calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerOneLpBackground.width)
-//                if (lp == 0) binding.vBarPlayerOneLp.visibility = View.GONE
+                binding.vBarPlayerOneLp.isInvisible = viewmodel.playerOneLpBarInvisible
                 binding.vBarPlayerOneLp.requestLayout()
             }
         })
@@ -145,8 +146,7 @@ class CalculatorFragment : Fragment() {
             binding.root.doOnLayout {
                 binding.vBarPlayerTwoLp.layoutParams.width =
                     calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerTwoLpBackground.width)
-//                if (lp == 0) binding.vBarPlayerTwoLp.visibility = View.GONE
-                binding.vBarPlayerTwoLp.isInvisible = viewmodel.playerOneLpBarInvisible
+                binding.vBarPlayerTwoLp.isInvisible = viewmodel.playerTwoLpBarInvisible
                 binding.vBarPlayerTwoLp.requestLayout()
             }
         })
@@ -156,6 +156,7 @@ class CalculatorFragment : Fragment() {
         viewmodel.animatePlayerOneLp.observe(viewLifecycleOwner, Observer { lp ->
             animateLpValue(lp.first, lp.second, binding.tvPlayerOneLp, false)
             animateLpBar(
+                Player.ONE,
                 lp.first,
                 lp.second,
                 binding.vBarPlayerOneLp,
@@ -168,6 +169,7 @@ class CalculatorFragment : Fragment() {
         viewmodel.animatePlayerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
             animateLpValue(lp.first, lp.second, binding.tvPlayerTwoLp, false)
             animateLpBar(
+                Player.TWO,
                 lp.first,
                 lp.second,
                 binding.vBarPlayerTwoLp,
@@ -205,7 +207,7 @@ class CalculatorFragment : Fragment() {
         }.start()
     }
 
-    private fun animateLpBar(currLp: Int, newLp: Int, view: View, width: Int) {
+    private fun animateLpBar(player: Player, currLp: Int, newLp: Int, view: View, width: Int) {
         ValueAnimator.ofInt(currLp, newLp).apply {
             this.duration = ANIMATION_DURATION
             this.addUpdateListener { valueAnimator ->
@@ -215,7 +217,8 @@ class CalculatorFragment : Fragment() {
                 when {
                     ans == 0 -> {
                         view.visibility = View.GONE
-                        viewmodel.playerOneLpBarInvisible = true
+                        if (player == Player.ONE) viewmodel.playerOneLpBarInvisible = true
+                        else viewmodel.playerTwoLpBarInvisible = true
                     }
                     ans >= width -> view.layoutParams.width = width
                     else -> view.layoutParams.width = ans
@@ -235,11 +238,6 @@ class CalculatorFragment : Fragment() {
 
     private fun reset() {
         viewmodel.reset()
-        binding.tvActionLp.hint = resources.getString(R.string.action_lp_hint)
-        binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
-        binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
-        binding.vBarPlayerOneLp.visibility = View.VISIBLE
-        binding.vBarPlayerTwoLp.visibility = View.VISIBLE
         binding.ibDuelTime.visibility = View.VISIBLE
         binding.tvDuelTime.visibility = View.INVISIBLE
     }

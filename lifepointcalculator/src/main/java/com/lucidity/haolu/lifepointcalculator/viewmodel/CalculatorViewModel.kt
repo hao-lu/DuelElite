@@ -57,7 +57,6 @@ class CalculatorViewModel : ViewModel() {
             CalculatorInput.NORMAL -> {
                 val appendNum = appendNum(_actionLp.value?.toIntOrNull(), num)
                 if (isLessThanMaxLifePointOrNull(appendNum)) {
-//                    updateActionLp(appendNum, appendNum)
                     updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, appendNum)
                 }
             }
@@ -123,12 +122,15 @@ class CalculatorViewModel : ViewModel() {
         calculator.reset()
         log.reset()
         timer.cancel()
+        playerOneLpBarInvisible = false
+        playerTwoLpBarInvisible = false
         _playerOneLpIndicatorInvisible.value = true
         _playerTwoLpIndicatorInvisible.value = true
         _actionLp.value = ""
         _actionLpHint.value = "0000"
-        _playerOneLp.value = 8000
-        _playerTwoLp.value = 8000
+        _playerOneLp.value = LifePointCalculator.START_LP
+        _playerTwoLp.value = LifePointCalculator.START_LP
+
 //        updatePlayerLp(Player.ONE, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
 //        updatePlayerLp(Player.TWO, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
     }
