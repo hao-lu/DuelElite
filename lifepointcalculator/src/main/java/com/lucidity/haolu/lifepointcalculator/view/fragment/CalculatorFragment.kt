@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.doOnLayout
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,10 +20,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
-import com.lucidity.haolu.lifepointcalculator.model.Player
 import com.lucidity.haolu.lifepointcalculator.util.Constants
 import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
-import kotlin.math.abs
 
 class CalculatorFragment : Fragment() {
 
@@ -35,8 +31,7 @@ class CalculatorFragment : Fragment() {
     private val ANIMATION_DURATION: Long = 500
 
     companion object {
-        fun newInstance() =
-            CalculatorFragment()
+        fun newInstance() = CalculatorFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,76 +67,111 @@ class CalculatorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeActionLp()
         observeActionHint()
+        observeAnimateActionLp()
         observeDuelTime()
         observePlayerOneLp()
+        observeAnimatePlayerOneLp()
         observePlayerTwoLp()
+        observeAnimatePlayerTwoLp()
+        observePlayerOneLastLpIndicatorInvisible()
+        observePlayerTwoLastLpIndicatorInvisible()
+        observeLastLpIndicatorDrawable()
+        observeShowResetSnackbar()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewmodel.onResume()
+    private fun observeAnimateActionLp() {
+        viewmodel.animateActionLp.observe(viewLifecycleOwner, Observer { lp ->
+            animateLpValue(lp.first, lp.second, binding.tvActionLp, true)
+        })
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewmodel.onPause()
+    private fun observeShowResetSnackbar() {
+        viewmodel.showResetSnackbar.observe(viewLifecycleOwner, Observer { text ->
+            showResetSnackbar(text)
+        })
+    }
+
+    private fun observePlayerOneLastLpIndicatorInvisible() {
+        viewmodel.playerOneLpIndicatorInvisible.observe(
+            viewLifecycleOwner,
+            Observer { isInvisible ->
+                binding.ivPlayerOneLastLpIndicator.isInvisible = isInvisible
+            })
+    }
+
+    private fun observePlayerTwoLastLpIndicatorInvisible() {
+        viewmodel.playerTwoLpIndicatorInvisible.observe(
+            viewLifecycleOwner,
+            Observer { isInvisible ->
+                binding.ivPlayerTwoLastLpIndicator.isInvisible = isInvisible
+            })
+    }
+
+    private fun observeLastLpIndicatorDrawable() {
+        viewmodel.lpIndicatorDrawableId.observe(viewLifecycleOwner, Observer { drawableId ->
+            val drawable = ContextCompat.getDrawable(requireContext(), drawableId)
+            binding.ivPlayerOneLastLpIndicator.setImageDrawable(drawable)
+            binding.ivPlayerTwoLastLpIndicator.setImageDrawable(drawable)
+        })
     }
 
     private fun observeActionLp() {
         viewmodel.actionLp.observe(viewLifecycleOwner, Observer { lp ->
-            binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
-            binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
-            if (viewmodel.animate && lp.first != lp.second) {
-                animateLpValue(lp.first, lp.second, binding.tvActionLp, true)
-            } else if (viewmodel.halve) {
-                binding.tvActionLp.text = resources.getText(R.string.halve)
-            } else if (lp.second == 0) { // Clear
-                binding.tvActionLp.text = resources.getText(R.string.empty)
-                viewmodel.log.getLatestEntry()?.let { logItem ->
-                    val indicatorIcon =
-                        if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
-                    indicatorIcon.visibility = View.VISIBLE
-                }
-            } else {
-                binding.tvActionLp.text = lp.second.toString()
-            }
+            binding.tvActionLp.text = lp?.toString() ?: ""
         })
     }
 
     private fun observeActionHint() {
-        viewmodel.actionLpHint.observe(viewLifecycleOwner, Observer { logItem ->
-            binding.ivPlayerOneLastLpIndicator.visibility = View.INVISIBLE
-            binding.ivPlayerTwoLastLpIndicator.visibility = View.INVISIBLE
-            val drawableId =
-                if (logItem.actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
-            val indicatorIcon =
-                if (logItem.player == Player.ONE.name) binding.ivPlayerOneLastLpIndicator else binding.ivPlayerTwoLastLpIndicator
-            indicatorIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableId))
-            indicatorIcon.visibility = View.VISIBLE
-            binding.tvActionLp.hint = abs(logItem.actionLp).toString()
+        viewmodel.actionLpHint.observe(viewLifecycleOwner, Observer { hint ->
+            binding.tvActionLp.hint = hint
         })
     }
 
     private fun observePlayerOneLp() {
         viewmodel.playerOneLp.observe(viewLifecycleOwner, Observer { lp ->
-            animatePlayerLp(
-                resources.getString(R.string.snack_bar_message_player_two_won),
-                lp,
-                binding.tvPlayerOneLp,
-                binding.vBarPlayerOneLp,
-                binding.vBarPlayerOneLpBackground
-            )
+            binding.tvPlayerOneLp.text = lp.toString()
+            binding.root.doOnLayout {
+                binding.vBarPlayerOneLp.layoutParams.width =
+                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerOneLpBackground.width)
+//                if (lp == 0) binding.vBarPlayerOneLp.visibility = View.GONE
+                binding.vBarPlayerOneLp.requestLayout()
+            }
         })
     }
 
     private fun observePlayerTwoLp() {
         viewmodel.playerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
-            animatePlayerLp(
-                resources.getString(R.string.snack_bar_message_player_one_won),
-                lp,
-                binding.tvPlayerTwoLp,
+            binding.tvPlayerTwoLp.text = lp.toString()
+            binding.root.doOnLayout {
+                binding.vBarPlayerTwoLp.layoutParams.width =
+                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerTwoLpBackground.width)
+//                if (lp == 0) binding.vBarPlayerTwoLp.visibility = View.GONE
+                binding.vBarPlayerTwoLp.isInvisible = viewmodel.playerOneLpBarInvisible
+                binding.vBarPlayerTwoLp.requestLayout()
+            }
+        })
+    }
+
+    private fun observeAnimatePlayerOneLp() {
+        viewmodel.animatePlayerOneLp.observe(viewLifecycleOwner, Observer { lp ->
+            animateLpValue(lp.first, lp.second, binding.tvPlayerOneLp, false)
+            animateLpBar(
+                lp.first,
+                lp.second,
+                binding.vBarPlayerOneLp,
+                binding.vBarPlayerOneLpBackground.width
+            )
+        })
+    }
+
+    private fun observeAnimatePlayerTwoLp() {
+        viewmodel.animatePlayerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
+            animateLpValue(lp.first, lp.second, binding.tvPlayerTwoLp, false)
+            animateLpBar(
+                lp.first,
+                lp.second,
                 binding.vBarPlayerTwoLp,
-                binding.vBarPlayerTwoLpBackground
+                binding.vBarPlayerTwoLpBackground.width
             )
         })
     }
@@ -158,28 +188,6 @@ class CalculatorFragment : Fragment() {
 
     private fun calculateLpBarWidth(lp: Double, width: Int) =
         (lp / LifePointCalculator.START_LP * width).toInt()
-
-    private fun animatePlayerLp(
-        message: String,
-        lp: Pair<Int, Int>,
-        lpTextView: TextView,
-        lpBar: View,
-        lpBarBackground: View
-    ) {
-        if (lp.second == 0) {
-            showResetSnackbar(message)
-        }
-        if (viewmodel.animate) {
-            animateLpValue(lp.first, lp.second, lpTextView, false)
-            animateLpBar(lp.first, lp.second, lpBar, lpBarBackground.width)
-        } else {
-            lpTextView.text = lp.second.toString()
-            binding.root.doOnLayout {
-                lpBar.layoutParams.width = calculateLpBarWidth(lp.second.toDouble(), lpBarBackground.width)
-                lpBar.requestLayout()
-            }
-        }
-    }
 
     private fun animateLpValue(currLp: Int, newLp: Int, text: TextView, clearText: Boolean) {
         ValueAnimator.ofInt(currLp, newLp).apply {
@@ -202,10 +210,13 @@ class CalculatorFragment : Fragment() {
             this.duration = ANIMATION_DURATION
             this.addUpdateListener { valueAnimator ->
                 // Animate the bar, use double or there's truncation with int
-                val animatedValue = valueAnimator.animatedValue.toString()
-                val ans = calculateLpBarWidth(animatedValue.toDouble(), width)
+                val animatedValue = valueAnimator.animatedValue.toString().toDouble()
+                val ans = calculateLpBarWidth(animatedValue, width)
                 when {
-                    ans == 0 -> view.visibility = View.GONE
+                    ans == 0 -> {
+                        view.visibility = View.GONE
+                        viewmodel.playerOneLpBarInvisible = true
+                    }
                     ans >= width -> view.layoutParams.width = width
                     else -> view.layoutParams.width = ans
                 }
