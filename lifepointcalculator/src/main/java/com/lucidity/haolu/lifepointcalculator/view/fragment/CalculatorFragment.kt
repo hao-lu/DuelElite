@@ -12,11 +12,13 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.lucidity.haolu.lifepointcalculator.BR
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
@@ -52,7 +54,6 @@ class CalculatorFragment : Fragment() {
             false
         )
         binding.viewmodel = viewmodel
-        binding.lInput.viewmodel = viewmodel
         binding.ibHistory.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.BUNDLE_KEY_LIFE_POINT_LOG, viewmodel.log)
@@ -61,6 +62,7 @@ class CalculatorFragment : Fragment() {
                 bundle
             )
         }
+        inflateInputLayout(R.layout.layout_normal_input)
         return binding.root
     }
 
@@ -80,6 +82,16 @@ class CalculatorFragment : Fragment() {
         observeShowResetSnackbar()
     }
 
+    private fun inflateInputLayout(layoutId: Int) {
+        viewmodel.inputType = layoutId
+        binding.vsInput.viewStub?.layoutResource = layoutId
+        binding.vsInput.viewStub?.setOnInflateListener { stub, inflated ->
+            val binding = DataBindingUtil.bind<ViewDataBinding>(inflated)
+            binding?.setVariable(BR.viewmodel, viewmodel)
+        }
+        binding.vsInput.viewStub?.inflate()
+    }
+
     private fun observeAnimateActionLp() {
         viewmodel.animateActionLp.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let { lp ->
@@ -97,7 +109,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun observePlayerOneLastLpIndicatorInvisible() {
-        viewmodel.playerOneLpIndicatorInvisible.observe(
+        viewmodel.playerOneLpIndicatorInvisibility.observe(
             viewLifecycleOwner,
             Observer { isInvisible ->
                 binding.ivPlayerOneLastLpIndicator.isInvisible = isInvisible
@@ -105,7 +117,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun observePlayerTwoLastLpIndicatorInvisible() {
-        viewmodel.playerTwoLpIndicatorInvisible.observe(
+        viewmodel.playerTwoLpIndicatorInvisibility.observe(
             viewLifecycleOwner,
             Observer { isInvisible ->
                 binding.ivPlayerTwoLastLpIndicator.isInvisible = isInvisible

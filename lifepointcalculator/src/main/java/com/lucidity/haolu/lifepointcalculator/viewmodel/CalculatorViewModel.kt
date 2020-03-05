@@ -25,8 +25,8 @@ class CalculatorViewModel : ViewModel() {
     private val _playerTwoLp = MutableLiveData<Int>()
     private val _actionLp = MutableLiveData<String>()
     private val _actionLpHint = MutableLiveData<String>()
-    private val _playerOneLpIndicatorInvisible = MutableLiveData<Boolean>()
-    private val _playerTwoLpIndicatorInvisible = MutableLiveData<Boolean>()
+    private val _playerOneLpIndicatorInvisibility = MutableLiveData<Boolean>()
+    private val _playerTwoLpIndicatorInvisibility = MutableLiveData<Boolean>()
     private val _lpIndicatorDrawableId = MutableLiveData<Int>()
     private val _showResetSnackbar = MutableLiveData<Event<String>>()
     private val _animatePlayerOneLp = MutableLiveData<Event<Pair<Int, Int>>>()
@@ -37,8 +37,8 @@ class CalculatorViewModel : ViewModel() {
     val playerTwoLp: LiveData<Int> = _playerTwoLp
     val actionLp: LiveData<String> = _actionLp
     val actionLpHint: LiveData<String> = _actionLpHint
-    val playerOneLpIndicatorInvisible: LiveData<Boolean> = _playerOneLpIndicatorInvisible
-    val playerTwoLpIndicatorInvisible: LiveData<Boolean> = _playerTwoLpIndicatorInvisible
+    val playerOneLpIndicatorInvisibility: LiveData<Boolean> = _playerOneLpIndicatorInvisibility
+    val playerTwoLpIndicatorInvisibility: LiveData<Boolean> = _playerTwoLpIndicatorInvisibility
     val lpIndicatorDrawableId: LiveData<Int> = _lpIndicatorDrawableId
     val showResetSnackbar: LiveData<Event<String>> = _showResetSnackbar
     val animatePlayerOneLp: LiveData<Event<Pair<Int, Int>>> = _animatePlayerOneLp
@@ -46,21 +46,22 @@ class CalculatorViewModel : ViewModel() {
     val animateActionLp: LiveData<Event<Pair<Int, Int>>> = _animateActionLp
 
     private var halve = false
-    var inputType = CalculatorInput.ACCUMULATED
+    var inputType = R.layout.layout_accumulated_input
 
     var playerOneLpBarInvisible = false
     var playerTwoLpBarInvisible = false
 
     fun onNumberClicked(num: String) {
         halve = false
+        setAllIndicatorInvisible()
         when (inputType) {
-            CalculatorInput.NORMAL -> {
+            R.layout.layout_normal_input -> {
                 val appendNum = appendNum(_actionLp.value?.toIntOrNull(), num)
                 if (isLessThanMaxLifePointOrNull(appendNum)) {
                     updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, appendNum)
                 }
             }
-            CalculatorInput.ACCUMULATED -> {
+            R.layout.layout_accumulated_input -> {
                 val sumNum = sumNum(_actionLp.value?.toIntOrNull(), num)
                 if (isLessThanMaxLifePointOrNull(sumNum)) {
                     updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, sumNum)
@@ -116,6 +117,9 @@ class CalculatorViewModel : ViewModel() {
     fun onClearClicked() {
         halve = false
         updateActionLp(0, 0)
+        log.getLatestEntry()?.let { logItem ->
+            setIndicatorInvisibility(logItem.player)
+        }
     }
 
     fun reset() {
@@ -124,8 +128,8 @@ class CalculatorViewModel : ViewModel() {
         timer.cancel()
         playerOneLpBarInvisible = false
         playerTwoLpBarInvisible = false
-        _playerOneLpIndicatorInvisible.value = true
-        _playerTwoLpIndicatorInvisible.value = true
+        _playerOneLpIndicatorInvisibility.value = true
+        _playerTwoLpIndicatorInvisibility.value = true
         _actionLp.value = ""
         _actionLpHint.value = "0000"
         _playerOneLp.value = LifePointCalculator.START_LP
@@ -141,6 +145,7 @@ class CalculatorViewModel : ViewModel() {
 
     fun onHalveClicked() {
         halve = true
+        setAllIndicatorInvisible()
         _actionLp.value = halveText
     }
 
@@ -160,23 +165,28 @@ class CalculatorViewModel : ViewModel() {
             log.add(LifePointLogItem(player, actionLp, totalLp, time))
             _actionLpHint.value = abs(actionLp).toString()
             _lpIndicatorDrawableId.value = if (actionLp < 0) R.drawable.ic_arrow_drop_down else R.drawable.ic_arrow_drop_up
-            setIndicatorInvisible(player)
+            setIndicatorInvisibility(player)
         }
     }
 
     private fun updateActionLp(prevLp: Int, currLp: Int) {
         _actionLp.value = if (currLp == 0) null else currLp.toString()
-        if (prevLp != currLp && inputType == CalculatorInput.ACCUMULATED) _animateActionLp.value = Event(Pair(prevLp, currLp))
+        if (prevLp != currLp && inputType == R.layout.layout_accumulated_input) _animateActionLp.value = Event(Pair(prevLp, currLp))
     }
 
-    private fun setIndicatorInvisible(player: String) {
+    private fun setIndicatorInvisibility(player: String) {
         if (player == Player.ONE.name) {
-            _playerOneLpIndicatorInvisible.value = false
-            _playerTwoLpIndicatorInvisible.value = true
+            _playerOneLpIndicatorInvisibility.value = false
+            _playerTwoLpIndicatorInvisibility.value = true
         } else {
-            _playerOneLpIndicatorInvisible.value = true
-            _playerTwoLpIndicatorInvisible.value = false
+            _playerOneLpIndicatorInvisibility.value = true
+            _playerTwoLpIndicatorInvisibility.value = false
         }
+    }
+
+    private fun setAllIndicatorInvisible() {
+        _playerOneLpIndicatorInvisibility.value = true
+        _playerTwoLpIndicatorInvisibility.value = true
     }
 
     enum class CalculatorInput {

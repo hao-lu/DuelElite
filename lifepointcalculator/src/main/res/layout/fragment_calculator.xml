@@ -245,16 +245,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
 
-            <include
-                android:id="@+id/l_input"
-                layout="@layout/layout_accumulated_input"
+            <ViewStub
+                android:id="@+id/vs_input"
+                android:layout="@layout/layout_accumulated_input"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/zero_dp"
                 android:elevation="@dimen/shadow_elevation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
                 app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
-                app:layout_constraintTop_toTopOf="@id/v_calculator_background" />
+                app:layout_constraintTop_toTopOf="@id/v_calculator_background"
+                tools:visibility="visible"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
