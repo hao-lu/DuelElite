@@ -3,9 +3,9 @@ package com.lucidity.haolu.lifepointcalculator.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lucidity.haolu.lifepointcalculator.Event
 import com.lucidity.haolu.lifepointcalculator.util.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.R
-import com.lucidity.haolu.lifepointcalculator.SingleLiveEvent
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem
 import com.lucidity.haolu.lifepointcalculator.model.LifePointLog
@@ -21,17 +21,17 @@ class CalculatorViewModel : ViewModel() {
     private val halveText = "HALVE"
     private val snackbarMessage = "%s has won"
 
-    private val _playerOneLp: MutableLiveData<Int> = MutableLiveData()
-    private val _playerTwoLp: MutableLiveData<Int> = MutableLiveData()
-    private val _actionLp: MutableLiveData<String> = MutableLiveData()
-    private val _actionLpHint: MutableLiveData<String> = MutableLiveData()
-    private val _playerOneLpIndicatorInvisible: MutableLiveData<Boolean> = MutableLiveData()
-    private val _playerTwoLpIndicatorInvisible: MutableLiveData<Boolean> = MutableLiveData()
-    private val _lpIndicatorDrawableId: MutableLiveData<Int> = MutableLiveData()
-    private val _showResetSnackbar: SingleLiveEvent<String> = SingleLiveEvent()
-    private val _animatePlayerOneLp: SingleLiveEvent<Pair<Int, Int>> = SingleLiveEvent()
-    private val _animatePlayerTwoLp: SingleLiveEvent<Pair<Int, Int>> = SingleLiveEvent()
-    private val _animateActionLp: SingleLiveEvent<Pair<Int, Int>> = SingleLiveEvent()
+    private val _playerOneLp = MutableLiveData<Int>()
+    private val _playerTwoLp = MutableLiveData<Int>()
+    private val _actionLp = MutableLiveData<String>()
+    private val _actionLpHint = MutableLiveData<String>()
+    private val _playerOneLpIndicatorInvisible = MutableLiveData<Boolean>()
+    private val _playerTwoLpIndicatorInvisible = MutableLiveData<Boolean>()
+    private val _lpIndicatorDrawableId = MutableLiveData<Int>()
+    private val _showResetSnackbar = MutableLiveData<Event<String>>()
+    private val _animatePlayerOneLp = MutableLiveData<Event<Pair<Int, Int>>>()
+    private val _animatePlayerTwoLp = MutableLiveData<Event<Pair<Int, Int>>>()
+    private val _animateActionLp = MutableLiveData<Event<Pair<Int, Int>>>()
 
     val playerOneLp: LiveData<Int> = _playerOneLp
     val playerTwoLp: LiveData<Int> = _playerTwoLp
@@ -40,10 +40,10 @@ class CalculatorViewModel : ViewModel() {
     val playerOneLpIndicatorInvisible: LiveData<Boolean> = _playerOneLpIndicatorInvisible
     val playerTwoLpIndicatorInvisible: LiveData<Boolean> = _playerTwoLpIndicatorInvisible
     val lpIndicatorDrawableId: LiveData<Int> = _lpIndicatorDrawableId
-    val showResetSnackbar: LiveData<String> = _showResetSnackbar
-    val animatePlayerOneLp: LiveData<Pair<Int, Int>> = _animatePlayerOneLp
-    val animatePlayerTwoLp: LiveData<Pair<Int, Int>> = _animatePlayerTwoLp
-    val animateActionLp: LiveData<Pair<Int, Int>> = _animateActionLp
+    val showResetSnackbar: LiveData<Event<String>> = _showResetSnackbar
+    val animatePlayerOneLp: LiveData<Event<Pair<Int, Int>>> = _animatePlayerOneLp
+    val animatePlayerTwoLp: LiveData<Event<Pair<Int, Int>>> = _animatePlayerTwoLp
+    val animateActionLp: LiveData<Event<Pair<Int, Int>>> = _animateActionLp
 
     private var halve = false
     var inputType = CalculatorInput.ACCUMULATED
@@ -107,7 +107,7 @@ class CalculatorViewModel : ViewModel() {
         updatePlayerLp(player, prevLp, currLp)
         updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, 0)
         logLp(player.name, currLp - prevLp, currLp, timer.formattedRemainingTime)
-        if (currLp == 0) _showResetSnackbar.value = String.format(snackbarMessage, player.name)
+        if (currLp == 0) _showResetSnackbar.value = Event(String.format(snackbarMessage, player.name))
     }
 
     private fun isHalveOrNull(resourceId: Int?) =
@@ -147,11 +147,11 @@ class CalculatorViewModel : ViewModel() {
     private fun updatePlayerLp(player: Player, previousLp: Int, currLp: Int) {
         if (player == Player.ONE) {
             _playerOneLp.value = currLp
-            _animatePlayerOneLp.value = Pair(previousLp, currLp)
+            _animatePlayerOneLp.value = Event(Pair(previousLp, currLp))
         }
         else {
             _playerTwoLp.value = currLp
-            _animatePlayerTwoLp.value = Pair(previousLp, currLp)
+            _animatePlayerTwoLp.value = Event(Pair(previousLp, currLp))
         }
     }
 
@@ -166,7 +166,7 @@ class CalculatorViewModel : ViewModel() {
 
     private fun updateActionLp(prevLp: Int, currLp: Int) {
         _actionLp.value = if (currLp == 0) null else currLp.toString()
-        if (prevLp != currLp && inputType == CalculatorInput.ACCUMULATED) _animateActionLp.value = Pair(prevLp, currLp)
+        if (prevLp != currLp && inputType == CalculatorInput.ACCUMULATED) _animateActionLp.value = Event(Pair(prevLp, currLp))
     }
 
     private fun setIndicatorInvisible(player: String) {

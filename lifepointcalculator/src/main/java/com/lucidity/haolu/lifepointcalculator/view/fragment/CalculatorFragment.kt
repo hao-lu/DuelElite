@@ -81,14 +81,18 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun observeAnimateActionLp() {
-        viewmodel.animateActionLp.observe(viewLifecycleOwner, Observer { lp ->
-            animateLpValue(lp.first, lp.second, binding.tvActionLp, true)
+        viewmodel.animateActionLp.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { lp ->
+                animateLpValue(lp.first, lp.second, binding.tvActionLp, true)
+            }
         })
     }
 
     private fun observeShowResetSnackbar() {
-        viewmodel.showResetSnackbar.observe(viewLifecycleOwner, Observer { text ->
-            showResetSnackbar(text)
+        viewmodel.showResetSnackbar.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { text ->
+                showResetSnackbar(text)
+            }
         })
     }
 
@@ -153,28 +157,32 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun observeAnimatePlayerOneLp() {
-        viewmodel.animatePlayerOneLp.observe(viewLifecycleOwner, Observer { lp ->
-            animateLpValue(lp.first, lp.second, binding.tvPlayerOneLp, false)
-            animateLpBar(
-                Player.ONE,
-                lp.first,
-                lp.second,
-                binding.vBarPlayerOneLp,
-                binding.vBarPlayerOneLpBackground.width
-            )
+        viewmodel.animatePlayerOneLp.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { lp ->
+                animateLpValue(lp.first, lp.second, binding.tvPlayerOneLp, false)
+                animateLpBar(
+                    Player.ONE,
+                    lp.first,
+                    lp.second,
+                    binding.vBarPlayerOneLp,
+                    binding.vBarPlayerOneLpBackground.width
+                )
+            }
         })
     }
 
     private fun observeAnimatePlayerTwoLp() {
-        viewmodel.animatePlayerTwoLp.observe(viewLifecycleOwner, Observer { lp ->
-            animateLpValue(lp.first, lp.second, binding.tvPlayerTwoLp, false)
-            animateLpBar(
-                Player.TWO,
-                lp.first,
-                lp.second,
-                binding.vBarPlayerTwoLp,
-                binding.vBarPlayerTwoLpBackground.width
-            )
+        viewmodel.animatePlayerTwoLp.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { lp ->
+                animateLpValue(lp.first, lp.second, binding.tvPlayerTwoLp, false)
+                animateLpBar(
+                    Player.TWO,
+                    lp.first,
+                    lp.second,
+                    binding.vBarPlayerTwoLp,
+                    binding.vBarPlayerTwoLpBackground.width
+                )
+            }
         })
     }
 
