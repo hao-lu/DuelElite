@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion Versions.COMPILE_SDK
+
+    defaultConfig {
+        minSdkVersion Versions.MIN_SDK
+        targetSdkVersion Versions.TARGET_SDK
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.KOTLIN_STDLIB_JDK7
+
+    // AndroidX
+    implementation AndroidX.APPCOMPAT
+    implementation AndroidX.CONSTRAINTLAYOUT
+    implementation AndroidX.CORE
+    implementation AndroidX.CORE_KTX
+    implementation AndroidX.MATERIAL
+    implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_UI
+    implementation AndroidX.VIEWPAGER2
+
+    // Test
+    testImplementation Tests.JUNIT
+    androidTestImplementation Tests.EXT_JUNIT
+    androidTestImplementation Tests.ESPRESSO_CORE
+}

@@ -36,7 +36,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         )
         viewmodel = ViewModelProvider(this).get(BottomNavigationViewModel::class.java)
 
-        val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_log)
+        val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_random)
         binding.bottomNavigationMain.setupWithNavController(
             navGraphIds,
             supportFragmentManager,

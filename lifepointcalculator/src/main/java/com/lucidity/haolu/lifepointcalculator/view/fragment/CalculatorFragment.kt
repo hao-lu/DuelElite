@@ -62,7 +62,7 @@ class CalculatorFragment : Fragment() {
                 bundle
             )
         }
-        inflateInputLayout(R.layout.layout_normal_input)
+        inflateInputLayout(R.layout.layout_accumulated_input)
         return binding.root
     }
 

@@ -6,4 +6,6 @@
 
     <include app:graph="@navigation/navigation_calculator"/>
 
+    <include app:graph="@navigation/navigation_random"/>
+
 </navigation>

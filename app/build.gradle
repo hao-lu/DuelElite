@@ -55,6 +55,7 @@ dependencies {
     implementation Dependencies.RETROFIT
 
     implementation project(path: ':lifepointcalculator')
+    implementation project(path: ':randomgenerator')
 }
 
 repositories {

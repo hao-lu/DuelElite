@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_calculator"
         android:title="@string/title_calculator" />
     <item
-        android:id="@+id/navigation_log"
+        android:id="@+id/navigation_random"
         android:icon="@drawable/ic_dice_2"
         android:title="@string/title_random" />
     <item
