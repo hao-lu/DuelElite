@@ -4,10 +4,12 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
@@ -32,6 +34,7 @@ class CalculatorFragment : Fragment() {
     private lateinit var viewmodel: CalculatorViewModel
 
     private val ANIMATION_DURATION: Long = 500
+    private val SNACKBAR_DURATION: Int = 5000
 
     companion object {
         fun newInstance() = CalculatorFragment()
@@ -249,10 +252,10 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showResetSnackbar(text: String) {
-        val snackBar = Snackbar.make(binding.root, text, 5000)
-            .setAction("RESET", { reset() })
+        val snackBar = Snackbar.make(binding.root, text, SNACKBAR_DURATION)
+            .setAction(R.string.snackbar_action_reset, { reset() })
             .setActionTextColor(Color.WHITE)
-        snackBar.config(requireContext())
+        snackBar.config(requireContext(), binding.root.width)
         snackBar.show()
     }
 
@@ -263,14 +266,15 @@ class CalculatorFragment : Fragment() {
     }
 
     // TODO: shared module
-    fun Snackbar.config(context: Context) {
-        val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
+    fun Snackbar.config(context: Context, width: Int) {
+        val params = this.view.layoutParams as CoordinatorLayout.LayoutParams
         val margin = context.resources.getDimension(R.dimen.snackbar_margins).toInt()
-        params.setMargins(margin, margin, margin, margin)
         this.view.setOnApplyWindowInsetsListener { v, insets ->
             v.updatePadding(bottom = v.paddingBottom - insets.systemWindowInsetBottom)
             insets
         }
+        params.width = width - (margin * 2)
+        params.gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
         this.view.layoutParams = params
         this.view.background = context.getDrawable(R.drawable.bg_snackbar)
         ViewCompat.setElevation(this.view, 6f)
