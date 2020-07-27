@@ -109,7 +109,10 @@ class CalculatorViewModel : ViewModel() {
         updatePlayerLp(player, prevLp, currLp)
         updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, 0)
         logLp(player.name, currLp - prevLp, currLp, timer.formattedRemainingTime)
-        if (currLp == 0) _showResetSnackbar.value = Event(String.format(snackbarMessage, player.name))
+        if (currLp == 0) {
+            _showResetSnackbar.value = Event(String.format(snackbarMessage, player.name))
+            timer.cancel()
+        }
     }
 
     private fun isHalveOrNull(resourceId: Int?) =

@@ -34,7 +34,7 @@ class CalculatorFragment : Fragment() {
     private lateinit var viewmodel: CalculatorViewModel
 
     private val ANIMATION_DURATION: Long = 500
-    private val SNACKBAR_DURATION: Int = 5000
+    private val SNACKBAR_DURATION: Int = 10000
 
     companion object {
         fun newInstance() = CalculatorFragment()
@@ -270,10 +270,10 @@ class CalculatorFragment : Fragment() {
     fun Snackbar.config(context: Context, width: Int) {
         val params = this.view.layoutParams as CoordinatorLayout.LayoutParams
         val margin = context.resources.getDimension(R.dimen.snackbar_margins).toInt()
-        this.view.setOnApplyWindowInsetsListener { v, insets ->
-            v.updatePadding(bottom = v.paddingBottom - insets.systemWindowInsetBottom)
-            insets
-        }
+//        this.view.setOnApplyWindowInsetsListener { v, insets ->
+//            v.updatePadding(bottom = v.paddingBottom - insets.systemWindowInsetBottom)
+//            insets
+//        }
         params.width = width - (margin * 2)
         params.gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
         this.view.layoutParams = params
