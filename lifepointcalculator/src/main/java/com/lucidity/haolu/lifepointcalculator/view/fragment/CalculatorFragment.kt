@@ -57,6 +57,7 @@ class CalculatorFragment : Fragment() {
             false
         )
         binding.viewmodel = viewmodel
+        // TODO: Move to viewmodel
         binding.ibHistory.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.BUNDLE_KEY_LIFE_POINT_LOG, viewmodel.log)

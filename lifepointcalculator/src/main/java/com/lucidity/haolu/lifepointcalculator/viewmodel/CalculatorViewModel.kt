@@ -21,6 +21,7 @@ class CalculatorViewModel : ViewModel() {
     private val halveText = "HALVE"
     private val snackbarMessage = "%s has won"
 
+    // TODO: use peek
     private val _playerOneLp = MutableLiveData<Int>()
     private val _playerTwoLp = MutableLiveData<Int>()
     private val _actionLp = MutableLiveData<String>()

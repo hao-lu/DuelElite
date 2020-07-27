@@ -1,11 +1,14 @@
-package com.example.randomgenerator
+package com.example.randomgenerator.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.randomgenerator.R
+import com.example.randomgenerator.view.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,6 +29,9 @@ class RandomGeneratorTabsFragment : Fragment() {
         viewPagerAdapter = ViewPagerAdapter(this)
         viewPager = view.findViewById(R.id.pager)
         viewPager.adapter = viewPagerAdapter
+        viewPager.apply {
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

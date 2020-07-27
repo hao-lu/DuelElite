@@ -3,6 +3,7 @@
     package="com.lucidity.haolu.duelking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.lucidity.haolu.duelking.MyApplication"
