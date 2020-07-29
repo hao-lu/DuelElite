@@ -8,4 +8,6 @@
 
     <include app:graph="@navigation/navigation_random"/>
 
+    <include app:graph="@navigation/navigation_search"/>
+
 </navigation>
