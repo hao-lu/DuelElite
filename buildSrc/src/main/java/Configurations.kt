@@ -31,6 +31,8 @@ object AndroidX {
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment:2.2.1"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui:2.2.1"
     const val PALETTE = "androidx.palette:palette:1.0.0"
+    const val ROOM_RUNTIME = "androidx.room:room-runtime:2.2.5"
+    const val ROOM_COMPILER = "androidx.room:room-compiler:2.2.5"
     const val VIEWPAGER2 = "androidx.viewpager2:viewpager2:1.0.0"
 }
 

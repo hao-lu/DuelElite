@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion Versions.COMPILE_SDK
@@ -29,6 +32,11 @@ dependencies {
 
     implementation AndroidX.APPCOMPAT
     implementation AndroidX.CORE_KTX
+    implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_UI
+    implementation AndroidX.ROOM_RUNTIME
+
+    kapt AndroidX.ROOM_COMPILER
 
     // Test
     testImplementation Tests.JUNIT
