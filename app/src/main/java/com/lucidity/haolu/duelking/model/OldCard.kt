@@ -8,5 +8,4 @@ import io.realm.annotations.Required
  *
  * @param name Is required
  */
-
-open class Card(var id: Int = 0, @Required var name: String = "") : RealmObject()
+open class OldCard(var id: Int = 0, @Required var name: String = "") : RealmObject()

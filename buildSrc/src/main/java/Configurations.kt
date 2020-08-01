@@ -16,6 +16,9 @@ object GradlePlugin {
 object Dependencies {
     const val JSOUP = "org.jsoup:jsoup:1.10.3"
     const val KOTLIN_STDLIB_JDK7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
+    const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8"
+    const val MOSHI = "com.squareup.moshi:moshi:1.9.3"
+    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:1.9.3"
     const val PICASSO = "com.squareup.picasso:picasso:2.5.2"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:2.3.0"
 }
@@ -31,8 +34,9 @@ object AndroidX {
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment:2.2.1"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui:2.2.1"
     const val PALETTE = "androidx.palette:palette:1.0.0"
-    const val ROOM_RUNTIME = "androidx.room:room-runtime:2.2.5"
     const val ROOM_COMPILER = "androidx.room:room-compiler:2.2.5"
+    const val ROOM_KTX = "androidx.room:room-ktx:2.2.5"
+    const val ROOM_RUNTIME = "androidx.room:room-runtime:2.2.5"
     const val VIEWPAGER2 = "androidx.viewpager2:viewpager2:1.0.0"
 }
 

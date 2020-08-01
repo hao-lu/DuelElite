@@ -34,6 +34,7 @@ dependencies {
 
     // Kotlin
     implementation Dependencies.KOTLIN_STDLIB_JDK7
+    implementation Dependencies.KOTLIN_COROUTINES_CORE
 
     // AndroidX
     implementation AndroidX.APPCOMPAT
@@ -46,11 +47,18 @@ dependencies {
     implementation AndroidX.NAVIGATION_FRAGMENT
     implementation AndroidX.NAVIGATION_UI
     implementation AndroidX.PALETTE
+    implementation AndroidX.ROOM_KTX
+    implementation AndroidX.ROOM_RUNTIME
 
     testImplementation Tests.JUNIT
 
+    // Annotation Processor
+    kapt AndroidX.ROOM_COMPILER
+
     // 3rd-party
     implementation Dependencies.JSOUP
+    implementation Dependencies.MOSHI
+    implementation Dependencies.MOSHI_KOTLIN
     implementation Dependencies.PICASSO
     implementation Dependencies.RETROFIT
 

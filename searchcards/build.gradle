@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
 
 android {
@@ -31,10 +29,15 @@ dependencies {
     implementation Dependencies.KOTLIN_STDLIB_JDK7
 
     implementation AndroidX.APPCOMPAT
+    implementation AndroidX.CONSTRAINTLAYOUT
     implementation AndroidX.CORE_KTX
     implementation AndroidX.NAVIGATION_FRAGMENT
     implementation AndroidX.NAVIGATION_UI
+    implementation AndroidX.ROOM_KTX
     implementation AndroidX.ROOM_RUNTIME
+
+    implementation Dependencies.MOSHI
+    implementation Dependencies.MOSHI_KOTLIN
 
     kapt AndroidX.ROOM_COMPILER
 
