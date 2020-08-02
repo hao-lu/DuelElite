@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -31,6 +35,7 @@ dependencies {
     implementation AndroidX.APPCOMPAT
     implementation AndroidX.CONSTRAINTLAYOUT
     implementation AndroidX.CORE_KTX
+    implementation AndroidX.MATERIAL
     implementation AndroidX.NAVIGATION_FRAGMENT
     implementation AndroidX.NAVIGATION_UI
     implementation AndroidX.ROOM_KTX
