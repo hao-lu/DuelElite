@@ -11,94 +11,22 @@
             type="com.lucidity.haolu.SearchHomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ml_search_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/fragment_search_home_scene">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="8dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="58dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="64dp" />
-
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/iv_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:clickable="false"
-            android:focusable="false"
-            app:overlay="false"
-            android:src="@drawable/ic_search_box"
-            app:altSrc="@drawable/ic_arrow_down"
-            android:tint="@color/hint_gray"
-            android:translationZ="5dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-            app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
-
-        <EditText
-            android:id="@+id/et_search_box_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:clickable="true"
-            android:focusable="true"
-            android:hint="@string/hint_search_box"
-            android:inputType="text"
-            android:textColorHint="@color/hint_gray"
-            android:textSize="16sp"
-            android:translationZ="5dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-            app:layout_constraintLeft_toLeftOf="@id/guideline_left"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
-
-        <View
-            android:id="@+id/v_search_box_bg"
+        <fragment
+            android:id="@+id/hao_fragment"
+            android:name="com.lucidity.haolu.SearchFragment"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/search_box_bg"
-            android:clickable="true"
-            android:elevation="4dp"
-            android:focusable="true"
-            android:onClick="@{() -> viewmodel.onSearchBarClicked()}"
-            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp"
+            tools:layout="@layout/fragment_search_home"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <View
-            android:id="@+id/v_divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#E0E0E0"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_bottom" />
-
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

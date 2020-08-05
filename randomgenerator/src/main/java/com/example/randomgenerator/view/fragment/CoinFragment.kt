@@ -33,14 +33,16 @@ class CoinFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_coin_new,
-                container,
-                false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_coin_new,
+            container,
+            false
+        )
         binding.viewmodel = viewmodel
         return binding.root
     }
@@ -101,7 +103,7 @@ class CoinFragment : Fragment() {
         val marginFromBottom = resources.getDimension(R.dimen.random_device_margin_hao) ?: 800f
         val marginFromTop = (icon.height - marginFromBottom) + marginFromBottom
         val heightOfParentView = binding.clParent.height - marginFromTop
-        upDownAnimator = ValueAnimator.ofFloat(startY, heightOfParentView - startY).apply {
+        upDownAnimator = ValueAnimator.ofFloat(startY, 50f).apply {
             interpolator = DecelerateInterpolator()
             duration = 500
             addUpdateListener { upValueAnimator ->
@@ -132,7 +134,8 @@ class CoinFragment : Fragment() {
     private fun observeFlipCoin() {
         viewmodel.flipCoin.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let { isHead ->
-                val resourceId = if (isHead) R.drawable.ic_random_head_coin else R.drawable.ic_random_tail_coin
+                val resourceId =
+                    if (isHead) R.drawable.ic_random_head_coin else R.drawable.ic_random_tail_coin
                 initUpDownAnimator(resourceId, binding.clParent.height)
                 initRotateAnimator(R.drawable.ic_random_tail_coin, R.drawable.ic_random_head_coin)
                 startFlipCoinAnimation()

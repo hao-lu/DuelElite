@@ -27,7 +27,7 @@ object AndroidX {
     const val APPCOMPAT = "androidx.appcompat:appcompat:1.1.0"
     const val CORE = "androidx.core:core:1.1.0"
     const val CORE_KTX = "androidx.core:core-ktx:1.1.0"
-    const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-rc1"
+    const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta8"
     const val LEGACY_SUPPORT_V4 = "androidx.legacy:legacy-support-v4:1.0.0"
     const val LIFECYCLE_EXTENSION = "androidx.lifecycle:lifecycle-extensions:2.2.0"
     const val MATERIAL = "com.google.android.material:material:1.2.0-rc01"

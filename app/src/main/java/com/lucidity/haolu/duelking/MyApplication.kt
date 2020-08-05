@@ -20,7 +20,7 @@ class MyApplication : Application() {
 
     private val scope = CoroutineScope(Dispatchers.Main)
 
-    private lateinit var db: AppDatabase
+    lateinit var db: AppDatabase
 
     override fun onCreate() {
         super.onCreate()

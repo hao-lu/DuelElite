@@ -11,7 +11,16 @@
         android:name="com.lucidity.haolu.SearchHomeFragment"
         android:label="SearchHome"
         tools:layout="@layout/fragment_search_home">
-
+        <action
+            android:id="@+id/action_fragment_search_home_to_fragment_search"
+            app:destination="@id/fragment_search">
+        </action>
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="com.lucidity.haolu.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search">
+    </fragment>
 </navigation>
