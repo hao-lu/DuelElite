@@ -37,6 +37,7 @@ dependencies {
     implementation AndroidX.CORE_KTX
     implementation AndroidX.MATERIAL
     implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_FRAGMENT_KTX
     implementation AndroidX.NAVIGATION_UI
     implementation AndroidX.ROOM_KTX
     implementation AndroidX.ROOM_RUNTIME

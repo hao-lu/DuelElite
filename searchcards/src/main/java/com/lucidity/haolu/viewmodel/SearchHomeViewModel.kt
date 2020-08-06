@@ -1,8 +1,9 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lucidity.haolu.Event
 
 class SearchHomeViewModel : ViewModel() {
 
@@ -10,7 +11,7 @@ class SearchHomeViewModel : ViewModel() {
 
     val searchBar: LiveData<Event<Unit>> = _searchBar
 
-    fun onSearchBarClicked() {
+    fun onSearchBarClick() {
         _searchBar.value = Event(Unit)
     }
 
