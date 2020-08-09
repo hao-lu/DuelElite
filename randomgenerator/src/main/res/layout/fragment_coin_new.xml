@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.randomgenerator.viewmodel.CoinViewModel" />
+            type="com.lucidity.haolu.randomgenerator.viewmodel.CoinViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

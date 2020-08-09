@@ -1,4 +1,4 @@
-package com.example.randomgenerator.view.fragment
+package com.lucidity.haolu.randomgenerator.view.fragment
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -15,9 +15,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.randomgenerator.R
-import com.example.randomgenerator.databinding.FragmentCoinNewBinding
-import com.example.randomgenerator.viewmodel.CoinViewModel
+import com.lucidity.haolu.randomgenerator.R
+import com.lucidity.haolu.randomgenerator.databinding.FragmentCoinNewBinding
+import com.lucidity.haolu.randomgenerator.viewmodel.CoinViewModel
 import kotlin.math.roundToInt
 
 class CoinFragment : Fragment() {

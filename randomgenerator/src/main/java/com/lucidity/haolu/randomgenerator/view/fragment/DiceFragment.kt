@@ -1,4 +1,4 @@
-package com.example.randomgenerator.view.fragment
+package com.lucidity.haolu.randomgenerator.view.fragment
 
 import android.animation.ValueAnimator
 import android.os.Bundle
@@ -13,10 +13,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.randomgenerator.R
-import com.example.randomgenerator.databinding.FragmentDiceNewBinding
-import com.example.randomgenerator.model.RandomGenerator
-import com.example.randomgenerator.viewmodel.DiceViewModel
+import com.lucidity.haolu.randomgenerator.R
+import com.lucidity.haolu.randomgenerator.databinding.FragmentDiceNewBinding
+import com.lucidity.haolu.randomgenerator.model.RandomGenerator
+import com.lucidity.haolu.randomgenerator.viewmodel.DiceViewModel
 import kotlin.math.roundToInt
 
 // TODO: clean up and combine with coin

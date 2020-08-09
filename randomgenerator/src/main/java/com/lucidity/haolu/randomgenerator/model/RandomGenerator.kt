@@ -1,4 +1,4 @@
-package com.example.randomgenerator.model
+package com.lucidity.haolu.randomgenerator.model
 
 class RandomGenerator {
 

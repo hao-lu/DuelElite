@@ -1,4 +1,4 @@
-package com.example.randomgenerator
+package com.lucidity.haolu.randomgenerator
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

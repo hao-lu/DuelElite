@@ -1,4 +1,4 @@
-package com.example.randomgenerator.view.fragment
+package com.lucidity.haolu.randomgenerator.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.randomgenerator.R
-import com.example.randomgenerator.view.adapter.ViewPagerAdapter
+import com.lucidity.haolu.randomgenerator.view.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.lucidity.haolu.randomgenerator.R
 
 class RandomGeneratorTabsFragment : Fragment() {
 
@@ -26,7 +26,8 @@ class RandomGeneratorTabsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewPagerAdapter = ViewPagerAdapter(this)
+        viewPagerAdapter =
+            ViewPagerAdapter(this)
         viewPager = view.findViewById(R.id.pager)
         viewPager.adapter = viewPagerAdapter
         viewPager.apply {

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_tab"
-        android:name="com.example.randomgenerator.view.fragment.RandomGeneratorTabsFragment"
+        android:name="com.lucidity.haolu.randomgenerator.view.fragment.RandomGeneratorTabsFragment"
         android:label="Tab"
         tools:layout="@layout/fragment_tab">
 

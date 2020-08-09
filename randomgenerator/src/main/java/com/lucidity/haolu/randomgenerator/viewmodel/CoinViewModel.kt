@@ -1,11 +1,10 @@
-package com.example.randomgenerator.viewmodel
+package com.lucidity.haolu.randomgenerator.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.randomgenerator.Event
-import com.example.randomgenerator.R
-import com.example.randomgenerator.model.RandomGenerator
+import com.lucidity.haolu.randomgenerator.Event
+import com.lucidity.haolu.randomgenerator.model.RandomGenerator
 
 class CoinViewModel : ViewModel() {
 
@@ -14,7 +13,8 @@ class CoinViewModel : ViewModel() {
     val flipCoin: LiveData<Event<Boolean>> = _flipCoin
 
     fun onCoinClicked() {
-        _flipCoin.value = Event(RandomGenerator.isHead())
+        _flipCoin.value =
+            Event(RandomGenerator.isHead())
     }
 
 }
