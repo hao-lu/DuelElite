@@ -8,9 +8,9 @@
 
     <fragment
         android:id="@+id/fragment_search_home"
-        android:name="com.lucidity.haolu.view.SearchHomeFragment"
+        android:name="com.lucidity.haolu.view.SearchCardHomeFragment"
         android:label="SearchHome"
-        tools:layout="@layout/fragment_search_home">
+        tools:layout="@layout/fragment_search_card_home">
 
         <action
             android:id="@+id/action_fragment_search_home_to_fragment_search"
@@ -20,9 +20,21 @@
 
     <fragment
         android:id="@+id/fragment_search"
-        android:name="com.lucidity.haolu.view.SearchFragment"
+        android:name="com.lucidity.haolu.view.SearchCardFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search">
+        tools:layout="@layout/fragment_search_card">
+
+        <action
+            android:id="@+id/action_fragment_search_card_to_fragment_search_card_details"
+            app:destination="@id/fragment_search_card_details"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_search_card_details"
+        android:name="com.lucidity.haolu.SearchCardDetailsFragment"
+        android:label="SearchCardDetails"
+        tools:layout="@layout/fragment_search_card_details">
     </fragment>
 
 </navigation>

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
-            type="com.lucidity.haolu.viewmodel.SearchHomeViewModel" />
+            type="com.lucidity.haolu.viewmodel.SearchCardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ml_search_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -43,27 +42,29 @@
             android:layout_marginStart="16dp"
             android:clickable="false"
             android:focusable="false"
-            app:overlay="false"
-            android:src="@drawable/ic_search_box"
+            android:onClick="@{() -> viewmodel.onBackButtonClick()}"
+            android:src="@drawable/ic_arrow_down"
             android:tint="@color/hint_gray"
-            android:translationZ="5dp"
-            android:visibility="visible"
             android:transitionName="iconTransition"
+            android:translationZ="1dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-            app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            app:overlay="false" />
 
-        <TextView
+        <EditText
             android:id="@+id/et_search_box_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:clickable="false"
-            android:focusable="false"
+            android:clickable="true"
+            android:focusable="true"
             android:hint="@string/hint_search_box"
+            android:inputType="text"
             android:textColorHint="@color/hint_gray"
             android:textSize="16sp"
-            android:translationZ="5dp"
+            android:translationZ="1dp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
             app:layout_constraintLeft_toLeftOf="@id/guideline_left"
@@ -71,32 +72,38 @@
 
         <View
             android:id="@+id/v_search_box_bg"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/search_box_bg"
             android:clickable="true"
-            android:elevation="4dp"
             android:focusable="true"
             android:transitionName="searchBoxTransition"
-            android:onClick="@{() -> viewmodel.onSearchBarClick()}"
-            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/v_divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="#E0E0E0"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:translationZ="1dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/v_search_box_bg"
+            app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
             app:layout_constraintTop_toTopOf="@id/guideline_bottom" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_results"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/v_search_box_bg"
+            app:layout_constraintEnd_toEndOf="@id/v_search_box_bg"
+            app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
+            app:layout_constraintTop_toBottomOf="@id/v_divider" />
 
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

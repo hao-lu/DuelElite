@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lucidity.haolu.Event
+import com.lucidity.haolu.SearchCardsDatabase
+import java.io.IOException
 
-class SearchHomeViewModel : ViewModel() {
+class SearchCardHomeViewModel : ViewModel() {
 
     private val _searchBar = MutableLiveData<Event<Unit>>()
 

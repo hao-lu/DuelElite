@@ -1,34 +1,31 @@
-package com.lucidity.haolu.duelking
+package com.lucidity.haolu
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.lucidity.haolu.Card
-import com.lucidity.haolu.CardDao
 
 @Database(entities = arrayOf(Card::class), version = 1)
-abstract class AppDatabase : RoomDatabase() {
+abstract class SearchCardsDatabase : RoomDatabase() {
     abstract fun cardDao(): CardDao
 
     companion object {
-        var instance: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase? {
+        var instance: SearchCardsDatabase? = null
+        fun getInstance(context: Context): SearchCardsDatabase? {
             if (instance == null) {
-                synchronized(AppDatabase::class.java) {
+                synchronized(SearchCardsDatabase::class.java) {
                     if (instance == null) {
-                        instance =
-                            buildDataBaseBuild(context)
+                        instance = buildDataBaseBuild(context)
                     }
                 }
             }
             return instance
         }
 
-        private fun buildDataBaseBuild(context: Context): AppDatabase {
+        private fun buildDataBaseBuild(context: Context): SearchCardsDatabase {
             return Room.databaseBuilder(
                 context,
-                AppDatabase::class.java, "appdb"
+                SearchCardsDatabase::class.java, "searchCardsDb"
             )
                 .build()
         }

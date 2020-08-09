@@ -18,19 +18,19 @@ import java.io.InputStream
  */
 class MyApplication : Application() {
 
-    private val scope = CoroutineScope(Dispatchers.Main)
+//    private val scope = CoroutineScope(Dispatchers.Main)
 
-    private lateinit var db: AppDatabase
+//    private lateinit var db: AppDatabase
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "tcg")
-                .build()
+//        db = Room.databaseBuilder(applicationContext,
+//                AppDatabase::class.java, "tcg")
+//                .build()
 
-        scope.launch {
-            populateTcgDatabase()
-        }
+//        scope.launch {
+//            populateTcgDatabase()
+//        }
 
 //        scope.launch {
 //            println(db.cardDao().getAllContainsSubstring("Blue%eyes"))
@@ -65,12 +65,12 @@ class MyApplication : Application() {
                 .build()
         val newAdapter = moshi.adapter<CardList>(CardList::class.java)
         val cardList = newAdapter.fromJson(json!!)
-
-        cardList?.data?.let { list ->
-            for (card in list) {
-                db.cardDao().insert(Card(card))
-            }
-        }
+//
+//        cardList?.data?.let { list ->
+//            for (card in list) {
+//                db.cardDao().insert(Card(card))
+//            }
+//        }
     }
 
     private fun loadJsonFromRawResource(rawSourceId: Int): String? {
