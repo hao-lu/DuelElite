@@ -1,12 +1,9 @@
 package com.lucidity.haolu.duelking
 
 import android.app.Application
-import androidx.room.Room
-import com.lucidity.haolu.Card
-import com.lucidity.haolu.CardList
+import com.lucidity.haolu.searchcards.room.entity.CardList
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -63,7 +60,8 @@ class MyApplication : Application() {
         val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
-        val newAdapter = moshi.adapter<CardList>(CardList::class.java)
+        val newAdapter = moshi.adapter<CardList>(
+            CardList::class.java)
         val cardList = newAdapter.fromJson(json!!)
 //
 //        cardList?.data?.let { list ->

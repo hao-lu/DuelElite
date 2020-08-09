@@ -1,8 +1,7 @@
-package com.lucidity.haolu.view
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lucidity.haolu.Card
-import com.lucidity.haolu.R
-import com.lucidity.haolu.SearchCardRecyclerViewAdapter
-import com.lucidity.haolu.databinding.FragmentSearchCardBinding
-import com.lucidity.haolu.transition.RotateCrossfadeTransition
-import com.lucidity.haolu.viewmodel.SearchCardViewModel
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.room.entity.Card
+import com.lucidity.haolu.searchcards.view.adapter.SearchCardRecyclerViewAdapter
+import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardBinding
+import com.lucidity.haolu.searchcards.transition.RotateCrossfadeTransition
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardViewModel
 import kotlinx.coroutines.*
 
 class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchResultListener {
@@ -99,7 +98,11 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 //                viewmodel.getSearchResults(editable.toString())
                 withContext(Dispatchers.Main) {
                     val list = viewmodel.getSearchResult(editable.toString())
-                    binding.rvSearchResults.adapter = SearchCardRecyclerViewAdapter(list, this@SearchCardFragment)
+                    binding.rvSearchResults.adapter =
+                        SearchCardRecyclerViewAdapter(
+                            list,
+                            this@SearchCardFragment
+                        )
                 }
             }
         }

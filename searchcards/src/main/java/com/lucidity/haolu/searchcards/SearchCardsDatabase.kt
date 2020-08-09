@@ -1,9 +1,11 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.lucidity.haolu.searchcards.room.dao.CardDao
+import com.lucidity.haolu.searchcards.room.entity.Card
 
 @Database(entities = arrayOf(Card::class), version = 1)
 abstract class SearchCardsDatabase : RoomDatabase() {
@@ -15,7 +17,10 @@ abstract class SearchCardsDatabase : RoomDatabase() {
             if (instance == null) {
                 synchronized(SearchCardsDatabase::class.java) {
                     if (instance == null) {
-                        instance = buildDataBaseBuild(context)
+                        instance =
+                            buildDataBaseBuild(
+                                context
+                            )
                     }
                 }
             }

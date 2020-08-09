@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -19,8 +19,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.palette.graphics.Palette
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import com.lucidity.haolu.databinding.FragmentSearchCardDetailsBinding
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
+import com.lucidity.haolu.searchcards.view.adapter.SearchCardDetailsViewPagerAdapter
+import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardDetailsBinding
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import org.jsoup.HttpStatusException
@@ -53,7 +55,9 @@ class SearchCardDetailsFragment : Fragment() {
         )
 //        binding.viewmodel = viewmodel
         val cardName = arguments?.getString("cardName")
-        LoadImageHeaderTask(requireContext()).execute(cardName)
+        LoadImageHeaderTask(
+            requireContext()
+        ).execute(cardName)
 
         return binding.root
     }
@@ -61,7 +65,11 @@ class SearchCardDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val cardName = arguments?.getString("cardName")
-        viewPagerAdapter = SearchCardDetailsViewPagerAdapter(this, cardName!!)
+        viewPagerAdapter =
+            SearchCardDetailsViewPagerAdapter(
+                this,
+                cardName!!
+            )
         binding.container.adapter = viewPagerAdapter
 
 //        val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
@@ -155,7 +163,8 @@ class SearchCardDetailsFragment : Fragment() {
                     val bundle = Bundle()
                     bundle.putString("imageUrl", mImageUrl)
 
-                    val fragment = ImageDialogFragment()
+                    val fragment =
+                        ImageDialogFragment()
                     fragment.arguments = bundle
                     val ft = mActivity.supportFragmentManager.beginTransaction()
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

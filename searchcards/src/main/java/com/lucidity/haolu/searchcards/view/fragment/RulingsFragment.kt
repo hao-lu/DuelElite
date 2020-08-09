@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -13,7 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import com.lucidity.haolu.R
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.view.adapter.RulingsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
@@ -33,7 +34,8 @@ class RulingsFragment : Fragment() {
         val rootView = inflater!!.inflate(R.layout.fragment_rulings_new, container, false)
         val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_rulings).visibility = View.VISIBLE
-        ParseRulingsTask(context!!).execute(cardName)
+        ParseRulingsTask(context!!)
+            .execute(cardName)
         return rootView
     }
 
@@ -101,7 +103,10 @@ class RulingsFragment : Fragment() {
                 val progressBar = mActivity.findViewById(R.id.progressbar_rulings) as ProgressBar
                 progressBar.visibility = ProgressBar.GONE
                 if (mRulingsList.size != 0) {
-                    val simpleAdapter = RulingsRecyclerViewAdapter(mRulingsList)
+                    val simpleAdapter =
+                        RulingsRecyclerViewAdapter(
+                            mRulingsList
+                        )
                     val layoutManger = LinearLayoutManager(mActivity)
                     val tipList = mActivity.findViewById(R.id.tcg_ruling_rv) as RecyclerView
                     tipList.layoutManager = layoutManger
@@ -123,10 +128,20 @@ class RulingsFragment : Fragment() {
             // Removes the superscripts (foot notes)
             val text = c.text().replace(Regex("((References: )*\\[.*?\\])"), "")
             if (c.`is`("h2"))
-                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H2, text))
+                rulingList.add(
+                    RulingsRecyclerViewAdapter.HeaderOrItem(
+                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.H2,
+                        text
+                    )
+                )
             // Subheader
             else if (c.`is`("h3"))
-                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.H3, text))
+                rulingList.add(
+                    RulingsRecyclerViewAdapter.HeaderOrItem(
+                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.H3,
+                        text
+                    )
+                )
             // Div has children (red / green box)
             else if (c.`is`("div")) {
                 val grandChildren = c.children()
@@ -136,7 +151,12 @@ class RulingsFragment : Fragment() {
             }
             // Item
             else if (c.`is`("ul"))
-                rulingList.add(RulingsRecyclerViewAdapter.HeaderOrItem(RulingsRecyclerViewAdapter.HeaderOrItem.Types.UL, text))
+                rulingList.add(
+                    RulingsRecyclerViewAdapter.HeaderOrItem(
+                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.UL,
+                        text
+                    )
+                )
         }
     }
 

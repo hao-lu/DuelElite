@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.view.adapter.TipsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import java.net.URLEncoder
@@ -93,7 +95,10 @@ class TipsFragment : Fragment() {
                 progressBar.visibility = ProgressBar.GONE
                 if (mTipsList.size != 0) {
                     Log.d(TAG, mTipsList.size.toString())
-                    val simpleAdapter = TipsRecyclerViewAdapter(mTipsList)
+                    val simpleAdapter =
+                        TipsRecyclerViewAdapter(
+                            mTipsList
+                        )
                     val layoutManger = LinearLayoutManager(mActivity)
                     val tipList = mActivity.findViewById(R.id.tips_recycler_view) as RecyclerView
                     val itemDecoration = DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL)

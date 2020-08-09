@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.BR
+import com.lucidity.haolu.searchcards.room.entity.Card
 
 class SearchCardRecyclerViewAdapter(val searchResults: List<Card>?,
-val listener: OnSearchResultListener) :
+                                    val listener: OnSearchResultListener
+) :
     RecyclerView.Adapter<SearchCardRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -17,7 +21,9 @@ val listener: OnSearchResultListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.search_card_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int {

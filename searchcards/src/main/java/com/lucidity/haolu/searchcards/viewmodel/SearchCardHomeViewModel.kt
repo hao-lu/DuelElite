@@ -1,11 +1,9 @@
-package com.lucidity.haolu.viewmodel
+package com.lucidity.haolu.searchcards.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidity.haolu.Event
-import com.lucidity.haolu.SearchCardsDatabase
-import java.io.IOException
+import com.lucidity.haolu.searchcards.Event
 
 class SearchCardHomeViewModel : ViewModel() {
 

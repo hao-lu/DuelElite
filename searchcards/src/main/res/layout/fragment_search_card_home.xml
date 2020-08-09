@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.lucidity.haolu.viewmodel.SearchCardHomeViewModel" />
+            type="com.lucidity.haolu.searchcards.viewmodel.SearchCardHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

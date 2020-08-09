@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.adapter
 
 import android.graphics.Typeface
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TextView
+import com.lucidity.haolu.searchcards.R
 
 /**
  * RecyclerView adapter for RulingFragment, which splits the rulings into different sections
@@ -62,7 +63,9 @@ class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.item_ruling_row, parent, false))
+        return ViewHolder(
+            layoutInflater.inflate(R.layout.item_ruling_row, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

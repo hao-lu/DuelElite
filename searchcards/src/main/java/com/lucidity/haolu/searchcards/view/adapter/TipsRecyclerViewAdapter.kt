@@ -1,10 +1,11 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
 import android.widget.TextView
+import com.lucidity.haolu.searchcards.R
 
 class TipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapter<TipsRecyclerViewAdapter.ViewHolder>() {
 
@@ -18,7 +19,9 @@ class TipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.item_tip_row, parent, false))
+        return ViewHolder(
+            layoutInflater.inflate(R.layout.item_tip_row, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

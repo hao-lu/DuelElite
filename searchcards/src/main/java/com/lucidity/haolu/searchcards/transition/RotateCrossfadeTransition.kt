@@ -1,4 +1,4 @@
-package com.lucidity.haolu.transition
+package com.lucidity.haolu.searchcards.transition
 
 import androidx.transition.ChangeBounds
 import androidx.transition.ChangeImageTransform

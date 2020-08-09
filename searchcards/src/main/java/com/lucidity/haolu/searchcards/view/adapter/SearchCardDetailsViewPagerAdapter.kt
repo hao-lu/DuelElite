@@ -1,8 +1,11 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.adapter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.lucidity.haolu.searchcards.view.fragment.TipsFragment
+import com.lucidity.haolu.searchcards.view.fragment.DetailsFragment
+import com.lucidity.haolu.searchcards.view.fragment.RulingsFragment
 
 class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String) :
     FragmentStateAdapter(fragment) {

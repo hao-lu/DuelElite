@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
 import android.os.AsyncTask
@@ -13,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import com.lucidity.haolu.searchcards.R
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -27,7 +28,8 @@ class DetailsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_details_new, container, false)
         val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_details).visibility = View.VISIBLE
-        ParseDetailsTask(context!!).execute(cardName)
+        ParseDetailsTask(context!!)
+            .execute(cardName)
         return rootView
     }
 

@@ -1,46 +1,28 @@
-package com.lucidity.haolu.view
+package com.lucidity.haolu.searchcards.view.fragment
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.palette.graphics.Palette
-import androidx.palette.graphics.Palette.*
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
-import com.lucidity.haolu.*
-import com.lucidity.haolu.viewmodel.SearchCardHomeViewModel
-import com.lucidity.haolu.databinding.FragmentSearchCardHomeBinding
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardHomeViewModel
+import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.SearchCardsDatabase
+import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardHomeBinding
+import com.lucidity.haolu.searchcards.room.entity.Card
+import com.lucidity.haolu.searchcards.room.entity.CardList
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jsoup.HttpStatusException
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
 import java.io.IOException
-import java.net.URLEncoder
-import java.net.UnknownHostException
 
 
 class SearchCardHomeFragment : Fragment() {
@@ -107,12 +89,17 @@ class SearchCardHomeFragment : Fragment() {
                 val moshi = Moshi.Builder()
                     .add(KotlinJsonAdapterFactory())
                     .build()
-                val cardAdapter = moshi.adapter<CardList>(CardList::class.java)
+                val cardAdapter = moshi.adapter<CardList>(
+                    CardList::class.java)
                 withContext(Dispatchers.IO) {
                     val cardList = cardAdapter.fromJson(json)
                     cardList?.data?.let { list ->
                         for (card in list) {
-                            db?.cardDao()?.insert(Card(card))
+                            db?.cardDao()?.insert(
+                                Card(
+                                    card
+                                )
+                            )
                         }
                     }
                 }

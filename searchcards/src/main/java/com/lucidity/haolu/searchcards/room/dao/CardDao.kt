@@ -1,9 +1,10 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.lucidity.haolu.searchcards.room.entity.Card
 
 @Dao
 interface CardDao {

@@ -1,9 +1,8 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.room.entity
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lucidity.haolu.generated.callback.OnClickListener
 
 /**
  * Used to search card names locally
@@ -18,8 +17,3 @@ data class Card(
         @NonNull
         @PrimaryKey val name: String)
 
-
-data class SearchViewState(
-        val card: String,
-        val onClickListener: OnClickListener? = null
-)

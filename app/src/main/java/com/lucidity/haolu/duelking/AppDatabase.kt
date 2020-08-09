@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.lucidity.haolu.Card
-import com.lucidity.haolu.CardDao
+import com.lucidity.haolu.searchcards.room.entity.Card
+import com.lucidity.haolu.searchcards.room.dao.CardDao
 
 @Database(entities = arrayOf(Card::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {

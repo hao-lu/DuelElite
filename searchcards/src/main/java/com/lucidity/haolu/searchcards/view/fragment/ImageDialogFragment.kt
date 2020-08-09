@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.view.fragment
 
 import android.app.Dialog
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.view.Window
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.WindowManager
+import com.lucidity.haolu.searchcards.R
 
 class ImageDialogFragment : DialogFragment() {
 

@@ -1,6 +1,4 @@
-package com.lucidity.haolu.model
-
-import com.squareup.moshi.Json
+package com.lucidity.haolu.searchcards.model
 
 /**
  * This is the data received while using the YGOdeck api call.

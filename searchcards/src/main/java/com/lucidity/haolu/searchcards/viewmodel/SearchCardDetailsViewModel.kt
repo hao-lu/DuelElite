@@ -1,4 +1,4 @@
-package com.lucidity.haolu
+package com.lucidity.haolu.searchcards.viewmodel
 
 import androidx.lifecycle.ViewModel
 
