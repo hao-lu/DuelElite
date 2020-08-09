@@ -39,11 +39,11 @@
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:clickable="false"
             android:focusable="false"
             android:onClick="@{() -> viewmodel.onBackButtonClick()}"
-            android:src="@drawable/ic_arrow_down"
+            android:padding="16dp"
+            android:src="@drawable/ic_arrow_back"
             android:tint="@color/hint_gray"
             android:transitionName="iconTransition"
             android:translationZ="1dp"
@@ -51,7 +51,8 @@
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_top"
-            app:overlay="false" />
+            app:overlay="false"
+            android:contentDescription="TODO" />
 
         <EditText
             android:id="@+id/et_search_box_hint"

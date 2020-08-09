@@ -110,7 +110,7 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 
     private fun setSharedElementTransitions() {
         sharedElementEnterTransition =
-            RotateCrossfadeTransition()
+            RotateCrossfadeTransition(startRotation = -45f, endRotation = 0f)
         sharedElementReturnTransition =
             RotateCrossfadeTransition(
                 true,

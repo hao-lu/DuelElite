@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.lucidity.haolu.searchcards.viewmodel.SearchCardHomeViewModel" />
@@ -40,18 +41,18 @@
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:clickable="false"
             android:focusable="false"
-            app:overlay="false"
+            android:padding="16dp"
             android:src="@drawable/ic_search_box"
             android:tint="@color/hint_gray"
+            android:transitionName="iconTransition"
             android:translationZ="5dp"
             android:visibility="visible"
-            android:transitionName="iconTransition"
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
             app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            app:overlay="false" />
 
         <TextView
             android:id="@+id/et_search_box_hint"
@@ -79,8 +80,8 @@
             android:clickable="true"
             android:elevation="4dp"
             android:focusable="true"
-            android:transitionName="searchBoxTransition"
             android:onClick="@{() -> viewmodel.onSearchBarClick()}"
+            android:transitionName="searchBoxTransition"
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
