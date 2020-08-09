@@ -47,7 +47,7 @@ class CalculatorViewModel : ViewModel() {
     val animateActionLp: LiveData<Event<Pair<Int, Int>>> = _animateActionLp
 
     private var halve = false
-    var inputType = R.layout.layout_accumulated_input
+    var inputType = R.layout.layout_normal_input
 
     var playerOneLpBarInvisible = false
     var playerTwoLpBarInvisible = false

@@ -66,7 +66,7 @@ class CalculatorFragment : Fragment() {
                 bundle
             )
         }
-        inflateInputLayout(R.layout.layout_accumulated_input)
+        inflateInputLayout(R.layout.layout_normal_input)
         return binding.root
     }
 
@@ -153,7 +153,7 @@ class CalculatorFragment : Fragment() {
             binding.tvPlayerOneLp.text = lp.toString()
             binding.root.doOnLayout {
                 binding.vBarPlayerOneLp.layoutParams.width =
-                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerOneLpBackground.width)
+                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerLpBackground.width / 2)
                 binding.vBarPlayerOneLp.isInvisible = viewmodel.playerOneLpBarInvisible
                 binding.vBarPlayerOneLp.requestLayout()
             }
@@ -165,7 +165,7 @@ class CalculatorFragment : Fragment() {
             binding.tvPlayerTwoLp.text = lp.toString()
             binding.root.doOnLayout {
                 binding.vBarPlayerTwoLp.layoutParams.width =
-                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerTwoLpBackground.width)
+                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerLpBackground.width / 2)
                 binding.vBarPlayerTwoLp.isInvisible = viewmodel.playerTwoLpBarInvisible
                 binding.vBarPlayerTwoLp.requestLayout()
             }
@@ -181,7 +181,7 @@ class CalculatorFragment : Fragment() {
                     lp.first,
                     lp.second,
                     binding.vBarPlayerOneLp,
-                    binding.vBarPlayerOneLpBackground.width
+                    binding.vBarPlayerLpBackground.width / 2
                 )
             }
         })
@@ -196,7 +196,7 @@ class CalculatorFragment : Fragment() {
                     lp.first,
                     lp.second,
                     binding.vBarPlayerTwoLp,
-                    binding.vBarPlayerTwoLpBackground.width
+                    binding.vBarPlayerLpBackground.width / 2
                 )
             }
         })

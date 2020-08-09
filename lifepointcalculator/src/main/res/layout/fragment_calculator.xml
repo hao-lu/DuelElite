@@ -25,8 +25,15 @@
             android:layout_height="match_parent"
             android:background="@color/background">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_vertical_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".5" />
+
             <View
-                android:id="@+id/v_bar_player_one_lp_background"
+                android:id="@+id/v_bar_player_lp_background"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/life_point_bar_height"
                 android:background="@android:color/white"
@@ -37,62 +44,58 @@
 
             <View
                 android:id="@+id/v_bar_player_one_lp"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/life_point_bar_height"
                 android:background="@drawable/rect"
                 android:backgroundTint="@color/yugi_yellow"
                 android:elevation="@dimen/shadow_elevation"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_lp_background"
+                app:layout_constraintEnd_toStartOf="@id/gl_vertical_center"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/v_bar_player_lp_background"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_lp_background" />
 
             <TextView
                 android:id="@+id/tv_player_one_lp"
                 android:layout_width="@dimen/zero_dp"
-                android:layout_height="@dimen/zero_dp"
+                android:layout_height="@dimen/life_point_bar_height"
                 android:elevation="@dimen/shadow_elevation"
                 android:text="8000"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/life_point_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_one_lp_background"
-                app:layout_constraintEnd_toEndOf="@id/v_bar_player_one_lp_background"
-                app:layout_constraintStart_toStartOf="@id/v_bar_player_one_lp_background"
-                app:layout_constraintTop_toTopOf="@id/v_bar_player_one_lp_background" />
-
-            <View
-                android:id="@+id/v_bar_player_two_lp_background"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="@dimen/life_point_bar_height"
-                android:layout_marginTop="@dimen/material_margin"
-                android:background="@android:color/white"
-                android:elevation="@dimen/shadow_elevation"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_lp_background"
+                app:layout_constraintEnd_toStartOf="@id/gl_vertical_center"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/v_bar_player_lp_background"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_lp_background" />
 
             <View
                 android:id="@+id/v_bar_player_two_lp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/life_point_bar_height"
-                android:layout_marginTop="@dimen/material_margin"
                 android:background="@drawable/rect"
                 android:backgroundTint="@color/yugi_red"
                 android:elevation="@dimen/shadow_elevation"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_bar_player_one_lp_background" />
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_lp_background"
+                app:layout_constraintEnd_toEndOf="@id/v_bar_player_lp_background"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/gl_vertical_center"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_lp_background" />
 
             <TextView
                 android:id="@+id/tv_player_two_lp"
                 android:layout_width="@dimen/zero_dp"
-                android:layout_height="@dimen/zero_dp"
+                android:layout_height="@dimen/life_point_bar_height"
                 android:elevation="@dimen/shadow_elevation"
                 android:gravity="end"
                 android:text="8000"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/life_point_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_two_lp_background"
-                app:layout_constraintEnd_toEndOf="@id/v_bar_player_two_lp_background"
-                app:layout_constraintStart_toStartOf="@id/v_bar_player_two_lp_background"
-                app:layout_constraintTop_toTopOf="@id/v_bar_player_two_lp_background" />
+                app:layout_constraintBottom_toBottomOf="@id/v_bar_player_lp_background"
+                app:layout_constraintEnd_toEndOf="@id/v_bar_player_lp_background"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/gl_vertical_center"
+                app:layout_constraintTop_toTopOf="@id/v_bar_player_lp_background" />
 
             <View
                 android:id="@+id/v_utility_background"
@@ -103,7 +106,7 @@
                 android:elevation="@dimen/shadow_elevation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_bar_player_two_lp_background" />
+                app:layout_constraintTop_toBottomOf="@id/v_bar_player_lp_background" />
 
             <ImageButton
                 android:id="@+id/ib_duel_time"
@@ -248,15 +251,15 @@
 
             <ViewStub
                 android:id="@+id/vs_input"
-                android:layout="@layout/layout_accumulated_input"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/zero_dp"
                 android:elevation="@dimen/shadow_elevation"
+                android:layout="@layout/layout_normal_input"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
                 app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
                 app:layout_constraintTop_toTopOf="@id/v_calculator_background"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
