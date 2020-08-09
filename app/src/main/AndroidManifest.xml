@@ -14,51 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- MainActivity -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <!-- LifePointLog Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.view.activity.LogActivity"
-            android:label="@string/title_log_activity">
-        </activity>
-
-        <!-- Searchable Activity -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.SearchableCardActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.SearchSuggestion">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable">
-            </meta-data>
-        </activity>
-
-        <!-- Activity that shows the details of the cards -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.CardDetailActivity"
-            android:label="@string/title_activity_card_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <!-- Provides search suggestions for cards -->
-        <provider
-            android:name="com.lucidity.haolu.duelking.CardSuggestionProvider"
-            android:authorities="com.lucidity.haolu.duelking.CardSuggestionProvider"
-            android:exported="false"/>
-
-        <!-- Rng Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.view.activity.RngActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/flip_and_roll">
-        </activity>
-
         <activity android:name=".view.activity.BottomNavigationActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
