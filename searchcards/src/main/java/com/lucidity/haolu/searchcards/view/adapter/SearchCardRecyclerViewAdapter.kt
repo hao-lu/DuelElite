@@ -20,7 +20,7 @@ class SearchCardRecyclerViewAdapter(val searchResults: List<Card>?,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.search_card_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_card, parent, false)
         return ViewHolder(
             view
         )

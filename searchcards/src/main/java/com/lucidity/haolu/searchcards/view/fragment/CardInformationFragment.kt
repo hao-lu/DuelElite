@@ -11,22 +11,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucidity.haolu.searchcards.R
-import com.lucidity.haolu.searchcards.databinding.FragmentDetailsNewBinding
-import com.lucidity.haolu.searchcards.view.adapter.DetailsRecyclerViewAdapter
-import com.lucidity.haolu.searchcards.viewmodel.DetailsViewModel
+import com.lucidity.haolu.searchcards.databinding.FragmentCardInformationBinding
+import com.lucidity.haolu.searchcards.view.adapter.CardInformationRecyclerViewAdapter
+import com.lucidity.haolu.searchcards.viewmodel.CardInformationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailsFragment : Fragment() {
+class CardInformationFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailsNewBinding
-    private lateinit var viewmodel: DetailsViewModel
+    private lateinit var binding: FragmentCardInformationBinding
+    private lateinit var viewmodel: CardInformationViewModel
 
     private val TAG = "DetailsFragment"
 
 //    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val rootView = inflater.inflate(R.layout.fragment_details_new, container, false)
+//        val rootView = inflater.inflate(R.layout.fragment_card_information, container, false)
 //        val cardName = arguments!!.getString("cardName")
 //        rootView.findViewById<ProgressBar>(R.id.progressbar_details).visibility = View.VISIBLE
 ////        ParseDetailsTask(context!!)
@@ -36,7 +36,7 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewmodel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+        viewmodel = ViewModelProvider(this).get(CardInformationViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_details_new,
+            R.layout.fragment_card_information,
             container,
             false)
         return binding.root
@@ -64,7 +64,7 @@ class DetailsFragment : Fragment() {
 
     private fun observeCardDetails() {
         viewmodel.cardDetails.observe(viewLifecycleOwner, Observer {  list ->
-            binding.detailsRecyclerView.adapter = DetailsRecyclerViewAdapter(list ?: emptyList())
+            binding.detailsRecyclerView.adapter = CardInformationRecyclerViewAdapter(list ?: emptyList())
         })
     }
 

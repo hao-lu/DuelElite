@@ -15,18 +15,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.lucidity.haolu.searchcards.R
-import com.lucidity.haolu.searchcards.view.adapter.TipsRecyclerViewAdapter
+import com.lucidity.haolu.searchcards.view.adapter.CardTipsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import java.net.URLEncoder
 import java.net.UnknownHostException
 
-class TipsFragment : Fragment() {
+class CardTipsFragment : Fragment() {
 
     private val TAG = "TipsFragment"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater!!.inflate(R.layout.fragment_tips_new, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_card_tips, container, false)
         val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_tips).visibility = View.VISIBLE
         ParseTipsTask(context!!).execute(cardName)
@@ -96,7 +96,7 @@ class TipsFragment : Fragment() {
                 if (mTipsList.size != 0) {
                     Log.d(TAG, mTipsList.size.toString())
                     val simpleAdapter =
-                        TipsRecyclerViewAdapter(
+                        CardTipsRecyclerViewAdapter(
                             mTipsList
                         )
                     val layoutManger = LinearLayoutManager(mActivity)

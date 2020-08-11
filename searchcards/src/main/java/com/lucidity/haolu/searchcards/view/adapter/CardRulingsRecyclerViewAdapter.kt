@@ -14,7 +14,7 @@ import com.lucidity.haolu.searchcards.R
  * The RecyclerView in RulingFragment is a RecyclerView of TableLayouts
  */
 
-class RulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOrItem>>) : RecyclerView.Adapter<RulingsRecyclerViewAdapter.ViewHolder>() {
+class CardRulingsRecyclerViewAdapter(private val mList: ArrayList<ArrayList<HeaderOrItem>>) : RecyclerView.Adapter<CardRulingsRecyclerViewAdapter.ViewHolder>() {
 
     data class HeaderOrItem(val type: Types, val data: String) {
 

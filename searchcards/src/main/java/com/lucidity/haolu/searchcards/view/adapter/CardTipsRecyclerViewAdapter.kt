@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import com.lucidity.haolu.searchcards.R
 
-class TipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapter<TipsRecyclerViewAdapter.ViewHolder>() {
+class CardTipsRecyclerViewAdapter(val mList: ArrayList<String>) : RecyclerView.Adapter<CardTipsRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

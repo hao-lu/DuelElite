@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.lucidity.haolu.searchcards.R
-import com.lucidity.haolu.searchcards.view.adapter.RulingsRecyclerViewAdapter
+import com.lucidity.haolu.searchcards.view.adapter.CardRulingsRecyclerViewAdapter
 import org.jsoup.Jsoup
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Element
@@ -26,12 +26,12 @@ import java.net.UnknownHostException
  * Parses the ruling information
  */
 
-class RulingsFragment : Fragment() {
+class CardRulingsFragment : Fragment() {
 
     private val TAG = "RulingsFragment"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater!!.inflate(R.layout.fragment_rulings_new, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_card_rulings, container, false)
         val cardName = arguments!!.getString("cardName")
         rootView.findViewById<ProgressBar>(R.id.progressbar_rulings).visibility = View.VISIBLE
         ParseRulingsTask(context!!)
@@ -49,7 +49,7 @@ class RulingsFragment : Fragment() {
         private val BASE_URL = "https://yugioh.wikia.com/wiki/Card_Rulings:"
 
         // ArrayList of ArrayList to section different headers, i.e., TCG Rulings vs OCG Rulings
-        private var mRulingsList = ArrayList<ArrayList<RulingsRecyclerViewAdapter.HeaderOrItem>>()
+        private var mRulingsList = ArrayList<ArrayList<CardRulingsRecyclerViewAdapter.HeaderOrItem>>()
         private val mActivity = context as AppCompatActivity
 
         override fun onPreExecute() {
@@ -104,7 +104,7 @@ class RulingsFragment : Fragment() {
                 progressBar.visibility = ProgressBar.GONE
                 if (mRulingsList.size != 0) {
                     val simpleAdapter =
-                        RulingsRecyclerViewAdapter(
+                        CardRulingsRecyclerViewAdapter(
                             mRulingsList
                         )
                     val layoutManger = LinearLayoutManager(mActivity)
@@ -129,16 +129,16 @@ class RulingsFragment : Fragment() {
             val text = c.text().replace(Regex("((References: )*\\[.*?\\])"), "")
             if (c.`is`("h2"))
                 rulingList.add(
-                    RulingsRecyclerViewAdapter.HeaderOrItem(
-                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.H2,
+                    CardRulingsRecyclerViewAdapter.HeaderOrItem(
+                        CardRulingsRecyclerViewAdapter.HeaderOrItem.Types.H2,
                         text
                     )
                 )
             // Subheader
             else if (c.`is`("h3"))
                 rulingList.add(
-                    RulingsRecyclerViewAdapter.HeaderOrItem(
-                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.H3,
+                    CardRulingsRecyclerViewAdapter.HeaderOrItem(
+                        CardRulingsRecyclerViewAdapter.HeaderOrItem.Types.H3,
                         text
                     )
                 )
@@ -152,8 +152,8 @@ class RulingsFragment : Fragment() {
             // Item
             else if (c.`is`("ul"))
                 rulingList.add(
-                    RulingsRecyclerViewAdapter.HeaderOrItem(
-                        RulingsRecyclerViewAdapter.HeaderOrItem.Types.UL,
+                    CardRulingsRecyclerViewAdapter.HeaderOrItem(
+                        CardRulingsRecyclerViewAdapter.HeaderOrItem.Types.UL,
                         text
                     )
                 )

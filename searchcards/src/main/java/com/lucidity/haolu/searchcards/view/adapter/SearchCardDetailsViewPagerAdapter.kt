@@ -3,9 +3,9 @@ package com.lucidity.haolu.searchcards.view.adapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.lucidity.haolu.searchcards.view.fragment.TipsFragment
-import com.lucidity.haolu.searchcards.view.fragment.DetailsFragment
-import com.lucidity.haolu.searchcards.view.fragment.RulingsFragment
+import com.lucidity.haolu.searchcards.view.fragment.CardTipsFragment
+import com.lucidity.haolu.searchcards.view.fragment.CardInformationFragment
+import com.lucidity.haolu.searchcards.view.fragment.CardRulingsFragment
 
 class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String) :
     FragmentStateAdapter(fragment) {
@@ -15,7 +15,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
     override fun createFragment(position: Int): Fragment {
         // Return a NEW fragment instance in createFragment(int)
         return if (position == 0) {
-            val fragment = DetailsFragment()
+            val fragment = CardInformationFragment()
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)
@@ -23,7 +23,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
             }
             fragment
         } else if (position == 1) {
-            val fragment = RulingsFragment()
+            val fragment = CardRulingsFragment()
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)
@@ -31,7 +31,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
             }
             fragment
         } else {
-            val fragment = TipsFragment()
+            val fragment = CardTipsFragment()
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)

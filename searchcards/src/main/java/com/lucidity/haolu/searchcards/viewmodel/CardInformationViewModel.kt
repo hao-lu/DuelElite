@@ -7,7 +7,7 @@ import com.lucidity.haolu.searchcards.network.YugiohWikiaDataProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class DetailsViewModel : ViewModel() {
+class CardInformationViewModel : ViewModel() {
 
     private val yugiohWikiaDataProvider = YugiohWikiaDataProvider()
 

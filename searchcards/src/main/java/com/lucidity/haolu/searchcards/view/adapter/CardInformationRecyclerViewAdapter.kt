@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lucidity.haolu.searchcards.BR
 import com.lucidity.haolu.searchcards.R
 
-class DetailsRecyclerViewAdapter(val mList: List<Pair<String,String>>) : RecyclerView.Adapter<DetailsRecyclerViewAdapter.ViewHolder>() {
+class CardInformationRecyclerViewAdapter(val mList: List<Pair<String,String>>) : RecyclerView.Adapter<CardInformationRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding: ViewDataBinding? = DataBindingUtil.bind(view)
