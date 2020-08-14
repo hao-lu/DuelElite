@@ -58,6 +58,10 @@ class BottomNavigationActivity : AppCompatActivity() {
         // Only have BottomNavigationView handle fitsSystemWindow
 //        binding.clActivityMain.setOnApplyWindowInsetsListener(null)
 
+      setupKeyboardListener()
+    }
+
+    private fun setupKeyboardListener() {
         // Move to util
         binding.root.viewTreeObserver.addOnGlobalLayoutListener {
             val rectangle = Rect()

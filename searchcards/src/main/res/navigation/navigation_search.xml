@@ -20,9 +20,9 @@
 
     <fragment
         android:id="@+id/fragment_search"
-        android:name="com.lucidity.haolu.searchcards.view.fragment.SearchCardFragment"
+        android:name="com.lucidity.haolu.searchcards.view.fragment.SearchCardResultsFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search_card">
+        tools:layout="@layout/fragment_search_card_results">
 
         <action
             android:id="@+id/action_fragment_search_card_to_fragment_search_card_details"

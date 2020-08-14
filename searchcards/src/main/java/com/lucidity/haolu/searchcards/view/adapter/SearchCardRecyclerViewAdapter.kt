@@ -13,7 +13,7 @@ import com.lucidity.haolu.searchcards.room.entity.Card
 
 class SearchCardRecyclerViewAdapter(
     private val searchResults: MutableList<Card>,
-    private val listener: OnSearchResultListener
+    private val listener: OnSearchResultListener2
 ) :
     RecyclerView.Adapter<SearchCardRecyclerViewAdapter.ViewHolder>() {
 
@@ -23,7 +23,7 @@ class SearchCardRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_search_card, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_search_card_result, parent, false)
         return ViewHolder(
             view
         )
@@ -52,7 +52,7 @@ class SearchCardRecyclerViewAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    interface OnSearchResultListener {
+    interface OnSearchResultListener2 {
         fun onSearchResultClick(card: Card)
     }
 

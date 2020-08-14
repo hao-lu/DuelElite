@@ -16,11 +16,19 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/iv_search_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_box"
+            android:layout_marginEnd="16dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{card.name}"
-            tools:text="Blue-Eyes White Dragon"/>
+            tools:text="Blue-Eyes White Dragon"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

@@ -9,7 +9,7 @@ import com.lucidity.haolu.searchcards.Event
 import com.lucidity.haolu.searchcards.SearchCardsDatabase
 import kotlinx.coroutines.*
 
-class SearchCardViewModel : ViewModel() {
+class SearchCardResultsViewModel : ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 

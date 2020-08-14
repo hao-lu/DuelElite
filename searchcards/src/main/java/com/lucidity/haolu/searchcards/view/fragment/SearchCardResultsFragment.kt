@@ -16,19 +16,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.room.entity.Card
 import com.lucidity.haolu.searchcards.view.adapter.SearchCardRecyclerViewAdapter
-import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardBinding
+import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardResultsBinding
 import com.lucidity.haolu.searchcards.transition.RotateCrossfadeTransition
 import com.lucidity.haolu.searchcards.view.adapter.SearchCardResultsListAdapter
-import com.lucidity.haolu.searchcards.viewmodel.SearchCardViewModel
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardResultsViewModel
 import kotlinx.coroutines.*
 
-class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchResultListener {
+class SearchCardResultsFragment : Fragment(), SearchCardResultsListAdapter.OnSearchResultListener {
 
-    private lateinit var binding: FragmentSearchCardBinding
-    private lateinit var viewmodel: SearchCardViewModel
+    private lateinit var binding: FragmentSearchCardResultsBinding
+    private lateinit var viewmodel: SearchCardResultsViewModel
 
     companion object {
-        fun newInstance() = SearchCardFragment()
+        fun newInstance() = SearchCardResultsFragment()
     }
 
 //    private val listener = object: SearchCardRecyclerViewAdapter.OnSearchResultListener {
@@ -39,7 +39,7 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewmodel = ViewModelProvider(this).get(SearchCardViewModel::class.java)
+        viewmodel = ViewModelProvider(this).get(SearchCardResultsViewModel::class.java)
         setSharedElementTransitions()
     }
 
@@ -50,7 +50,7 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
     ): View? {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_search_card,
+            R.layout.fragment_search_card_results,
             container,
             false
         )
@@ -128,7 +128,7 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 
     private fun setupSearchCardRecyclerView() {
         binding.rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvSearchResults.adapter = SearchCardResultsListAdapter()
+        binding.rvSearchResults.adapter = SearchCardResultsListAdapter(this)
     }
 
 }
