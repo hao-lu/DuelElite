@@ -18,6 +18,7 @@ import com.lucidity.haolu.searchcards.room.entity.Card
 import com.lucidity.haolu.searchcards.view.adapter.SearchCardRecyclerViewAdapter
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardBinding
 import com.lucidity.haolu.searchcards.transition.RotateCrossfadeTransition
+import com.lucidity.haolu.searchcards.view.adapter.SearchCardResultsListAdapter
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardViewModel
 import kotlinx.coroutines.*
 
@@ -25,6 +26,10 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 
     private lateinit var binding: FragmentSearchCardBinding
     private lateinit var viewmodel: SearchCardViewModel
+
+    companion object {
+        fun newInstance() = SearchCardFragment()
+    }
 
 //    private val listener = object: SearchCardRecyclerViewAdapter.OnSearchResultListener {
 //        override fun onSearchResultClick(position: Int) {
@@ -85,7 +90,8 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
     private fun setSearchBoxOnFocusChangeListener() {
         binding.etSearchBoxHint.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
-                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.etSearchBoxHint, InputMethodManager.SHOW_IMPLICIT)
             }
         }
@@ -94,15 +100,16 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
     private fun addSearchBoxEditTextChangeListener() {
         binding.etSearchBoxHint.addTextChangedListener { editable ->
             CoroutineScope(Dispatchers.IO).launch {
-                delay(300)
-//                viewmodel.getSearchResults(editable.toString())
+                delay(200)
                 withContext(Dispatchers.Main) {
-                    val list = viewmodel.getSearchResult(editable.toString())
-                    binding.rvSearchResults.adapter =
-                        SearchCardRecyclerViewAdapter(
-                            list,
-                            this@SearchCardFragment
-                        )
+                    editable?.let { text ->
+                        val list = if (text.isEmpty()) {
+                            emptyList<Card>()
+                        } else {
+                            viewmodel.getSearchResult(editable.toString())
+                        }
+                        (binding.rvSearchResults.adapter as SearchCardResultsListAdapter).submitList(list)
+                    }
                 }
             }
         }
@@ -121,7 +128,7 @@ class SearchCardFragment : Fragment(), SearchCardRecyclerViewAdapter.OnSearchRes
 
     private fun setupSearchCardRecyclerView() {
         binding.rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
-//        binding.rvSearchResults.adapter = SearchCardRecyclerViewAdapter(listOf("Blue-Eyes White Dragon"))
+        binding.rvSearchResults.adapter = SearchCardResultsListAdapter()
     }
 
 }

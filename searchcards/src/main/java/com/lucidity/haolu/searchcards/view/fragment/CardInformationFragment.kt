@@ -20,6 +20,10 @@ import kotlinx.coroutines.launch
 
 class CardInformationFragment : Fragment() {
 
+    companion object {
+        fun newInstance() = CardInformationFragment()
+    }
+
     private lateinit var binding: FragmentCardInformationBinding
     private lateinit var viewmodel: CardInformationViewModel
 
