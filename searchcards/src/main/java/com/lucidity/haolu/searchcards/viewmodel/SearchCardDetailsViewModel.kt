@@ -6,22 +6,28 @@ import androidx.lifecycle.ViewModel
 import com.lucidity.haolu.searchcards.network.YugiohWikiaDataProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class SearchCardDetailsViewModel(val cardName: String) : ViewModel() {
+class SearchCardDetailsViewModel(val cardName: String?) : ViewModel() {
 
     private val yugiohWikiaDataProvider = YugiohWikiaDataProvider()
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    val _imageUrl = MutableLiveData<String>()
+    private val _imageUrl = MutableLiveData<String>()
     val imageUrl: LiveData<String> = _imageUrl
 
-    suspend fun fetchCardImageUrl(cardName: String): String {
+    suspend fun fetchCardImageUrl(cardName: String) {
         withContext(Dispatchers.Main) {
-            _imageUrl.value = yugiohWikiaDataProvider.fetchCardImageUrl(cardName)
+            val deferred = async(Dispatchers.IO) {
+                yugiohWikiaDataProvider.fetchCardImageUrl(cardName)
+            }
+            val url = deferred.await()
+            if (url != null) {
+                _imageUrl.value = deferred.await()
+            }
         }
-        return yugiohWikiaDataProvider.fetchCardImageUrl(cardName)
     }
 
 //    suspend fun fetchCardImageUrl(url: String): String {

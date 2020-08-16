@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.databinding.FragmentCardInformationBinding
 import com.lucidity.haolu.searchcards.view.adapter.CardInformationRecyclerViewAdapter
 import com.lucidity.haolu.searchcards.viewmodel.CardInformationViewModel
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,8 +26,9 @@ class CardInformationFragment : Fragment() {
         fun newInstance() = CardInformationFragment()
     }
 
+    private lateinit var parentViewModel: SearchCardDetailsViewModel
     private lateinit var binding: FragmentCardInformationBinding
-    private lateinit var viewmodel: CardInformationViewModel
+    private lateinit var viewModel: CardInformationViewModel
 
     private val TAG = "DetailsFragment"
 
@@ -40,7 +43,8 @@ class CardInformationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewmodel = ViewModelProvider(this).get(CardInformationViewModel::class.java)
+        parentViewModel = ViewModelProvider(requireParentFragment()).get(SearchCardDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CardInformationViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -61,21 +65,34 @@ class CardInformationFragment : Fragment() {
 //        binding.detailsRecyclerView.adapter = DetailsRecyclerViewAdapter(log?.getReverseList() ?: emptyList())
         binding.detailsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
+        observeProgressBarEvent()
         observeCardDetails()
 
-        fetchCardDetails()
+        // Refactor call once
+        if (viewModel.cardDetails.value == null) {
+            fetchCardDetails()
+        }
+    }
+
+    private fun observeProgressBarEvent() {
+        viewModel.progressBarEvent.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { visibility ->
+                binding.progressbarDetails.isVisible = visibility
+            }
+        })
     }
 
     private fun observeCardDetails() {
-        viewmodel.cardDetails.observe(viewLifecycleOwner, Observer {  list ->
+        viewModel.cardDetails.observe(viewLifecycleOwner, Observer { list ->
             binding.detailsRecyclerView.adapter = CardInformationRecyclerViewAdapter(list ?: emptyList())
         })
     }
 
     private fun fetchCardDetails() {
         CoroutineScope(Dispatchers.IO).launch {
-            val cardName = arguments?.getString("cardName")
-            viewmodel.fetchCardDetails(cardName!!)
+            parentViewModel.cardName?.run {
+                viewModel.fetchCardDetails(this)
+            }
         }
     }
 

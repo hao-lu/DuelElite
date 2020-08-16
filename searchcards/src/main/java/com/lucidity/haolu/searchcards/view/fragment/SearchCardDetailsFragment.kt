@@ -1,47 +1,46 @@
 package com.lucidity.haolu.searchcards.view.fragment
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.palette.graphics.Palette
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lucidity.haolu.searchcards.R
-import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
-import com.lucidity.haolu.searchcards.view.adapter.SearchCardDetailsViewPagerAdapter
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardDetailsBinding
+import com.lucidity.haolu.searchcards.view.adapter.SearchCardDetailsViewPagerAdapter
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModelFactory
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
-import kotlinx.coroutines.*
-import org.jsoup.HttpStatusException
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
-import java.net.URLEncoder
-import java.net.UnknownHostException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SearchCardDetailsFragment : Fragment() {
+
+    companion object {
+        fun newInstance(): SearchCardDetailsFragment {
+            val args = Bundle()
+            val fragment = SearchCardDetailsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     private lateinit var viewPagerAdapter: SearchCardDetailsViewPagerAdapter
     private lateinit var binding: FragmentSearchCardDetailsBinding
     private lateinit var viewmodel: SearchCardDetailsViewModel
+
+    private var cardName: String? = null
 
     private val picassoTargetAccessoryColor = object : Target {
         override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
@@ -64,7 +63,7 @@ class SearchCardDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        viewmodel = ViewModelProvider(this).get(SearchCardDetailsViewModel::class.java)
-        val cardName = arguments?.getString("cardName")!!
+        cardName = arguments?.getString("cardName")
         viewmodel = ViewModelProvider(this, SearchCardDetailsViewModelFactory(cardName)).get(
             SearchCardDetailsViewModel::class.java
         )
@@ -91,7 +90,6 @@ class SearchCardDetailsFragment : Fragment() {
         setupToolbar()
 
         observeCardImageUrl()
-
         fetchCardImageUrl()
     }
 
@@ -127,17 +125,18 @@ class SearchCardDetailsFragment : Fragment() {
 
     private fun fetchCardImageUrl() {
         CoroutineScope(Dispatchers.IO).launch {
-            val cardName = arguments?.getString("cardName")
+//            val cardName = arguments?.getString("cardName")
 //            val url = "https://yugioh.wikia.com/wiki/" + cardName!!.encodeToHtmlAndReplacePlusWithUnderscore()
-            val imageUrl = viewmodel.fetchCardImageUrl(cardName!!)
-            println(imageUrl)
+            cardName?.run {
+                viewmodel.fetchCardImageUrl(this)
+            }
         }
     }
 
     private fun observeCardImageUrl() {
         viewmodel.imageUrl.observe(viewLifecycleOwner, Observer { imageUrl ->
             Picasso.with(context).load(imageUrl).into(binding.imageHeader)
-            Picasso.with(context).load(imageUrl).into(picassoTargetAccessoryColor)
+//            Picasso.with(context).load(imageUrl).into(picassoTargetAccessoryColor)
         })
     }
 }
