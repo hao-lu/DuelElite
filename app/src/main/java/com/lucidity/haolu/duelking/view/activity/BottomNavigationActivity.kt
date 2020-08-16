@@ -30,13 +30,13 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= 27) {
             window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
-//                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
+//                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
 //                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             window.statusBarColor = Color.WHITE
-//            window.navigationBarColor = Color.WHITE
+            window.navigationBarColor = Color.WHITE
         } else {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
         }
@@ -58,7 +58,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         // Only have BottomNavigationView handle fitsSystemWindow
 //        binding.clActivityMain.setOnApplyWindowInsetsListener(null)
 
-      setupKeyboardListener()
+//      setupKeyboardListener()
     }
 
     private fun setupKeyboardListener() {
