@@ -7,7 +7,7 @@ import com.lucidity.haolu.searchcards.view.fragment.CardTipsFragment
 import com.lucidity.haolu.searchcards.view.fragment.CardInformationFragment
 import com.lucidity.haolu.searchcards.view.fragment.CardRulingsFragment
 
-class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String) :
+class SearchCardDetailsViewPagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 3
@@ -19,7 +19,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)
-                putString("cardName", cardName)
+//                putString("cardName", cardName)
             }
             fragment
         } else if (position == 1) {
@@ -27,7 +27,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)
-                putString("cardName", cardName)
+//                putString("cardName", cardName)
             }
             fragment
         } else {
@@ -35,7 +35,7 @@ class SearchCardDetailsViewPagerAdapter(fragment: Fragment, val cardName: String
             fragment.arguments = Bundle().apply {
                 // Our object is just an integer :-P
                 putInt("ARG_OBJECT", position + 1)
-                putString("cardName", cardName)
+//                putString("cardName", cardName)
             }
             fragment
         }

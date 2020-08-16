@@ -94,7 +94,6 @@ class SearchCardDetailsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        val cardName = arguments?.getString("cardName")
         binding.toolbar.title = cardName
         binding.toolbar.navigationIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
@@ -104,11 +103,9 @@ class SearchCardDetailsFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        val cardName = arguments?.getString("cardName")
         viewPagerAdapter =
             SearchCardDetailsViewPagerAdapter(
-                this,
-                cardName!!
+                this
             )
         binding.container.adapter = viewPagerAdapter
         val viewPager2 = binding.container

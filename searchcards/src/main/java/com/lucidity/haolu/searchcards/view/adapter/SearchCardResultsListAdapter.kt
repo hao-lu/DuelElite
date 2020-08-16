@@ -12,12 +12,21 @@ import com.lucidity.haolu.searchcards.BR
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.room.entity.Card
 
-class SearchCardResultsListAdapter(private val listener: OnSearchResultListener) : ListAdapter<Card,
-            SearchCardResultsListAdapter.ViewHolder>
-        (SearchCardResultsDiffUtilCallback()) {
+class SearchCardResultsListAdapter(private val listener: OnSearchResultListener) :
+    ListAdapter<Card, SearchCardResultsListAdapter.ViewHolder>(SearchCardResultsDiffUtilCallback()) {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View,
+                     private val onSearchResultListener: OnSearchResultListener) :
+        RecyclerView.ViewHolder(view), View.OnClickListener {
         val binding: ViewDataBinding? = DataBindingUtil.bind(view)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            onSearchResultListener.onSearchResultClick(adapterPosition)
+        }
     }
 
     private class SearchCardResultsDiffUtilCallback : DiffUtil.ItemCallback<Card>() {
@@ -31,25 +40,19 @@ class SearchCardResultsListAdapter(private val listener: OnSearchResultListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_search_card_result, parent, false)
-        return ViewHolder(
-            view
-        )
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_search_card_result, parent, false)
+        return ViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding?.apply {
             setVariable(BR.card, getItem(position))
-            // refactor
-                holder.itemView.setOnClickListener {
-                listener.onSearchResultClick(getItem(position))
-            }
             executePendingBindings()
         }
     }
+}
 
-    interface OnSearchResultListener {
-        fun onSearchResultClick(card: Card)
-    }
+interface OnSearchResultListener {
+    fun onSearchResultClick(position: Int)
 }
