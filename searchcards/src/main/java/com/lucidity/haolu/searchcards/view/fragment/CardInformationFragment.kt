@@ -27,10 +27,10 @@ class CardInformationFragment : Fragment() {
     }
 
     private lateinit var parentViewModel: SearchCardDetailsViewModel
-    private lateinit var binding: FragmentCardInformationBinding
     private lateinit var viewModel: CardInformationViewModel
+    private lateinit var binding: FragmentCardInformationBinding
 
-    private val TAG = "DetailsFragment"
+    private val TAG = "CardInformationFragment"
 
 //    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 //        val rootView = inflater.inflate(R.layout.fragment_card_information, container, false)
@@ -66,10 +66,10 @@ class CardInformationFragment : Fragment() {
         binding.detailsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         observeProgressBarEvent()
-        observeCardDetails()
+        observeCardInformation()
 
         // Refactor call once
-        if (viewModel.cardDetails.value == null) {
+        if (viewModel.cardInformation.value == null) {
             fetchCardDetails()
         }
     }
@@ -82,8 +82,8 @@ class CardInformationFragment : Fragment() {
         })
     }
 
-    private fun observeCardDetails() {
-        viewModel.cardDetails.observe(viewLifecycleOwner, Observer { list ->
+    private fun observeCardInformation() {
+        viewModel.cardInformation.observe(viewLifecycleOwner, Observer { list ->
             binding.detailsRecyclerView.adapter = CardInformationRecyclerViewAdapter(list ?: emptyList())
         })
     }
@@ -91,7 +91,7 @@ class CardInformationFragment : Fragment() {
     private fun fetchCardDetails() {
         CoroutineScope(Dispatchers.IO).launch {
             parentViewModel.cardName?.run {
-                viewModel.fetchCardDetails(this)
+                viewModel.fetchCardInformation(this)
             }
         }
     }

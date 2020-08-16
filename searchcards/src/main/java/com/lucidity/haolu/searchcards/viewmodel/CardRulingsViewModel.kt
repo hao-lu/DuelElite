@@ -4,30 +4,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lucidity.haolu.searchcards.Event
+import com.lucidity.haolu.searchcards.model.CardRulings
 import com.lucidity.haolu.searchcards.network.YugiohWikiaDataProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class CardInformationViewModel : ViewModel() {
+class CardRulingsViewModel : ViewModel() {
 
     private val yugiohWikiaDataProvider = YugiohWikiaDataProvider()
 
     private val _progressBarEvent = MutableLiveData<Event<Boolean>>()
-    private val _cardInformation = MutableLiveData<List<Pair<String, String>>>()
+    private val _cardRulings = MutableLiveData<ArrayList<CardRulings>>()
 
     val progressBarEvent: LiveData<Event<Boolean>> = _progressBarEvent
-    val cardInformation: LiveData<List<Pair<String, String>>> = _cardInformation
+    val cardRulings: LiveData<ArrayList<CardRulings>> = _cardRulings
 
-    suspend fun fetchCardInformation(cardName: String) {
+    suspend fun fetchCardRulings(cardName: String) {
         withContext(Dispatchers.Main) {
             _progressBarEvent.value = Event(true)
             val deferred = async(Dispatchers.IO) {
-                yugiohWikiaDataProvider.fetchCardInformation(cardName)
+                yugiohWikiaDataProvider.fetchCardRulings(cardName)
             }
-            val details = deferred.await()
-            details?.run {
-                _cardInformation.value = details
+            val rulings = deferred.await()
+            rulings?.run {
+                _cardRulings.value = rulings
             }
             _progressBarEvent.value = Event(false)
         }

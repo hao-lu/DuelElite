@@ -41,6 +41,7 @@ class SearchCardResultsListAdapter(private val listener: OnSearchResultListener)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding?.apply {
             setVariable(BR.card, getItem(position))
+            // refactor
                 holder.itemView.setOnClickListener {
                 listener.onSearchResultClick(getItem(position))
             }

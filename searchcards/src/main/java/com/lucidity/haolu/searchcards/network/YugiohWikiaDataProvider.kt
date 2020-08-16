@@ -1,9 +1,8 @@
 package com.lucidity.haolu.searchcards.network
 
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.lucidity.haolu.searchcards.model.CardRulings
+import kotlinx.coroutines.*
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -14,6 +13,8 @@ import java.net.UnknownHostException
 class YugiohWikiaDataProvider {
 
     private val TAG = "YugiohWikiaDataProvider"
+
+    private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     companion object {
         const val BASE_URL = "https://yugioh.wikia.com/wiki/"
@@ -75,7 +76,7 @@ class YugiohWikiaDataProvider {
         return null
     }
 
-    suspend fun fetchCardDetails(cardName: String): List<Pair<String, String>>? {
+    suspend fun fetchCardInformation(cardName: String): List<Pair<String, String>>? {
         val document = fetchDocument(generateCardWikiaEndpoint(cardName))
         document?.let {
             // <table class = cardtable>
@@ -132,8 +133,59 @@ class YugiohWikiaDataProvider {
         return null
     }
 
+    suspend fun fetchCardRulings(cardName: String): ArrayList<CardRulings>? {
+        val document = fetchDocument(generateCardWikiaRulingEndpoint(cardName))
+        document?.let {
+            val listOfCardRulings = ArrayList<CardRulings>()
+            val article = document.select("article").first()
+            val div = article.getElementById("mw-content-text")
+            val children = div.children()
+            var addToList = false
+            for (child in children) {
+                // Add all header sections excluding References and Notes
+                if (child.`is`("h2") && child.text() != "References" && child.text() != "Notes") {
+                    addToList = true
+                    // New header
+                    listOfCardRulings.add(CardRulings(arrayListOf()))
+                    Log.d(TAG, child.text())
+                } else if (child.`is`("h2")) {
+                    addToList = false
+                }
+                if (addToList) {
+                    val rulingList = listOfCardRulings[listOfCardRulings.size - 1]
+                    listOfCardRulings[listOfCardRulings.size - 1] = addRulingsItemHelper(child, rulingList)
+                }
+            }
+            return listOfCardRulings
+        }
+        return null
+    }
+
+    /**
+     * Helper to parse Rulings
+     */
+    private fun addRulingsItemHelper(parent: Element, rulings: CardRulings): CardRulings {
+        // Removes the superscripts (foot notes)
+        val text = parent.text().replace(Regex("((References: )*\\[.*?\\])"), "")
+        when {
+            parent.`is`("h2") -> rulings.addHeader2(text)
+            // Subheader
+            parent.`is`("h3") -> rulings.addHeader2(text)
+            // Div has children (red / green box)
+            parent.`is`("div") -> {
+                val children = parent.children()
+                for (child in children) {
+                    addRulingsItemHelper(child, rulings)
+                }
+            }
+            // Item
+            parent.`is`("ul") -> rulings.addUl(text)
+        }
+        return rulings
+    }
+
     private suspend fun fetchDocument(url: String): Document? {
-        return coroutineScope {
+        return supervisorScope {
             val deferred = async(Dispatchers.IO) {
                 Jsoup.connect(url).get()
             }
@@ -141,19 +193,23 @@ class YugiohWikiaDataProvider {
                 deferred.await()
             } catch (httpStatusException: HttpStatusException) {
                 Log.e(TAG, httpStatusException.toString())
-                return@coroutineScope null
+                null
             } catch (unknownHostException: UnknownHostException) {
                 Log.e(TAG, unknownHostException.toString())
-                return@coroutineScope null
+                null
             } catch (e: Exception) {
                 Log.e(TAG, e.toString())
-                return@coroutineScope null
+                null
             }
         }
     }
 
     private fun generateCardWikiaEndpoint(cardName: String): String {
         return BASE_URL + encodeToHtmlAndReplacePlusWithUnderscore(cardName)
+    }
+
+    private fun generateCardWikiaRulingEndpoint(cardName: String): String {
+        return BASE_URL + "Card_Rulings:" + encodeToHtmlAndReplacePlusWithUnderscore(cardName)
     }
 
     private fun encodeToHtmlAndReplacePlusWithUnderscore(s: String): String {
