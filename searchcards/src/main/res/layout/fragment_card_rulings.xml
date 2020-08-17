@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.lucidity.haolu.searchcards.viewmodel.CardRulingsViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,32 +25,26 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/empty_no_rulings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:gravity="center"
-            android:orientation="vertical"
+        <ImageView
+            android:id="@+id/iv_no_ruling"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/ic_no_rulings"
             android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                android:src="@drawable/ic_no_rulings" />
-
-            <TextView
-                android:id="@+id/text_no_rulings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/no_rulings_available"
-                android:textSize="16sp" />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_no_ruling_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_rulings"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_no_ruling"
+            app:layout_constraintStart_toStartOf="@id/iv_no_ruling"
+            app:layout_constraintTop_toBottomOf="@id/iv_no_ruling" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_rulings"

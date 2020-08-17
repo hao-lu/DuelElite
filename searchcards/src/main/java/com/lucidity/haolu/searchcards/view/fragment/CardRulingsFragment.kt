@@ -51,6 +51,7 @@ class CardRulingsFragment : Fragment() {
 
         observeProgressBarEvent()
         observeCardRulings()
+        observeEmptyStateCardRulingsVisibility()
 
         if (viewModel.cardRulings.value == null) {
             fetchCardRulings()
@@ -68,6 +69,13 @@ class CardRulingsFragment : Fragment() {
     private fun observeCardRulings() {
         viewModel.cardRulings.observe(viewLifecycleOwner, Observer { list ->
             binding.rvRulings.adapter = CardRulingsRecyclerViewAdapter(list)
+        })
+    }
+
+    private fun observeEmptyStateCardRulingsVisibility() {
+        viewModel.emptyStateCardRulingsVisibility.observe(viewLifecycleOwner, Observer { visibility ->
+            binding.ivNoRuling.visibility = visibility
+            binding.tvNoRulingHint.visibility = visibility
         })
     }
 

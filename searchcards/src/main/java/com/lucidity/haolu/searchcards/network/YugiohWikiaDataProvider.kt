@@ -37,28 +37,6 @@ class YugiohWikiaDataProvider {
             "Card effect types",
             "Statuses",
             "Description")
-
-//        val DETAILS_MAP = mutableMapOf<String, String>(
-//            "Card Type" to "",
-//            "Property" to "",
-//            "Attribute" to "",
-//            "Types" to "",
-//            "Rank" to "",
-//            "Level" to "",
-//            "Link Arrows" to "",
-//            "Pendulum Scale" to "",
-//            "ATK / DEF" to "",
-//            "ATK / LINK" to "",
-//            "Ritual Spell Card required" to "",
-//            "Ritual Monster required" to "",
-//            "Fusion Material" to "",
-//            "Materials" to "",
-//            "Card effect types" to "",
-//            "Statuses" to "",
-//            "Description" to ""
-//        )
-
-
     }
 
     suspend fun fetchCardImageUrl(cardName: String): String? {
@@ -184,6 +162,23 @@ class YugiohWikiaDataProvider {
         return rulings
     }
 
+    suspend fun fetchCardTips(cardName: String): ArrayList<String>? {
+        val mTipsList: ArrayList<String> = arrayListOf()
+        val document = fetchDocument(generateCardWikiaTipsEndpoint(cardName))
+        document?.let {
+            val article = document.select("article").first()
+            val context = article.getElementById("mw-content-text")
+            val children = context.children()
+            for (c in children) {
+                if (c.text() == "Traditional Format" || c.text() == "List")
+                    break
+                if (c.`is`("ul")) mTipsList.add(c.text())
+            }
+            return mTipsList
+        }
+        return null
+    }
+
     private suspend fun fetchDocument(url: String): Document? {
         return supervisorScope {
             val deferred = async(Dispatchers.IO) {
@@ -210,6 +205,10 @@ class YugiohWikiaDataProvider {
 
     private fun generateCardWikiaRulingEndpoint(cardName: String): String {
         return BASE_URL + "Card_Rulings:" + encodeToHtmlAndReplacePlusWithUnderscore(cardName)
+    }
+
+    private fun generateCardWikiaTipsEndpoint(cardName: String): String {
+        return BASE_URL + "Card_Tips:" + encodeToHtmlAndReplacePlusWithUnderscore(cardName)
     }
 
     private fun encodeToHtmlAndReplacePlusWithUnderscore(s: String): String {

@@ -25,9 +25,9 @@ class CardInformationViewModel : ViewModel() {
             val deferred = async(Dispatchers.IO) {
                 yugiohWikiaDataProvider.fetchCardInformation(cardName)
             }
-            val details = deferred.await()
-            details?.run {
-                _cardInformation.value = details
+            val information = deferred.await()
+            information?.run {
+                _cardInformation.value = information
             }
             _progressBarEvent.value = Event(false)
         }

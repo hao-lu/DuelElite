@@ -32,15 +32,6 @@ class CardInformationFragment : Fragment() {
 
     private val TAG = "CardInformationFragment"
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val rootView = inflater.inflate(R.layout.fragment_card_information, container, false)
-//        val cardName = arguments!!.getString("cardName")
-//        rootView.findViewById<ProgressBar>(R.id.progressbar_details).visibility = View.VISIBLE
-////        ParseDetailsTask(context!!)
-////            .execute(cardName)
-//
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentViewModel = ViewModelProvider(requireParentFragment()).get(SearchCardDetailsViewModel::class.java)
@@ -70,7 +61,7 @@ class CardInformationFragment : Fragment() {
 
         // Refactor call once
         if (viewModel.cardInformation.value == null) {
-            fetchCardDetails()
+            fetchCardInformation()
         }
     }
 
@@ -88,7 +79,7 @@ class CardInformationFragment : Fragment() {
         })
     }
 
-    private fun fetchCardDetails() {
+    private fun fetchCardInformation() {
         CoroutineScope(Dispatchers.IO).launch {
             parentViewModel.cardName?.run {
                 viewModel.fetchCardInformation(this)

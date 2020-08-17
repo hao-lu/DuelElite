@@ -1,116 +1,95 @@
 package com.lucidity.haolu.searchcards.view.fragment
 
-import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
+import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucidity.haolu.searchcards.R
+import com.lucidity.haolu.searchcards.databinding.FragmentCardTipsBinding
 import com.lucidity.haolu.searchcards.view.adapter.CardTipsRecyclerViewAdapter
-import org.jsoup.Jsoup
-import org.jsoup.HttpStatusException
-import java.net.URLEncoder
-import java.net.UnknownHostException
+import com.lucidity.haolu.searchcards.viewmodel.CardTipsViewModel
+import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CardTipsFragment : Fragment() {
 
-    private val TAG = "TipsFragment"
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater!!.inflate(R.layout.fragment_card_tips, container, false)
-        val cardName = arguments!!.getString("cardName")
-        rootView.findViewById<ProgressBar>(R.id.progressbar_tips).visibility = View.VISIBLE
-        ParseTipsTask(context!!).execute(cardName)
-        return rootView
+    companion object {
+        fun newInstance() = CardTipsFragment()
     }
 
-    /**
-     * Parse the tips in a list
-     */
+    private val TAG = "CardTipsFragment"
 
-    private class ParseTipsTask(val context: Context): AsyncTask<String, Void, Void>() {
-        private val TAG = "ParseTipsTask"
-        private val BASE_URL = "https://yugioh.wikia.com/wiki/Card_Tips:"
+    private lateinit var parentViewModel: SearchCardDetailsViewModel
+    private lateinit var viewModel: CardTipsViewModel
+    private lateinit var binding: FragmentCardTipsBinding
 
-        private val mActivity = context as AppCompatActivity
-        private var mTipsList: ArrayList<String> = arrayListOf()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parentViewModel = ViewModelProvider(requireParentFragment()).get(SearchCardDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CardTipsViewModel::class.java)
+    }
 
-        override fun onPreExecute() {
-            super.onPreExecute()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_card_tips,
+            container,
+            false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tipsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.tipsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+
+        observeProgressBarEvent()
+        observeCardTips()
+        observeEmptyStateCardTipsVisibility()
+
+        if (viewModel.cardTips.value == null) {
+            fetchCardTips()
         }
+    }
 
-        override fun doInBackground(vararg params: String?): Void? {
-
-            val cardName = params[0]
-            val encoder = URLEncoder.encode(cardName!!, "UTF-8")
-            val cardNamePath = encoder.replace("+", "_")
-            val cardUrl = BASE_URL + cardNamePath
-
-            try {
-
-                Log.d(TAG, "QUERY : " + cardName?.replace(" ", "_"))
-
-                val document = Jsoup.connect(cardUrl).get()
-                val article = document.select("article").first()
-                val context = article.getElementById("mw-content-text")
-                val children = context.children()
-                for (c in children) {
-//                    if (c.`is`("ul")) LifePointLog.d(TAG, c.text())
-                    if (c.text() == "Traditional Format" || c.text() == "List")
-                        break
-//                    LifePointLog.d(TAG, c.text())
-                    if (c.`is`("ul")) mTipsList.add(c.text())
-                }
-
+    private fun observeProgressBarEvent() {
+        viewModel.progressBarEvent.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { visibility ->
+                binding.progressbarTips.isVisible = visibility
             }
-            catch (httpStatusException: HttpStatusException) {
-                Log.d(TAG, "No webpage")
-            }
-            catch (unknownHostException: UnknownHostException) {
-                Log.d(TAG, "No Internet")
-            }
-            catch (e: Exception) {
-                e.printStackTrace()
-            }
+        })
+    }
 
-            // no internet connection error
-            // no webpage error
-            return null
-        }
+    private fun observeCardTips() {
+        viewModel.cardTips.observe(viewLifecycleOwner, Observer { list ->
+            binding.tipsRecyclerView.adapter = CardTipsRecyclerViewAdapter(list)
+        })
+    }
 
-        override fun onPostExecute(result: Void?) {
-            super.onPostExecute(result)
+    private fun observeEmptyStateCardTipsVisibility() {
+        viewModel.emptyStateCardTipsVisibility.observe(viewLifecycleOwner, Observer { visibility ->
+            binding.tvNoTipHint.visibility = visibility
+            binding.ivNoTip.visibility = visibility
+        })
+    }
 
-            if (mActivity.findViewById<ProgressBar>(R.id.progressbar_tips) != null) {
-                val progressBar = mActivity.findViewById(R.id.progressbar_tips) as ProgressBar
-                progressBar.visibility = ProgressBar.GONE
-                if (mTipsList.size != 0) {
-                    Log.d(TAG, mTipsList.size.toString())
-                    val simpleAdapter =
-                        CardTipsRecyclerViewAdapter(
-                            mTipsList
-                        )
-                    val layoutManger = LinearLayoutManager(mActivity)
-                    val tipList = mActivity.findViewById(R.id.tips_recycler_view) as RecyclerView
-                    val itemDecoration = DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL)
-                    tipList.addItemDecoration(itemDecoration)
-                    tipList.layoutManager = layoutManger
-                    tipList.adapter = simpleAdapter
-                } else {
-                    val noTips = mActivity.findViewById(R.id.empty_no_tips) as LinearLayout
-                    noTips.visibility = View.VISIBLE
-                }
+    private fun fetchCardTips() {
+        CoroutineScope(Dispatchers.IO).launch {
+            parentViewModel.cardName?.run {
+                viewModel.fetchCardTips(this)
             }
         }
-
     }
 }

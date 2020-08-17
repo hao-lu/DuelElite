@@ -5,4 +5,7 @@
     <string name="details_hao">Details</string>
     <string name="rulings_hao">Rulings</string>
     <string name="tips_hao">Tips</string>
+
+    <string name="no_rulings">No rulings available</string>
+    <string name="no_tips">No tips available</string>
 </resources>
