@@ -31,8 +31,6 @@
     <string name="no_rulings_available">No rulings available</string>
     <string name="no_tips_available">No tips available</string>
     <string name="title_log_activity">Log</string>
-    <string name="rng">RNG</string>
-    <string name="flip_and_roll"><![CDATA[Flip & Roll]]></string>
     <string name="action_start_pause">Start/Pause</string>
     <string name="action_open_wikia_page">Open Wikia Page</string>
     <string name="start_lp">8000</string>

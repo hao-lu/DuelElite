@@ -1,1 +1,1 @@
-include ':app', ':lifepointcalculator', ':randomgenerator', ':searchcards'
+include ':app', ':lifepointcalculator', ':randomgenerator', ':searchcards', ':common'
