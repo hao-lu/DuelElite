@@ -53,7 +53,7 @@ class CardTipsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tipsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.tipsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+        binding.tipsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         observeProgressBarEvent()
         observeCardTips()

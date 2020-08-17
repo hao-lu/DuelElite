@@ -11,6 +11,7 @@ import android.view.Window
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.WindowManager
+import androidx.navigation.fragment.findNavController
 import com.lucidity.haolu.searchcards.R
 
 class ImageDialogFragment : DialogFragment() {

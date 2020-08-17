@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.palette.graphics.Palette
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lucidity.haolu.searchcards.R
@@ -134,6 +136,16 @@ class SearchCardDetailsFragment : Fragment() {
         viewmodel.imageUrl.observe(viewLifecycleOwner, Observer { imageUrl ->
             Picasso.with(context).load(imageUrl).into(binding.imageHeader)
 //            Picasso.with(context).load(imageUrl).into(picassoTargetAccessoryColor)
+            binding.imageHeader.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("imageUrl", imageUrl)
+                findNavController().navigate(
+                    R.id.action_fragment_search_card_to_fragment_image_dialog,
+                    bundle,
+                    null,
+                    null
+                )
+            }
         })
     }
 }
