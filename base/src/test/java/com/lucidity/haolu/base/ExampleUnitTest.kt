@@ -1,4 +1,4 @@
-package com.lucidity.haolu.common
+package com.lucidity.haolu.base
 
 import org.junit.Test
 

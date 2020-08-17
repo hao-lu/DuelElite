@@ -1,4 +1,4 @@
-package com.lucidity.haolu.common
+package com.lucidity.haolu.base
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
