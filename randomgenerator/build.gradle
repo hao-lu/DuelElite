@@ -28,6 +28,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':base')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.KOTLIN_STDLIB_JDK7
 
