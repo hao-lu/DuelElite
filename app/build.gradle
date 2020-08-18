@@ -65,6 +65,7 @@ dependencies {
     implementation project(path: ':lifepointcalculator')
     implementation project(path: ':randomgenerator')
     implementation project(path: ':searchcards')
+    implementation project(path: ':base')
 }
 
 repositories {

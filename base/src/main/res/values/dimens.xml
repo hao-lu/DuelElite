@@ -7,6 +7,6 @@
     <dimen name="large_vertical_margin">16dp</dimen>
     <dimen name="large_horizontal_margin">16dp</dimen>
 
-    <dimen name="zero_dimen">0dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
 
 </resources>

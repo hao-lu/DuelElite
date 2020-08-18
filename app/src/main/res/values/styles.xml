@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorYugiBlack</item>
-        <item name="colorPrimaryDark">@color/colorYugiDarkerBlack</item>
-        <item name="colorAccent">@color/colorYugiBlue</item>
+        <item name="colorPrimary">@color/yugi_dark_gray</item>
+        <item name="colorPrimaryDark">@color/yugi_black</item>
+        <item name="colorAccent">@color/yugi_blue</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -13,7 +13,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:colorBackground">@color/colorGrayBg</item>
+        <item name="android:colorBackground">@color/gray_background</item>
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
@@ -22,7 +22,7 @@
     <style name="AppTheme.SearchSuggestion" parent="AppTheme.NoActionBar">
         <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>
-        <item name="android:windowBackground">@color/colorGrayBg</item>
+        <item name="android:windowBackground">@color/gray_background</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
