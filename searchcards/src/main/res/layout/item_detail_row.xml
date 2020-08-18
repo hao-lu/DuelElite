@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@{details.first}"
@@ -39,9 +39,9 @@
 
         <TextView
             android:id="@+id/tv_body"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/large_vertical_margin"
             android:text="@{details.second}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

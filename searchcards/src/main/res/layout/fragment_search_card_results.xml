@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="8dp" />
+            app:layout_constraintGuide_begin="@dimen/normal_horizontal_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
@@ -89,7 +89,7 @@
             android:id="@+id/v_divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/normal_vertical_margin"
             android:background="#E0E0E0"
             android:translationZ="1dp"
             android:visibility="visible"
@@ -99,8 +99,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_results"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
             app:layout_constraintBottom_toBottomOf="@id/v_search_box_bg"
             app:layout_constraintEnd_toEndOf="@id/v_search_box_bg"
             app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
