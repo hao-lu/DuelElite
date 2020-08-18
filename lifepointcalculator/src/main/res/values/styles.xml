@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Button.Accumulated" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/ripple_effect</item>
+        <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -11,7 +11,7 @@
     </style>
 
     <style name="Button.Accumulated.Landscape" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/ripple_effect</item>
+        <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -21,7 +21,7 @@
     </style>
 
     <style name="Button.Normal" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/ripple_effect</item>
+        <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:textSize">30sp</item>

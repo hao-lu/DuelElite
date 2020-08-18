@@ -19,56 +19,56 @@
         <Button
             android:id="@+id/button_fifty"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/fifty"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/fifty)}"/>
 
         <Button
             android:id="@+id/button_one_hundred"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/one_hundred"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/one_hundred)}"/>
 
         <Button
             android:id="@+id/button_two_hundred"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/two_hundred"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/two_hundred)}"/>
 
         <Button
             android:id="@+id/button_five_hundred"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/five_hundred"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/five_hundred)}"/>
 
         <Button
             android:id="@+id/button_one_thousand"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/one_thousand"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/one_thousand)}"/>
 
         <Button
             android:id="@+id/button_two_thousand"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/two_thousand"
             android:onClick="@{() -> viewmodel.onNumberClicked(@string/two_thousand)}"/>
 
         <Button
             android:id="@+id/button_halve"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/halve"
             android:onClick="@{() -> viewmodel.onHalveClicked()}"/>
 
         <Button
             android:id="@+id/button_clear"
             style="@style/Button.Accumulated"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple"
             android:text="@string/clear"
             android:onClick="@{() -> viewmodel.onClearClicked()}"/>
 

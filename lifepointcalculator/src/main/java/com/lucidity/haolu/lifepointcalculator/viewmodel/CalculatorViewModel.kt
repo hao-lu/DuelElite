@@ -3,7 +3,7 @@ package com.lucidity.haolu.lifepointcalculator.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidity.haolu.lifepointcalculator.Event
+import com.lucidity.haolu.base.Event
 import com.lucidity.haolu.lifepointcalculator.util.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
