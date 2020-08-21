@@ -2,6 +2,7 @@ package com.lucidity.haolu.lifepointcalculator.view.fragment
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.lifepointcalculator.BR
 import com.lucidity.haolu.lifepointcalculator.R
@@ -32,6 +34,8 @@ class CalculatorFragment : Fragment() {
     private lateinit var binding: FragmentCalculatorBinding
     private lateinit var viewmodel: CalculatorViewModel
     private lateinit var sharedPreferences: SharedPreferences
+
+    private var snackBar: Snackbar? = null
 
     private val ANIMATION_DURATION: Long = 500
     private val SNACKBAR_DURATION: Int = 10000
@@ -62,7 +66,8 @@ class CalculatorFragment : Fragment() {
         binding.viewmodel = viewmodel
         inflateInputLayout(R.layout.layout_normal_input, binding.vsNormalInput.viewStub)
         inflateInputLayout(R.layout.layout_accumulated_input, binding.vsAccumulatedInput.viewStub)
-        val inputType = sharedPreferences.getString(Constants.SHARED_PREF_INPUT_TYPE, null) ?: CalculatorInputType.NORMAL.name
+        val inputType = sharedPreferences.getString(Constants.SHARED_PREF_INPUT_TYPE, null)
+            ?: CalculatorInputType.NORMAL.name
         viewmodel.initInputView(inputType)
 
         return binding.root
@@ -88,6 +93,7 @@ class CalculatorFragment : Fragment() {
         observeNavigateLogEvent()
         observeDuelTimeButtonVisibility()
         observeDuelTimeTextViewVisibility()
+        observeResetClickEvent()
     }
 
     private fun inflateInputLayout(layoutId: Int, viewStub: ViewStub?) {
@@ -270,6 +276,20 @@ class CalculatorFragment : Fragment() {
         })
     }
 
+    private fun observeResetClickEvent() {
+        viewmodel.resetClickEvent.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Reset?")
+                    .setPositiveButton(
+                        "RESET",
+                        DialogInterface.OnClickListener { dialog, which -> reset() })
+                    .setNegativeButton("CANCEL", null)
+                    .show()
+            }
+        })
+    }
+
     private fun calculateLpBarWidth(lp: Double, width: Int) =
         (lp / LifePointCalculator.START_LP * width).toInt()
 
@@ -311,15 +331,18 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showResetSnackbar(text: String) {
-        val snackBar = Snackbar.make(binding.root, text, SNACKBAR_DURATION)
+        snackBar = Snackbar.make(binding.root, text, SNACKBAR_DURATION)
             .setAction(R.string.snackbar_action_reset, { reset() })
             .setActionTextColor(Color.WHITE)
-        snackBar.config(requireContext(), binding.root.width)
-        snackBar.show()
+        snackBar?.config(requireContext(), binding.root.width)
+        snackBar?.show()
     }
 
     private fun reset() {
         viewmodel.reset()
+        snackBar?.run {
+            dismiss()
+        }
     }
 
     // TODO: shared module

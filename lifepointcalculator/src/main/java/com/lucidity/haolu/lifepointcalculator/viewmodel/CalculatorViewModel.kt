@@ -36,6 +36,7 @@ class CalculatorViewModel : ViewModel() {
     private val _navigateToLogEvent = MutableLiveData<Event<Unit>>()
     private val _duelTimeButtonInvisibility = MutableLiveData<Boolean>()
     private val _duelTimeTextViewInvisibility = MutableLiveData<Boolean>()
+    private val _resetClickEvent = MutableLiveData<Event<Unit>>()
 
     val playerOneLp: LiveData<Int> = _playerOneLp
     val playerTwoLp: LiveData<Int> = _playerTwoLp
@@ -54,6 +55,7 @@ class CalculatorViewModel : ViewModel() {
     val navigateToLogEvent: LiveData<Event<Unit>> = _navigateToLogEvent
     val duelTimeButtonInvisibility: LiveData<Boolean> = _duelTimeButtonInvisibility
     val duelTimeTextViewInvisibility: LiveData<Boolean> = _duelTimeTextViewInvisibility
+    val resetClickEvent: LiveData<Event<Unit>> = _resetClickEvent
 
     private var halve = false
     private var inputType = CalculatorInputType.NORMAL.name
@@ -191,7 +193,7 @@ class CalculatorViewModel : ViewModel() {
     }
 
     fun onResetClick() {
-        reset()
+        _resetClickEvent.value = Event(Unit)
     }
 
     private fun updatePlayerLp(player: Player, previousLp: Int, currLp: Int) {
