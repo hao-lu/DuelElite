@@ -161,6 +161,7 @@
                 android:maxLength="6"
                 android:textAlignment="center"
                 android:textSize="30sp"
+                android:onClick="@{() -> viewmodel.onInputTypeClick()}"
                 app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
                 app:layout_constraintEnd_toStartOf="@id/iv_player_two_last_lp_indicator"
                 app:layout_constraintStart_toEndOf="@id/iv_player_one_last_lp_indicator"
@@ -186,6 +187,7 @@
                 android:background="@drawable/ripple"
                 android:elevation="@dimen/shadow_elevation"
                 android:src="@drawable/ic_history"
+                android:onClick="@{() -> viewmodel.onLogClick()}"
                 app:layout_constraintBottom_toBottomOf="@id/v_utility_background"
                 app:layout_constraintEnd_toEndOf="@id/v_utility_background"
                 app:layout_constraintStart_toEndOf="@id/iv_player_two_last_lp_indicator"
@@ -251,11 +253,23 @@
                 app:layout_constraintTop_toBottomOf="@id/ib_player_two_add" />
 
             <ViewStub
-                android:id="@+id/vs_input"
+                android:id="@+id/vs_normal_input"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/zero_dp"
                 android:elevation="@dimen/shadow_elevation"
                 android:layout="@layout/layout_normal_input"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
+                app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
+                app:layout_constraintTop_toTopOf="@id/v_calculator_background"
+                tools:visibility="visible" />
+
+            <ViewStub
+                android:id="@+id/vs_accumulated_input"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:elevation="@dimen/shadow_elevation"
+                android:layout="@layout/layout_accumulated_input"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
                 app:layout_constraintStart_toEndOf="@id/ib_player_one_add"

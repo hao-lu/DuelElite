@@ -33,6 +33,10 @@ class CalculatorViewModel : ViewModel() {
     private val _animatePlayerOneLp = MutableLiveData<Event<Pair<Int, Int>>>()
     private val _animatePlayerTwoLp = MutableLiveData<Event<Pair<Int, Int>>>()
     private val _animateActionLp = MutableLiveData<Event<Pair<Int, Int>>>()
+    private val _showInputTypeBottomSheet = MutableLiveData<Event<Unit>>()
+    private val _showNormalInput = MutableLiveData<Event<Unit>>()
+    private val _showAccumulatedInput = MutableLiveData<Event<Unit>>()
+    private val _navigateToLogEvent = MutableLiveData<Event<Unit>>()
 
     val playerOneLp: LiveData<Int> = _playerOneLp
     val playerTwoLp: LiveData<Int> = _playerTwoLp
@@ -45,9 +49,13 @@ class CalculatorViewModel : ViewModel() {
     val animatePlayerOneLp: LiveData<Event<Pair<Int, Int>>> = _animatePlayerOneLp
     val animatePlayerTwoLp: LiveData<Event<Pair<Int, Int>>> = _animatePlayerTwoLp
     val animateActionLp: LiveData<Event<Pair<Int, Int>>> = _animateActionLp
+    val showInputTypeBottomSheet: LiveData<Event<Unit>> = _showInputTypeBottomSheet
+    val showNormalInput: LiveData<Event<Unit>> = _showNormalInput
+    val showAccumulatedInput: LiveData<Event<Unit>> = _showAccumulatedInput
+    val navigateToLogEvent: LiveData<Event<Unit>> = _navigateToLogEvent
 
     private var halve = false
-    var inputType = R.layout.layout_normal_input
+    private var inputType = R.layout.layout_normal_input
 
     var playerOneLpBarInvisible = false
     var playerTwoLpBarInvisible = false
@@ -103,6 +111,24 @@ class CalculatorViewModel : ViewModel() {
             val currLp = calculator.getPlayerLifePoint(player)
             updateViews(player, prevLp, currLp)
         }
+    }
+
+    fun onInputTypeClick() {
+        _showInputTypeBottomSheet.value = Event(Unit)
+    }
+
+    fun onAccumulatedClick() {
+        inputType = R.layout.layout_accumulated_input
+        _showAccumulatedInput.value = Event(Unit)
+    }
+
+    fun onNormalClick() {
+        inputType = R.layout.layout_normal_input
+        _showNormalInput.value = Event(Unit)
+    }
+
+    fun onLogClick() {
+        _navigateToLogEvent.value = Event(Unit)
     }
 
     private fun updateViews(player: Player, prevLp: Int, currLp: Int) {
@@ -193,8 +219,4 @@ class CalculatorViewModel : ViewModel() {
         _playerTwoLpIndicatorInvisibility.value = true
     }
 
-    enum class CalculatorInput {
-        NORMAL,
-        ACCUMULATED
-    }
 }

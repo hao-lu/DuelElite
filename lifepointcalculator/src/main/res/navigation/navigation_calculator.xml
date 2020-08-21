@@ -16,6 +16,11 @@
             android:id="@+id/action_fragment_calculator_to_fragment_log"
             app:destination="@id/fragment_log">
         </action>
+
+        <action
+            android:id="@+id/action_fragment_calculator_to_fragment_input_type_bottom_sheet_dialog"
+            app:destination="@id/fragment_input_type_bottom_sheet_dialog">
+        </action>
     </fragment>
 
     <fragment
@@ -26,6 +31,13 @@
         <argument
             android:name="logArg"
             app:argType="com.lucidity.haolu.lifepointcalculator.model.LifePointLog"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_input_type_bottom_sheet_dialog"
+        android:name="com.lucidity.haolu.lifepointcalculator.view.fragment.InputTypeBottomSheetDialogFragment"
+        android:label="InputTypeBottomSheet"
+        tools:layout="@layout/fragment_input_type_bottom_sheet_dialog">
     </fragment>
 
 </navigation>

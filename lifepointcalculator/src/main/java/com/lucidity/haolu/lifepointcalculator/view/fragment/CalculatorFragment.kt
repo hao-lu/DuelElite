@@ -2,12 +2,10 @@ package com.lucidity.haolu.lifepointcalculator.view.fragment
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
@@ -33,15 +31,20 @@ class CalculatorFragment : Fragment() {
     private lateinit var binding: FragmentCalculatorBinding
     private lateinit var viewmodel: CalculatorViewModel
 
+    private var sharedPreferences: SharedPreferences? = null
+
     private val ANIMATION_DURATION: Long = 500
     private val SNACKBAR_DURATION: Int = 10000
 
     companion object {
+        const val TAG = "CalculatorFragment"
+
         fun newInstance() = CalculatorFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
         viewmodel = ViewModelProvider(this).get(CalculatorViewModel::class.java)
     }
 
@@ -57,16 +60,9 @@ class CalculatorFragment : Fragment() {
             false
         )
         binding.viewmodel = viewmodel
-        // TODO: Move to viewmodel
-        binding.ibHistory.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(Constants.BUNDLE_KEY_LIFE_POINT_LOG, viewmodel.log)
-            findNavController(this).navigate(
-                R.id.action_fragment_calculator_to_fragment_log,
-                bundle
-            )
-        }
-        inflateInputLayout(R.layout.layout_normal_input)
+        inflateInputLayout(R.layout.layout_normal_input, binding.vsNormalInput.viewStub)
+        inflateInputLayout(R.layout.layout_accumulated_input, binding.vsAccumulatedInput.viewStub)
+        binding.vsAccumulatedInput.viewStub?.visibility = View.GONE
         return binding.root
     }
 
@@ -84,16 +80,19 @@ class CalculatorFragment : Fragment() {
         observePlayerTwoLastLpIndicatorInvisible()
         observeLastLpIndicatorDrawable()
         observeShowResetSnackbar()
+        observeShowInputTypeBottomSheet()
+        observeShowNormalInput()
+        observeShowAccumulatedInput()
+        observeNavigateLogEvent()
     }
 
-    private fun inflateInputLayout(layoutId: Int) {
-        viewmodel.inputType = layoutId
-        binding.vsInput.viewStub?.layoutResource = layoutId
-        binding.vsInput.viewStub?.setOnInflateListener { stub, inflated ->
+    private fun inflateInputLayout(layoutId: Int, viewStub: ViewStub?) {
+        viewStub?.layoutResource = layoutId
+        viewStub?.setOnInflateListener { stub, inflated ->
             val binding = DataBindingUtil.bind<ViewDataBinding>(inflated)
             binding?.setVariable(BR.viewmodel, viewmodel)
         }
-        binding.vsInput.viewStub?.inflate()
+        viewStub?.inflate()
     }
 
     private fun observeAnimateActionLp() {
@@ -208,6 +207,45 @@ class CalculatorFragment : Fragment() {
                 binding.ibDuelTime.visibility = View.INVISIBLE
                 binding.tvDuelTime.visibility = View.VISIBLE
                 binding.tvDuelTime.text = duelTime
+            }
+        })
+    }
+
+    private fun observeShowInputTypeBottomSheet() {
+        viewmodel.showInputTypeBottomSheet.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                InputTypeBottomSheetDialogFragment().show(childFragmentManager, InputTypeBottomSheetDialogFragment.TAG)
+            }
+        })
+    }
+
+    private fun observeShowAccumulatedInput() {
+        viewmodel.showAccumulatedInput.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                binding.vsAccumulatedInput.viewStub?.visibility = View.VISIBLE
+                binding.vsNormalInput.viewStub?.visibility = View.GONE
+            }
+        })
+    }
+
+    private fun observeShowNormalInput() {
+        viewmodel.showNormalInput.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                binding.vsAccumulatedInput.viewStub?.visibility = View.GONE
+                binding.vsNormalInput.viewStub?.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    private fun observeNavigateLogEvent() {
+        viewmodel.navigateToLogEvent.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.BUNDLE_KEY_LIFE_POINT_LOG, viewmodel.log)
+                findNavController(this).navigate(
+                    R.id.action_fragment_calculator_to_fragment_log,
+                    bundle
+                )
             }
         })
     }

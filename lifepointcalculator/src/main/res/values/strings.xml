@@ -38,4 +38,7 @@
     <string name="snackbar_message_player_two_won">Player 2 has won</string>
     <string name="snackbar_action_reset">RESET</string>
 
+
+    <string name="lifepointcalculator_shared_preference_key">lifepointcalculator_shared_preference_key</string>
+
 </resources>

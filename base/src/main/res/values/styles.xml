@@ -61,6 +61,18 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="Base.RoundedBottomSheet.NavigationBar" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="shapeAppearanceLargeComponent">@style/Base.ShapeAppearance.LargeComponent.RoundedBottomSheet</item>
+    </style>
+
+    <style name="Base.ShapeAppearance.LargeComponent.RoundedBottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 
 <!--Text Styling-->
     <style name="Base.TextAppearance.Header5" parent="TextAppearance.AppCompat">

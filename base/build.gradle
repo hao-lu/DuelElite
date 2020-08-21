@@ -29,6 +29,8 @@ dependencies {
     implementation Dependencies.KOTLIN_STDLIB_JDK7
 
     implementation AndroidX.APPCOMPAT
+    implementation AndroidX.LIFECYCLE_EXTENSION
+    implementation AndroidX.MATERIAL
 
     // Test
     testImplementation Tests.JUNIT
