@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.lucidity.haolu.base.Event
 import com.lucidity.haolu.lifepointcalculator.util.PausableCountDownTimer
 import com.lucidity.haolu.lifepointcalculator.R
-import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
-import com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem
-import com.lucidity.haolu.lifepointcalculator.model.LifePointLog
-import com.lucidity.haolu.lifepointcalculator.model.Player
+import com.lucidity.haolu.lifepointcalculator.model.*
 import kotlin.math.abs
 
 class CalculatorViewModel : ViewModel() {
@@ -37,6 +34,8 @@ class CalculatorViewModel : ViewModel() {
     private val _showNormalInput = MutableLiveData<Event<Unit>>()
     private val _showAccumulatedInput = MutableLiveData<Event<Unit>>()
     private val _navigateToLogEvent = MutableLiveData<Event<Unit>>()
+    private val _duelTimeButtonInvisibility = MutableLiveData<Boolean>()
+    private val _duelTimeTextViewInvisibility = MutableLiveData<Boolean>()
 
     val playerOneLp: LiveData<Int> = _playerOneLp
     val playerTwoLp: LiveData<Int> = _playerTwoLp
@@ -53,9 +52,11 @@ class CalculatorViewModel : ViewModel() {
     val showNormalInput: LiveData<Event<Unit>> = _showNormalInput
     val showAccumulatedInput: LiveData<Event<Unit>> = _showAccumulatedInput
     val navigateToLogEvent: LiveData<Event<Unit>> = _navigateToLogEvent
+    val duelTimeButtonInvisibility: LiveData<Boolean> = _duelTimeButtonInvisibility
+    val duelTimeTextViewInvisibility: LiveData<Boolean> = _duelTimeTextViewInvisibility
 
     private var halve = false
-    private var inputType = R.layout.layout_normal_input
+    private var inputType = CalculatorInputType.NORMAL.name
 
     var playerOneLpBarInvisible = false
     var playerTwoLpBarInvisible = false
@@ -64,18 +65,26 @@ class CalculatorViewModel : ViewModel() {
         halve = false
         setAllIndicatorInvisible()
         when (inputType) {
-            R.layout.layout_normal_input -> {
+            CalculatorInputType.NORMAL.name -> {
                 val appendNum = appendNum(_actionLp.value?.toIntOrNull(), num)
                 if (isLessThanMaxLifePointOrNull(appendNum)) {
                     updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, appendNum)
                 }
             }
-            R.layout.layout_accumulated_input -> {
+            CalculatorInputType.ACCUMULATED.name -> {
                 val sumNum = sumNum(_actionLp.value?.toIntOrNull(), num)
                 if (isLessThanMaxLifePointOrNull(sumNum)) {
                     updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, sumNum)
                 }
             }
+        }
+    }
+
+    fun initInputView(inputType: String) {
+        this.inputType = inputType
+        when (inputType) {
+            CalculatorInputType.ACCUMULATED.name -> _showAccumulatedInput.value = Event(Unit)
+            CalculatorInputType.NORMAL.name -> _showNormalInput.value = Event(Unit)
         }
     }
 
@@ -118,12 +127,12 @@ class CalculatorViewModel : ViewModel() {
     }
 
     fun onAccumulatedClick() {
-        inputType = R.layout.layout_accumulated_input
+        inputType = CalculatorInputType.ACCUMULATED.name
         _showAccumulatedInput.value = Event(Unit)
     }
 
     fun onNormalClick() {
-        inputType = R.layout.layout_normal_input
+        inputType = CalculatorInputType.NORMAL.name
         _showNormalInput.value = Event(Unit)
     }
 
@@ -164,6 +173,8 @@ class CalculatorViewModel : ViewModel() {
         _actionLpHint.value = "0000"
         _playerOneLp.value = LifePointCalculator.START_LP
         _playerTwoLp.value = LifePointCalculator.START_LP
+        _duelTimeButtonInvisibility.value = false
+        _duelTimeTextViewInvisibility.value = true
 
 //        updatePlayerLp(Player.ONE, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
 //        updatePlayerLp(Player.TWO, LifePointCalculator.START_LP, LifePointCalculator.START_LP)
@@ -177,6 +188,10 @@ class CalculatorViewModel : ViewModel() {
         halve = true
         setAllIndicatorInvisible()
         _actionLp.value = halveText
+    }
+
+    fun onResetClick() {
+        reset()
     }
 
     private fun updatePlayerLp(player: Player, previousLp: Int, currLp: Int) {
@@ -201,7 +216,7 @@ class CalculatorViewModel : ViewModel() {
 
     private fun updateActionLp(prevLp: Int, currLp: Int) {
         _actionLp.value = if (currLp == 0) null else currLp.toString()
-        if (prevLp != currLp && inputType == R.layout.layout_accumulated_input) _animateActionLp.value = Event(Pair(prevLp, currLp))
+        if (prevLp != currLp && inputType == CalculatorInputType.ACCUMULATED.name) _animateActionLp.value = Event(Pair(prevLp, currLp))
     }
 
     private fun setIndicatorInvisibility(player: String) {

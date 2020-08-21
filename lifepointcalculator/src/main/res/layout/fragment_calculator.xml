@@ -274,7 +274,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ib_player_two_add"
                 app:layout_constraintStart_toEndOf="@id/ib_player_one_add"
                 app:layout_constraintTop_toTopOf="@id/v_calculator_background"
-                tools:visibility="visible" />
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

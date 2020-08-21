@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.lifepointcalculator.BR
 import com.lucidity.haolu.lifepointcalculator.R
 import com.lucidity.haolu.lifepointcalculator.databinding.FragmentCalculatorBinding
+import com.lucidity.haolu.lifepointcalculator.model.CalculatorInputType
 import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.Player
 import com.lucidity.haolu.lifepointcalculator.util.Constants
@@ -30,8 +31,7 @@ class CalculatorFragment : Fragment() {
 
     private lateinit var binding: FragmentCalculatorBinding
     private lateinit var viewmodel: CalculatorViewModel
-
-    private var sharedPreferences: SharedPreferences? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     private val ANIMATION_DURATION: Long = 500
     private val SNACKBAR_DURATION: Int = 10000
@@ -44,7 +44,7 @@ class CalculatorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         viewmodel = ViewModelProvider(this).get(CalculatorViewModel::class.java)
     }
 
@@ -62,7 +62,9 @@ class CalculatorFragment : Fragment() {
         binding.viewmodel = viewmodel
         inflateInputLayout(R.layout.layout_normal_input, binding.vsNormalInput.viewStub)
         inflateInputLayout(R.layout.layout_accumulated_input, binding.vsAccumulatedInput.viewStub)
-        binding.vsAccumulatedInput.viewStub?.visibility = View.GONE
+        val inputType = sharedPreferences.getString(Constants.SHARED_PREF_INPUT_TYPE, null) ?: CalculatorInputType.NORMAL.name
+        viewmodel.initInputView(inputType)
+
         return binding.root
     }
 
@@ -84,6 +86,8 @@ class CalculatorFragment : Fragment() {
         observeShowNormalInput()
         observeShowAccumulatedInput()
         observeNavigateLogEvent()
+        observeDuelTimeButtonVisibility()
+        observeDuelTimeTextViewVisibility()
     }
 
     private fun inflateInputLayout(layoutId: Int, viewStub: ViewStub?) {
@@ -204,6 +208,7 @@ class CalculatorFragment : Fragment() {
     private fun observeDuelTime() {
         viewmodel.timer.duelTime.observe(viewLifecycleOwner, Observer { duelTime ->
             if (viewmodel.timer.isStarted) {
+                // TODO: refactor
                 binding.ibDuelTime.visibility = View.INVISIBLE
                 binding.tvDuelTime.visibility = View.VISIBLE
                 binding.tvDuelTime.text = duelTime
@@ -214,7 +219,10 @@ class CalculatorFragment : Fragment() {
     private fun observeShowInputTypeBottomSheet() {
         viewmodel.showInputTypeBottomSheet.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let {
-                InputTypeBottomSheetDialogFragment().show(childFragmentManager, InputTypeBottomSheetDialogFragment.TAG)
+                InputTypeBottomSheetDialogFragment().show(
+                    childFragmentManager,
+                    InputTypeBottomSheetDialogFragment.TAG
+                )
             }
         })
     }
@@ -247,6 +255,18 @@ class CalculatorFragment : Fragment() {
                     bundle
                 )
             }
+        })
+    }
+
+    private fun observeDuelTimeButtonVisibility() {
+        viewmodel.duelTimeButtonInvisibility.observe(viewLifecycleOwner, Observer { isInvisible ->
+            binding.ibDuelTime.isInvisible = isInvisible
+        })
+    }
+
+    private fun observeDuelTimeTextViewVisibility() {
+        viewmodel.duelTimeTextViewInvisibility.observe(viewLifecycleOwner, Observer { isInvisible ->
+            binding.tvDuelTime.isInvisible = isInvisible
         })
     }
 
@@ -300,8 +320,6 @@ class CalculatorFragment : Fragment() {
 
     private fun reset() {
         viewmodel.reset()
-        binding.ibDuelTime.visibility = View.VISIBLE
-        binding.tvDuelTime.visibility = View.INVISIBLE
     }
 
     // TODO: shared module
