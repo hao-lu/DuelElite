@@ -34,7 +34,6 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="TextAppearance.LogEntry" parent="TextAppearance.AppCompat">

@@ -43,7 +43,7 @@ class LogFragment : Fragment() {
         val log = arguments?.getParcelable<LifePointLog>(Constants.BUNDLE_KEY_LIFE_POINT_LOG)
         binding.rvLog.layoutManager = LinearLayoutManager(requireContext())
         binding.rvLog.adapter = LogRecyclerViewAdapter(log?.getReverseList() ?: emptyList())
-        binding.rvLog.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+//        binding.rvLog.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         binding.toolbar.title = getString(R.string.title_log)
         binding.toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

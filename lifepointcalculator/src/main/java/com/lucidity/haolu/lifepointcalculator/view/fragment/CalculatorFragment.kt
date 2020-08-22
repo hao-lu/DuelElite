@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.lifepointcalculator.BR
 import com.lucidity.haolu.lifepointcalculator.R
@@ -334,7 +335,8 @@ class CalculatorFragment : Fragment() {
         snackBar = Snackbar.make(binding.root, text, SNACKBAR_DURATION)
             .setAction(R.string.snackbar_action_reset, { reset() })
             .setActionTextColor(Color.WHITE)
-        snackBar?.config(requireContext(), binding.root.width)
+            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+//        snackBar?.config(requireContext(), binding.root.width)
         snackBar?.show()
     }
 
