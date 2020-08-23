@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,8 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lucidity.haolu.base.util.KeyboardUtil
 import com.lucidity.haolu.searchcards.R
-import com.lucidity.haolu.searchcards.room.entity.Card
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardResultsBinding
 import com.lucidity.haolu.searchcards.transition.RotateCrossfadeTransition
 import com.lucidity.haolu.searchcards.view.adapter.OnSearchResultListener
@@ -63,8 +62,7 @@ class SearchCardResultsFragment : Fragment(), OnSearchResultListener {
     }
 
     override fun onSearchResultClick(position: Int) {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.etSearchBoxHint.windowToken, 0)
+        KeyboardUtil.hideKeyboard(requireActivity())
         val cardName = viewmodel.searchResults.value?.get(position)?.name ?: ""
         val bundle = Bundle()
         bundle.putString("cardName", cardName)
@@ -78,6 +76,7 @@ class SearchCardResultsFragment : Fragment(), OnSearchResultListener {
 
     private fun observe() {
         viewmodel.backButton.observe(viewLifecycleOwner, Observer {
+            KeyboardUtil.hideKeyboard(requireActivity())
             findNavController().popBackStack()
         })
     }

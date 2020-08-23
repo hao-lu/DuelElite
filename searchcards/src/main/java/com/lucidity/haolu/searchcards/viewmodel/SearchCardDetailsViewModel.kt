@@ -29,34 +29,4 @@ class SearchCardDetailsViewModel(val cardName: String?) : ViewModel() {
             }
         }
     }
-
-//    suspend fun fetchCardImageUrl(url: String): String {
-//        return coroutineScope {
-//            val deferred = async(Dispatchers.IO) {
-//                val document = Jsoup.connect(url).get()
-//                // <table class = cardtable>
-//                val cardTable: Element = document.getElementsByClass("cardtable").first()
-//                // <a href = ... >
-//                val imageUrl =
-//                    cardTable.select("tr")[1]
-//                        .getElementsByClass("cardtable-cardimage")[0]
-//                        .select("a[href]")[0]
-//                        .attr("href")
-//                        .toString()
-//                imageUrl
-//            }
-//            try {
-//                deferred.await()
-//            } catch (httpStatusException: HttpStatusException) {
-//                httpStatusException.toString()
-//            } catch (unknownHostException: UnknownHostException) {
-//                unknownHostException.toString()
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                e.toString()
-//            }
-//        }
-//    }
-
-
 }

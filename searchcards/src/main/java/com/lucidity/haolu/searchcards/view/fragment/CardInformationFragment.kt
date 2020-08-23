@@ -16,21 +16,19 @@ import com.lucidity.haolu.searchcards.databinding.FragmentCardInformationBinding
 import com.lucidity.haolu.searchcards.view.adapter.CardInformationRecyclerViewAdapter
 import com.lucidity.haolu.searchcards.viewmodel.CardInformationViewModel
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class CardInformationFragment : Fragment() {
 
     companion object {
+        const val TAG = "CardInformationFragment"
+
         fun newInstance() = CardInformationFragment()
     }
 
     private lateinit var parentViewModel: SearchCardDetailsViewModel
     private lateinit var viewModel: CardInformationViewModel
     private lateinit var binding: FragmentCardInformationBinding
-
-    private val TAG = "CardInformationFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

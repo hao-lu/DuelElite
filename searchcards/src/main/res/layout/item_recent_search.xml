@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recentSearch"
+            type="com.lucidity.haolu.searchcards.room.entity.RecentSearch" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp">
+
+        <View
+            android:id="@+id/v_background"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="45dp"
+            android:background="@drawable/search_box_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:backgroundTint="@{recentSearch.color}"
+            tools:backgroundTint="@color/monster_tan"/>
+
+        <TextView
+            android:id="@+id/tv_card_name"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_vertical_margin"
+            android:layout_marginEnd="@dimen/large_vertical_margin"
+            android:text="@{recentSearch.name}"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/v_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/v_background"
+            app:layout_constraintTop_toTopOf="@id/v_background"
+            tools:text="Blue-Eyes White Dragon"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -16,6 +16,10 @@
             android:id="@+id/action_fragment_search_home_to_fragment_search"
             app:destination="@id/fragment_search"/>
 
+        <action
+            android:id="@+id/action_fragment_search_home_to_fragment_search_card_details"
+            app:destination="@id/fragment_search_card_details"/>
+
     </fragment>
 
     <fragment

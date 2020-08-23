@@ -13,4 +13,9 @@
     <color name="yugi_blue">#374096</color>
     <color name="yugi_dark_gray">#2f2f2f</color>
     <color name="yugi_black">#252525</color>
+
+    <color name="monster_tan">#AB895D</color>
+    <color name="spell_green">#008182</color>
+    <color name="trap_violet">#A30661</color>
+
 </resources>

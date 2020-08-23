@@ -14,21 +14,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ml_search_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/normal_horizontal_margin" />
+            app:layout_constraintGuide_begin="@dimen/large_vertical_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="58dp" />
+            app:layout_constraintGuide_begin="64dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_left"
@@ -74,8 +75,8 @@
             android:id="@+id/v_search_box_bg"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="50dp"
-            android:layout_marginStart="@dimen/normal_vertical_margin"
-            android:layout_marginEnd="@dimen/normal_vertical_margin"
+            android:layout_marginStart="@dimen/large_vertical_margin"
+            android:layout_marginEnd="@dimen/large_vertical_margin"
             android:background="@drawable/search_box_bg"
             android:clickable="true"
             android:elevation="4dp"
@@ -97,6 +98,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_bottom" />
+
+        <TextView
+            android:id="@+id/tv_recent_searches"
+            style="@style/Base.TextAppearance.Header6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recent_searches"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_divider" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_searches"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_recent_searches" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

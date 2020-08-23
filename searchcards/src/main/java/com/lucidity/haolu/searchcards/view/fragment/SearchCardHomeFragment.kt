@@ -10,35 +10,32 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardHomeViewModel
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.SearchCardsDatabase
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardHomeBinding
 import com.lucidity.haolu.searchcards.room.entity.Card
 import com.lucidity.haolu.searchcards.room.entity.CardList
+import com.lucidity.haolu.searchcards.view.adapter.OnRecentSearchListener
+import com.lucidity.haolu.searchcards.view.adapter.RecentSearchesRecyclerViewAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.IOException
 
-
-class SearchCardHomeFragment : Fragment() {
+class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var binding: FragmentSearchCardHomeBinding
     private lateinit var viewmodel: SearchCardHomeViewModel
 
-//    val db = SearchCardsDatabase.getInstance(requireContext())
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewmodel = ViewModelProvider(this).get(SearchCardHomeViewModel::class.java)
-
+        // TODO: populate only once
         populateSearchCardsDatabase()
+        viewmodel = ViewModelProvider(this).get(SearchCardHomeViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -53,12 +50,31 @@ class SearchCardHomeFragment : Fragment() {
             false
         )
         binding.viewmodel = viewmodel
+        binding.rvRecentSearches.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeSearchBar()
+        observeRecentSearchList()
+
+        // TODO: add scoping
+        CoroutineScope(Dispatchers.IO).launch {
+            viewmodel.updateRecentSearchList()
+        }
+    }
+
+    override fun onRecentResultClick(position: Int) {
+        val bundle = Bundle()
+        val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
+        bundle.putString("cardName", cardName)
+        findNavController().navigate(
+            R.id.action_fragment_search_home_to_fragment_search_card_details,
+            bundle,
+            null,
+            null
+        )
     }
 
     private fun observeSearchBar() {
@@ -66,6 +82,12 @@ class SearchCardHomeFragment : Fragment() {
             event.getContentIfNotHandled()?.let {
                 navigateToSearchFragment()
             }
+        })
+    }
+
+    private fun observeRecentSearchList() {
+        viewmodel.recentSearchList.observe(viewLifecycleOwner, Observer { list ->
+            binding.rvRecentSearches.adapter = RecentSearchesRecyclerViewAdapter(list ?: emptyList(), this)
         })
     }
 
@@ -95,17 +117,12 @@ class SearchCardHomeFragment : Fragment() {
                     val cardList = cardAdapter.fromJson(json)
                     cardList?.data?.let { list ->
                         for (card in list) {
-                            db?.cardDao()?.insert(
-                                Card(
-                                    card
-                                )
-                            )
+                            db?.cardDao()?.insert(Card(card))
                         }
                     }
                 }
             }
         }
-
     }
 
     private fun loadJsonFromRawResource(rawSourceId: Int): String? {
