@@ -18,6 +18,7 @@ import androidx.transition.ChangeBounds
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardDetailsBinding
+import com.lucidity.haolu.searchcards.util.Constants
 import com.lucidity.haolu.searchcards.view.adapter.SearchCardDetailsViewPagerAdapter
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModel
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardDetailsViewModelFactory
@@ -65,7 +66,7 @@ class SearchCardDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        viewmodel = ViewModelProvider(this).get(SearchCardDetailsViewModel::class.java)
-        cardName = arguments?.getString("cardName")
+        cardName = arguments?.getString(Constants.BUNDLE_KEY_CARD_NAME)
         viewmodel = ViewModelProvider(this, SearchCardDetailsViewModelFactory(cardName)).get(
             SearchCardDetailsViewModel::class.java
         )

@@ -17,6 +17,7 @@ import com.lucidity.haolu.base.util.KeyboardUtil
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardResultsBinding
 import com.lucidity.haolu.searchcards.transition.RotateCrossfadeTransition
+import com.lucidity.haolu.searchcards.util.Constants
 import com.lucidity.haolu.searchcards.view.adapter.OnSearchResultListener
 import com.lucidity.haolu.searchcards.view.adapter.SearchCardResultsListAdapter
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardResultsViewModel
@@ -65,7 +66,7 @@ class SearchCardResultsFragment : Fragment(), OnSearchResultListener {
         KeyboardUtil.hideKeyboard(requireActivity())
         val cardName = viewmodel.searchResults.value?.get(position)?.name ?: ""
         val bundle = Bundle()
-        bundle.putString("cardName", cardName)
+        bundle.putString(Constants.BUNDLE_KEY_CARD_NAME, cardName)
         findNavController().navigate(
             R.id.action_fragment_search_card_to_fragment_search_card_details,
             bundle,

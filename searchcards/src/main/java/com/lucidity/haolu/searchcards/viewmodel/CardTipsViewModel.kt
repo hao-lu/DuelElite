@@ -4,7 +4,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidity.haolu.searchcards.Event
+import com.lucidity.haolu.base.Event
 import com.lucidity.haolu.searchcards.network.YugiohWikiaDataProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

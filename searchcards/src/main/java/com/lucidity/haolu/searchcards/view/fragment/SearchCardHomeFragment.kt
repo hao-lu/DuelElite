@@ -17,6 +17,7 @@ import com.lucidity.haolu.searchcards.SearchCardsDatabase
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardHomeBinding
 import com.lucidity.haolu.searchcards.room.entity.Card
 import com.lucidity.haolu.searchcards.room.entity.CardList
+import com.lucidity.haolu.searchcards.util.Constants
 import com.lucidity.haolu.searchcards.view.adapter.OnRecentSearchListener
 import com.lucidity.haolu.searchcards.view.adapter.RecentSearchesRecyclerViewAdapter
 import com.squareup.moshi.Moshi
@@ -75,7 +76,7 @@ class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
     override fun onRecentResultClick(position: Int, view: View) {
         val bundle = Bundle()
         val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
-        bundle.putString("cardName", cardName)
+        bundle.putString(Constants.BUNDLE_KEY_CARD_NAME, cardName)
         bundle.putString("transitionName", view.transitionName)
         val extras = FragmentNavigatorExtras(
             view to view.transitionName
