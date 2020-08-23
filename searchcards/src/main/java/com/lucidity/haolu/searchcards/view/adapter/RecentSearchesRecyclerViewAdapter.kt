@@ -3,6 +3,7 @@ package com.lucidity.haolu.searchcards.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +27,9 @@ class RecentSearchesRecyclerViewAdapter(
             itemView.setOnClickListener(this)
         }
 
-        override fun onClick(v: View?) {
+        override fun onClick(v: View) {
             onRecentSearchListener.onRecentResultClick(adapterPosition)
+            onRecentSearchListener.onRecentResultClick(adapterPosition, v)
         }
     }
 
@@ -43,6 +45,7 @@ class RecentSearchesRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        ViewCompat.setTransitionName(holder.itemView, recentSearches[position].name)
         holder.binding?.apply {
             setVariable(BR.recentSearch, recentSearches[position])
             executePendingBindings()
@@ -52,4 +55,5 @@ class RecentSearchesRecyclerViewAdapter(
 
 interface OnRecentSearchListener {
     fun onRecentResultClick(position: Int)
+    fun onRecentResultClick(position: Int, view: View)
 }

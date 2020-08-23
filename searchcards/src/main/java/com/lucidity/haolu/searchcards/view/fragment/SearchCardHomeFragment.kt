@@ -66,15 +66,25 @@ class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
     }
 
     override fun onRecentResultClick(position: Int) {
+//        val bundle = Bundle()
+//        val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
+//        bundle.putString("cardName", cardName)
+//        navigateToSearchCardDetailsFragment(bundle)
+    }
+
+    override fun onRecentResultClick(position: Int, view: View) {
         val bundle = Bundle()
         val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
         bundle.putString("cardName", cardName)
+        bundle.putString("transitionName", view.transitionName)
+        val extras = FragmentNavigatorExtras(
+            view to view.transitionName
+        )
         findNavController().navigate(
             R.id.action_fragment_search_home_to_fragment_search_card_details,
             bundle,
             null,
-            null
-        )
+            extras)
     }
 
     private fun observeSearchBar() {
@@ -102,6 +112,17 @@ class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
             null,
             extras
         )
+    }
+
+    private fun navigateToSearchCardDetailsFragment(bundle: Bundle) {
+        val extras = FragmentNavigatorExtras(
+            binding.vSearchBoxBg to "searchBoxTransition"
+        )
+        findNavController().navigate(
+            R.id.action_fragment_search_home_to_fragment_search_card_details,
+            bundle,
+            null,
+            extras)
     }
 
     private fun populateSearchCardsDatabase() {

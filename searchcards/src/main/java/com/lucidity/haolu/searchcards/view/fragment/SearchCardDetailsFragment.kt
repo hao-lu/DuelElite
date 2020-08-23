@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.palette.graphics.Palette
+import androidx.transition.ChangeBounds
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.databinding.FragmentSearchCardDetailsBinding
@@ -83,6 +83,9 @@ class SearchCardDetailsFragment : Fragment() {
             false
         )
         binding.viewmodel = viewmodel
+        val transitionName = arguments?.getString("transitionName")
+        binding.mainContent.transitionName = transitionName
+        sharedElementEnterTransition = ChangeBounds()
         return binding.root
     }
 

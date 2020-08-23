@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        android:transitionName="searchCardDetailTransition">
 
         <View
             android:id="@+id/v_background"
