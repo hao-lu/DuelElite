@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.databinding.FragmentCardRulingsBinding
@@ -23,10 +22,11 @@ import kotlinx.coroutines.launch
 class CardRulingsFragment : Fragment() {
 
     companion object {
+        const val TAG = "CardRulingsFragment"
+
         fun newInstance() = CardRulingsFragment()
     }
 
-    private val TAG = "CardRulingsFragment"
     private lateinit var parentViewModel: SearchCardDetailsViewModel
     private lateinit var viewModel: CardRulingsViewModel
     private lateinit var binding: FragmentCardRulingsBinding
@@ -37,11 +37,17 @@ class CardRulingsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(CardRulingsViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.fragment_card_rulings,
             container,
-            false)
+            false
+        )
         return binding.root
     }
 
@@ -53,7 +59,10 @@ class CardRulingsFragment : Fragment() {
         observeCardRulings()
         observeEmptyStateCardRulingsVisibility()
 
-        if (viewModel.cardRulings.value == null) {
+        // TODO: move to viewmodel
+        if (viewModel.cardRulings.value == null
+            && viewModel.emptyStateCardRulingsVisibility.value == View.GONE
+            || viewModel.emptyStateCardRulingsVisibility.value == null) {
             fetchCardRulings()
         }
     }

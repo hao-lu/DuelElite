@@ -59,7 +59,10 @@ class CardTipsFragment : Fragment() {
         observeCardTips()
         observeEmptyStateCardTipsVisibility()
 
-        if (viewModel.cardTips.value == null) {
+        // TODO: refactor
+        if (viewModel.cardTips.value == null
+            && viewModel.emptyStateCardTipsVisibility.value == View.GONE
+            || viewModel.emptyStateCardTipsVisibility.value == null) {
             fetchCardTips()
         }
     }

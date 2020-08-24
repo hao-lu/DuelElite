@@ -21,6 +21,7 @@
             android:id="@+id/iv_no_tip"
             android:layout_width="128dp"
             android:layout_height="128dp"
+            android:layout_marginTop="@dimen/large_horizontal_margin"
             android:src="@drawable/ic_no_tip"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +35,8 @@
             android:text="@string/no_tips"
             android:textSize="16sp"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/iv_no_tip"
-            app:layout_constraintStart_toStartOf="@id/iv_no_tip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_no_tip" />
 
         <androidx.recyclerview.widget.RecyclerView

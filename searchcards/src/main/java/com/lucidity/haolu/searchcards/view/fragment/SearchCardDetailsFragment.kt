@@ -29,6 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+// Rename to tab fragment
 class SearchCardDetailsFragment : Fragment() {
 
     companion object {
