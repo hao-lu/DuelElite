@@ -12,6 +12,8 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeTransform
 import com.lucidity.haolu.searchcards.R
 
 class ImageDialogFragment : DialogFragment() {
@@ -19,8 +21,13 @@ class ImageDialogFragment : DialogFragment() {
     private lateinit var mImageUrl: String
     private var mStatusBarColor = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        sharedElementEnterTransition = ChangeTransform()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater!!.inflate(R.layout.fragment_image_dialog_new, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_image_dialog_new, container, false)
         val imageUrl = arguments!!.getString("imageUrl")
         mImageUrl = imageUrl
         return rootView

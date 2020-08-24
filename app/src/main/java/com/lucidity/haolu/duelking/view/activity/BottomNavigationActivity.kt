@@ -1,9 +1,11 @@
 package com.lucidity.haolu.duelking.view.activity
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ViewUtils.getContentView
 import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.databinding.ActivityBottomNavigationBinding

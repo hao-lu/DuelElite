@@ -45,6 +45,7 @@ dependencies {
     implementation AndroidX.LIFECYCLE_EXTENSION
     implementation AndroidX.MATERIAL
     implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_FRAGMENT_KTX
     implementation AndroidX.NAVIGATION_UI
     implementation AndroidX.PALETTE
     implementation AndroidX.ROOM_KTX

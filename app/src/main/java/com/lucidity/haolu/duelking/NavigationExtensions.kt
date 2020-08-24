@@ -2,6 +2,7 @@ package com.lucidity.haolu.duelking
 
 import android.content.Intent
 import android.util.SparseArray
+import android.view.View
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
@@ -44,6 +45,16 @@ fun BottomNavigationView.setupWithNavController(
 
         // Obtain its id
         val graphId = navHostFragment.navController.graph.id
+
+        // TODO: clean up (add a list of fragments to hide bottom navigation)
+        if (navGraphId == R.navigation.navigation_search) {
+            navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                visibility = when (destination.id) {
+                    R.id.fragment_full_screen_image_viewer -> View.GONE
+                    else -> View.VISIBLE
+                }
+            }
+        }
 
         if (index == 0) {
             firstFragmentGraphId = graphId

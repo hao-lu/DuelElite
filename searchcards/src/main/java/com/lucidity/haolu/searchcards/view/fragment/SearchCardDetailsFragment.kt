@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.palette.graphics.Palette
@@ -143,11 +144,13 @@ class SearchCardDetailsFragment : Fragment() {
             binding.imageHeader.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString("imageUrl", imageUrl)
+                val extras = FragmentNavigatorExtras(
+                    binding.imageHeader to "imageHeaderTransition")
                 findNavController().navigate(
-                    R.id.action_fragment_search_card_to_fragment_image_dialog,
+                    R.id.action_fragment_search_card_to_fragment_full_screen_image_viewer,
                     bundle,
                     null,
-                    null
+                    extras
                 )
             }
         })
