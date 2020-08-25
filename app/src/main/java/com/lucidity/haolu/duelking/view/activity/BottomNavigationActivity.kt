@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -31,11 +33,11 @@ class BottomNavigationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBottomNavigationBinding
     private lateinit var viewmodel: BottomNavigationViewModel
 
+    private var currentNavController: LiveData<NavController>? = null
     private var isKeyboardVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (Build.VERSION.SDK_INT >= 27) {
             window.decorView.systemUiVisibility =
 //                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -55,18 +57,34 @@ class BottomNavigationActivity : AppCompatActivity() {
         )
         viewmodel = ViewModelProvider(this).get(BottomNavigationViewModel::class.java)
 
-        val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_random, R.navigation.navigation_search)
-        binding.bottomNavigationMain.setupWithNavController(
-            navGraphIds,
-            supportFragmentManager,
-            R.id.nav_host_container,
-            intent
-        )
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
 
         // Only have BottomNavigationView handle fitsSystemWindow
 //        binding.clActivityMain.setOnApplyWindowInsetsListener(null)
 
 //      setupKeyboardListener()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupBottomNavigationBar()
+    }
+
+    private fun setupBottomNavigationBar() {
+        val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_random, R.navigation.navigation_search)
+        val controller = binding.bottomNavigationMain.setupWithNavController(
+            navGraphIds,
+            supportFragmentManager,
+            R.id.nav_host_container,
+            intent
+        )
+        currentNavController = controller
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
     }
 
     private fun setupKeyboardListener() {
