@@ -60,7 +60,7 @@ class SearchCardDetailsFragment : Fragment() {
             if (dominant != null) {
                 binding.collapseToolbar.setContentScrimColor(dominant.rgb)
                 binding.tabs.setSelectedTabIndicatorColor(dominant.rgb)
-                activity?.window?.statusBarColor = dominant.rgb
+//                activity?.window?.statusBarColor = dominant.rgb
             }
         }
     }

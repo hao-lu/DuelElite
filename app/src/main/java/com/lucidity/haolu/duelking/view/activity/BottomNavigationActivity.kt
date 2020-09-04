@@ -40,12 +40,15 @@ class BottomNavigationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 27) {
             window.decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
 //                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
                         View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
 //                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             window.statusBarColor = Color.WHITE
+//            window.statusBarColor = Color.TRANSPARENT
+//            window.statusBarColor = ContextCompat.getColor(this, R.color.fifty_percent_white)
             window.navigationBarColor = Color.WHITE
         } else {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)

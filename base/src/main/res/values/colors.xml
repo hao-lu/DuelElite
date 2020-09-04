@@ -18,4 +18,6 @@
     <color name="spell_green">#008182</color>
     <color name="trap_violet">#A30661</color>
 
+    <color name="fifty_percent_white">#80FFFFFF</color>
+
 </resources>

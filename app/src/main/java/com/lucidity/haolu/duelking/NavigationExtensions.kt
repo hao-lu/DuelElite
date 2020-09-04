@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lucidity.haolu.base.util.WindowUtil
 
 /**
  * Manages the various graphs needed for a [BottomNavigationView].
@@ -52,6 +53,12 @@ fun BottomNavigationView.setupWithNavController(
                 visibility = when (destination.id) {
                     R.id.fragment_full_screen_image_viewer -> View.GONE
                     else -> View.VISIBLE
+                }
+                // TODO: CLEAN UP
+                when (destination.id) {
+                    R.id.fragment_search_card_details -> {
+                        WindowUtil.setStatusBarTransparent(navHostFragment.requireActivity())
+                    } else -> WindowUtil.setStatusBarColor(navHostFragment.requireActivity())
                 }
             }
         }
