@@ -37,6 +37,7 @@ class BottomNavigationActivity : AppCompatActivity() {
     private var isKeyboardVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 27) {
             window.decorView.systemUiVisibility =
