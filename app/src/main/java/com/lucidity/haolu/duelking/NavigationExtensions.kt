@@ -51,15 +51,16 @@ fun BottomNavigationView.setupWithNavController(
         if (navGraphId == R.navigation.navigation_search) {
             navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
                 visibility = when (destination.id) {
-                    R.id.fragment_full_screen_image_viewer -> View.GONE
+                    R.id.fragment_full_screen_image_viewer,
+                    R.id.fragment_search -> View.GONE
                     else -> View.VISIBLE
                 }
                 // TODO: CLEAN UP
-                when (destination.id) {
-                    R.id.fragment_search_card_details -> {
-                        WindowUtil.setStatusBarTransparent(navHostFragment.requireActivity())
-                    } else -> WindowUtil.setStatusBarColor(navHostFragment.requireActivity())
-                }
+//                when (destination.id) {
+//                    R.id.fragment_search_card_details -> {
+//                        WindowUtil.setStatusBarTransparent(navHostFragment.requireActivity())
+//                    } else -> WindowUtil.setStatusBarColor(navHostFragment.requireActivity())
+//                }
             }
         }
 

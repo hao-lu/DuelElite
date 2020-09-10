@@ -9,7 +9,7 @@ import com.lucidity.haolu.base.R
 open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int {
-        return R.style.Base_RoundedBottomSheet_NavigationBar
+        return R.style.Base_RoundedBottomSheet
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

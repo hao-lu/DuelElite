@@ -14,7 +14,8 @@
         android:id="@+id/cl_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?attr/colorSurface">
 
         <ImageView
             android:id="@+id/iv_random_device"

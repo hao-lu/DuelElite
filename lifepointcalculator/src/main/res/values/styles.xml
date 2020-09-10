@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Button.Accumulated" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/yugi_black</item>
+        <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -22,7 +22,7 @@
     </style>
 
     <style name="Button.Normal" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/yugi_black</item>
+        <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
@@ -32,12 +32,14 @@
     </style>
 
     <style name="TextAppearance.LogTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.LogEntry" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
     </style>

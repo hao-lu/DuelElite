@@ -1,27 +1,13 @@
 package com.lucidity.haolu.duelking.view.activity
 
-import android.content.Context
-import android.graphics.Color
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.ViewUtils.getContentView
 import com.lucidity.haolu.duelking.R
 import com.lucidity.haolu.duelking.databinding.ActivityBottomNavigationBinding
 import com.lucidity.haolu.duelking.setupWithNavController
@@ -37,23 +23,23 @@ class BottomNavigationActivity : AppCompatActivity() {
     private var isKeyboardVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.App_DarkTheme)
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= 27) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
-//                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
-//                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = Color.WHITE
-//            window.statusBarColor = Color.TRANSPARENT
-//            window.statusBarColor = ContextCompat.getColor(this, R.color.fifty_percent_white)
-            window.navigationBarColor = Color.WHITE
-        } else {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
-        }
+//        if (Build.VERSION.SDK_INT >= 27) {
+//            window.decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+//                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+////                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
+//                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
+////                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            window.statusBarColor = Color.WHITE
+////            window.statusBarColor = Color.TRANSPARENT
+////            window.statusBarColor = ContextCompat.getColor(this, R.color.fifty_percent_white)
+//            window.navigationBarColor = Color.WHITE
+//        } else {
+//            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
+//        }
 
         binding = DataBindingUtil.setContentView(
             this,

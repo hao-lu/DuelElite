@@ -17,7 +17,6 @@
             android:id="@+id/bt_seven"
             style="@style/Button.Normal"
             android:text="@string/seven_literal"
-            android:textColor="@color/yugi_black"
             app:layout_constraintBottom_toTopOf="@id/bt_four"
             app:layout_constraintEnd_toStartOf="@id/bt_eight"
             app:layout_constraintStart_toStartOf="parent"

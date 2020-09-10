@@ -1,77 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
-<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--        <item name="android:colorPrimary">@color/yugi_black</item>-->
-<!--        <item name="android:colorPrimaryDark">@color/yugi_black</item>-->
-<!--        <item name="android:colorAccent">@color/yugi_blue</item>-->
-<!--        <item name="android:windowActionBar">false</item>-->
-<!--        <item name="android:windowNoTitle">true</item>-->
-<!--    </style>-->
+    <style name="App.LightTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_surface_on_surface</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="colorSecondarySurface">@color/color_secondary_surface</item>
 
-<!--    <style name="AppTheme.NoActionBar">-->
-<!--        <item name="android:windowActionBar">false</item>-->
-<!--        <item name="android:windowNoTitle">true</item>-->
-<!--        <item name="android:colorBackground">@color/gray_background</item>-->
-<!--        &lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
-<!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
-<!--    </style>-->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/color_surface</item>
+        <item name="android:statusBarColor">@color/color_surface</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-<!--    &lt;!&ndash; SearchableCardActivity AutoCompleteDropDown Theme &ndash;&gt;-->
-<!--    <style name="AppTheme.SearchSuggestion" parent="AppTheme.NoActionBar">-->
-<!--        <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>-->
-<!--        <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>-->
-<!--        <item name="android:windowBackground">@color/gray_background</item>-->
-<!--    </style>-->
+    <style name="App.DarkTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryDark">@color/night_primary_dark</item>
+        <item name="colorAccent">@color/night_accent</item>
+        <item name="android:windowBackground">@color/night_window_background</item>
+        <item name="android:colorBackground">@color/night_color_background</item>
+        <item name="colorSurface">@color/night_color_surface</item>
+        <item name="colorOnSurface">@color/night_color_on_surface</item>
+        <item name="android:textColor">@color/night_primary_text</item>
+        <item name="android:textColorSecondary">@color/night_primary_text</item>
+        <item name="colorOnBackground">@color/night_color_on_background</item>
+        <item name="android:textColorHint">@color/night_text_color_hint</item>
+        <item name="colorSecondarySurface">@color/night_color_secondary_surface</item>
 
-<!--    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/night_color_surface</item>
+        <item name="android:statusBarColor">@color/night_color_surface</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-<!--    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
-
-<!--    <style name="CustomDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">-->
-<!--        <item name="android:textColor">#ffffff</item>-->
-<!--        <item name="android:textSize">14sp</item>-->
-<!--    </style>-->
-
-<!--    <style name="CustomDropDownListViewStyle" parent="Widget.AppCompat.ListView.DropDown">-->
-<!--        <item name="android:background">#2e2e2e</item>-->
-<!--        <item name="android:layout_width">30dp</item>-->
-<!--        <item name="android:layout_height">wrap_content</item>-->
-<!--    </style>-->
-
-<!--    &lt;!&ndash; MainActivity Button Style &ndash;&gt;-->
-<!--    <style name="ButtonStyle" parent="Widget.AppCompat.Button">-->
-<!--        <item name="android:textColor">@android:color/white</item>-->
-<!--        <item name="android:background">@drawable/ripple</item>-->
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:layout_height">0dp</item>-->
-<!--        <item name="android:layout_weight">1</item>-->
-<!--    </style>-->
-
-<!--    <style name="DialogTheme" parent="@style/Base.Theme.AppCompat.Light.Dialog">-->
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
-<!--    </style>-->
-
-<!--    <style name="ButtonStyle2" parent="Widget.AppCompat.Button">-->
-<!--        <item name="android:background">@drawable/ripple</item>-->
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:layout_height">0dp</item>-->
-<!--        <item name="android:layout_weight">1</item>-->
-<!--        <item name="android:textSize">30sp</item>-->
-<!--    </style>-->
-
-    <style name="Base.RoundedBottomSheet.NavigationBar" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="Base.RoundedBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="shapeAppearanceLargeComponent">@style/Base.ShapeAppearance.LargeComponent.RoundedBottomSheet</item>
+<!--        <item name="shapeAppearanceLargeComponent">@style/Base.ShapeAppearance.LargeComponent.RoundedBottomSheet</item>-->
+        <item name="bottomSheetStyle">@style/RoundedBottomSheet</item>
     </style>
 
     <style name="Base.ShapeAppearance.LargeComponent.RoundedBottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
+        <item name="android:colorBackground">@android:color/white</item>
+    </style>
+
+    <style name="RoundedBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">#0000FF</item>
     </style>
 
 <!--Text Styling-->

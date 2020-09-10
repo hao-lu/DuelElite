@@ -15,8 +15,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Base.RoundedBottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Input type"
+            android:textColor="?android:textColor"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +40,7 @@
             android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
+            android:textColor="?android:textColor"
             android:onClick="@{() -> viewModel.onAccumulatedClick()}"
             android:padding="16dp"
             android:text="Accumulated"
@@ -63,6 +66,7 @@
             android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
+            android:textColor="?android:textColor"
             android:padding="16dp"
             android:text="Normal"
             android:onClick="@{() -> viewModel.onNormalClick()}"
