@@ -1,43 +1,4 @@
 <resources>
-    <style name="App.LightTheme" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/accent</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/window_background</item>
-        <item name="android:colorBackground">@color/color_background</item>
-        <item name="colorSurface">@color/color_surface</item>
-        <item name="colorOnSurface">@color/color_surface_on_surface</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="android:textColorHint">@color/text_color_hint</item>
-        <item name="colorSecondarySurface">@color/color_secondary_surface</item>
-
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">@color/color_surface</item>
-        <item name="android:statusBarColor">@color/color_surface</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="App.DarkTheme" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/accent</item>
-        <item name="colorPrimaryDark">@color/night_primary_dark</item>
-        <item name="colorAccent">@color/night_accent</item>
-        <item name="android:windowBackground">@color/night_window_background</item>
-        <item name="android:colorBackground">@color/night_color_background</item>
-        <item name="colorSurface">@color/night_color_surface</item>
-        <item name="colorOnSurface">@color/night_color_on_surface</item>
-        <item name="android:textColor">@color/night_primary_text</item>
-        <item name="android:textColorSecondary">@color/night_primary_text</item>
-        <item name="colorOnBackground">@color/night_color_on_background</item>
-        <item name="android:textColorHint">@color/night_text_color_hint</item>
-        <item name="colorSecondarySurface">@color/night_color_secondary_surface</item>
-
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">@color/night_color_surface</item>
-        <item name="android:statusBarColor">@color/night_color_surface</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="Base.RoundedBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

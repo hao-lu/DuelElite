@@ -1,9 +1,11 @@
 package com.lucidity.haolu.duelking.view.activity
 
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +25,8 @@ class BottomNavigationActivity : AppCompatActivity() {
     private var isKeyboardVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.App_DarkTheme)
+//        setupTheme()
+        setTheme(R.style.App_LightTheme)
         super.onCreate(savedInstanceState)
 //        if (Build.VERSION.SDK_INT >= 27) {
 //            window.decorView.systemUiVisibility =
@@ -60,6 +63,19 @@ class BottomNavigationActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
     }
 
     private fun setupBottomNavigationBar() {
