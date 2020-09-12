@@ -11,8 +11,9 @@
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:textColorSecondary">@color/secondary_text</item>
         <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="android:textColorHint">@color/text_color_hint</item>
         <item name="colorSecondarySurface">@color/color_secondary_surface</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textColorHintInverse">@color/text_color_hint_inverse</item>
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/color_surface</item>

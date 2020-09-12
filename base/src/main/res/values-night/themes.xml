@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="App.LightTheme" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimary">@color/night_accent</item>
         <item name="colorPrimaryDark">@color/night_primary_dark</item>
         <item name="colorAccent">@color/night_accent</item>
         <item name="android:windowBackground">@color/night_window_background</item>
@@ -11,8 +11,9 @@
         <item name="android:textColor">@color/night_primary_text</item>
         <item name="android:textColorSecondary">@color/night_secondary_text</item>
         <item name="colorOnBackground">@color/night_color_on_background</item>
-        <item name="android:textColorHint">@color/night_text_color_hint</item>
         <item name="colorSecondarySurface">@color/night_color_secondary_surface</item>
+        <item name="android:textColorHint">@color/night_text_color_hint</item>
+        <item name="android:textColorHintInverse">@color/night_text_color_hint_inverse</item>
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/night_color_surface</item>

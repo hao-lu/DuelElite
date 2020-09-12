@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:layout_marginBottom="?attr/actionBarSize">
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:background="?android:attr/colorBackground">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
@@ -47,7 +48,7 @@
             android:focusable="false"
             android:padding="16dp"
             android:src="@drawable/ic_search_box"
-            android:tint="@color/hint_gray"
+            android:tint="?android:attr/textColorHintInverse"
             android:transitionName="iconTransition"
             android:translationZ="5dp"
             android:visibility="visible"
@@ -64,7 +65,7 @@
             android:clickable="false"
             android:focusable="false"
             android:hint="@string/hint_search_box"
-            android:textColorHint="@color/hint_gray"
+            android:textColorHint="?android:attr/textColorHintInverse"
             android:textSize="16sp"
             android:translationZ="5dp"
             android:visibility="visible"
@@ -94,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="#E0E0E0"
+            android:background="?android:attr/textColorHint"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/recent_searches"
+            android:textColor="?android:attr/textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_divider" />

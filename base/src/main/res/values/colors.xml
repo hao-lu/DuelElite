@@ -29,12 +29,13 @@
     <color name="color_surface_on_surface">#000000</color>
     <color name="color_secondary_surface">#E5E5E5</color>
     <color name="text_color_hint">#BDBDBD</color>
+    <color name="text_color_hint_inverse">#757575</color>
 
 
     <!--Dark Theme-->
     <color name="night_primary">#252525</color>
     <color name="night_primary_dark">@color/yugi_blue</color>
-    <color name="night_accent">@color/yugi_blue</color>
+    <color name="night_accent">#517EFA</color>
     <color name="night_window_background">#252525</color>
     <color name="night_primary_text">#FFFFFF</color>
     <color name="night_secondary_text">#BDBDBD</color>
@@ -44,6 +45,6 @@
     <color name="night_color_on_surface">#FFFFFF</color>
     <color name="night_color_secondary_surface">#757575</color>
     <color name="night_text_color_hint">#757575</color>
-
+    <color name="night_text_color_hint_inverse">#BDBDBD</color>
 
 </resources>
