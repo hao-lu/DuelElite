@@ -145,9 +145,9 @@ class CalculatorViewModel : ViewModel() {
     private fun updateViews(player: Player, prevLp: Int, currLp: Int) {
         updatePlayerLp(player, prevLp, currLp)
         updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, 0)
-        logLp(player.name, currLp - prevLp, currLp, timer.formattedRemainingTime)
+        logLp(player.tag, currLp - prevLp, currLp, timer.formattedRemainingTime)
         if (currLp == 0) {
-            _showResetSnackbar.value = Event(String.format(snackbarMessage, player.name))
+            _showResetSnackbar.value = Event(String.format(snackbarMessage, player.tag))
             timer.cancel()
         }
     }

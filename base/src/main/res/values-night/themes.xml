@@ -16,6 +16,7 @@
         <item name="android:textColorHintInverse">@color/night_text_color_hint_inverse</item>
 
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:navigationBarColor">@color/night_color_surface</item>
         <item name="android:statusBarColor">@color/night_color_surface</item>
         <item name="windowNoTitle">true</item>

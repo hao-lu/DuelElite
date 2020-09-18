@@ -1,7 +1,9 @@
 package com.lucidity.haolu.duelking.view.activity
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -65,18 +67,18 @@ class BottomNavigationActivity : AppCompatActivity() {
         setupBottomNavigationBar()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        when (currentNightMode) {
-            Configuration.UI_MODE_NIGHT_NO -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-            Configuration.UI_MODE_NIGHT_YES -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
-        }
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//        when (currentNightMode) {
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//            }
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//            }
+//        }
+//    }
 
     private fun setupBottomNavigationBar() {
         val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_random, R.navigation.navigation_search)
@@ -91,6 +93,25 @@ class BottomNavigationActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
+    }
+
+    private fun checkSystemNavigation() {
+        binding.clActivityMain.setOnApplyWindowInsetsListener { v, insets ->
+            if (insets.systemWindowInsetBottom < 100) {
+                if (Build.VERSION.SDK_INT >= 27) {
+                    window.decorView.systemUiVisibility =
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    window.navigationBarColor = Color.TRANSPARENT
+                }
+            } else {
+                // TODO: check theme
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE or
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+            insets
+        }
     }
 
     private fun setupKeyboardListener() {

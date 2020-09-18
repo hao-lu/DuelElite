@@ -43,5 +43,9 @@ class FullScreenImageViewerFragment : Fragment() {
         catch (illegalArgument: IllegalArgumentException) {
 
         }
+
+        binding.ivImage.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

@@ -4,7 +4,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 
-// TODO: move to base2
+// TODO: refactor not use actual value not id
 @BindingAdapter("bind:backgroundTint")
 fun setBackgroundTint(view: View, colorId: Int) {
     val context = view.context

@@ -16,6 +16,7 @@
         <item name="android:textColorHintInverse">@color/text_color_hint_inverse</item>
 
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:navigationBarColor">@color/color_surface</item>
         <item name="android:statusBarColor">@color/color_surface</item>
         <item name="windowNoTitle">true</item>

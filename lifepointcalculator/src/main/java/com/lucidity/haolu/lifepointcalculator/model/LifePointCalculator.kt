@@ -41,7 +41,7 @@ class LifePointCalculator {
     }
 }
 
-enum class Player {
-    ONE,
-    TWO
+enum class Player(val tag: String) {
+    ONE("Player 1"),
+    TWO("Player 2")
 }
