@@ -15,7 +15,8 @@
 
         <activity android:name=".view.activity.BottomNavigationActivity"
             android:theme="@style/AppTheme.Launcher"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

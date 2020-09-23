@@ -2,6 +2,9 @@ package com.lucidity.haolu.base.util
 
 import android.app.Activity
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import com.lucidity.haolu.base.R
 
 class WindowUtil {
 
@@ -20,5 +23,12 @@ class WindowUtil {
             activity.window.statusBarColor = Color.TRANSPARENT
         }
 
+        fun setStatusBarColorByTheme(activity: Activity) {
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.night_color_surface)
+            } else {
+                activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.color_surface)
+            }
+        }
     }
 }

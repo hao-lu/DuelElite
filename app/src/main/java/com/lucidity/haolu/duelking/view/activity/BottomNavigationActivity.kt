@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
@@ -26,25 +27,25 @@ class BottomNavigationActivity : AppCompatActivity() {
     private var currentNavController: LiveData<NavController>? = null
     private var isKeyboardVisible = false
 
+    private val lightSystemUiFlags = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+    private val darkSystemUiFlags = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
     override fun onCreate(savedInstanceState: Bundle?) {
-//        setupTheme()
         setTheme(R.style.App_LightTheme)
         super.onCreate(savedInstanceState)
-//        if (Build.VERSION.SDK_INT >= 27) {
-//            window.decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-//                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
-////                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // or
-//                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR //or
-////                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//            window.statusBarColor = Color.WHITE
-////            window.statusBarColor = Color.TRANSPARENT
-////            window.statusBarColor = ContextCompat.getColor(this, R.color.fifty_percent_white)
-//            window.navigationBarColor = Color.WHITE
-//        } else {
-//            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
-//        }
+        if (Build.VERSION.SDK_INT >= 27) {
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                window.decorView.systemUiVisibility = darkSystemUiFlags
+            } else {
+                window.decorView.systemUiVisibility = lightSystemUiFlags
+            }
+        } else {
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.yugi_black)
+        }
 
         binding = DataBindingUtil.setContentView(
             this,
@@ -58,8 +59,6 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         // Only have BottomNavigationView handle fitsSystemWindow
 //        binding.clActivityMain.setOnApplyWindowInsetsListener(null)
-
-//      setupKeyboardListener()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -67,18 +66,20 @@ class BottomNavigationActivity : AppCompatActivity() {
         setupBottomNavigationBar()
     }
 
-//    override fun onConfigurationChanged(newConfig: Configuration) {
-//        super.onConfigurationChanged(newConfig)
-//        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
-//        when (currentNightMode) {
-//            Configuration.UI_MODE_NIGHT_NO -> {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//            }
-//            Configuration.UI_MODE_NIGHT_YES -> {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//            }
-//        }
-//    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                recreate()
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                recreate()
+            }
+        }
+    }
 
     private fun setupBottomNavigationBar() {
         val navGraphIds = listOf(R.navigation.navigation_calculator, R.navigation.navigation_random, R.navigation.navigation_search)

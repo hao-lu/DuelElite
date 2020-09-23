@@ -56,11 +56,14 @@ fun BottomNavigationView.setupWithNavController(
                     else -> View.VISIBLE
                 }
                 // TODO: CLEAN UP
-//                when (destination.id) {
-//                    R.id.fragment_search_card_details -> {
-//                        WindowUtil.setStatusBarTransparent(navHostFragment.requireActivity())
-//                    } else -> WindowUtil.setStatusBarColor(navHostFragment.requireActivity())
-//                }
+                when (destination.id) {
+                    R.id.fragment_search_card_details -> {
+                        WindowUtil.setStatusBarTransparent(navHostFragment.requireActivity())
+                    }
+                    else -> {
+                        WindowUtil.setStatusBarColorByTheme(navHostFragment.requireActivity())
+                    }
+                }
             }
         }
 
