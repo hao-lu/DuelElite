@@ -8,10 +8,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnLayout
+import androidx.core.view.isInvisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -29,6 +32,11 @@ import com.lucidity.haolu.lifepointcalculator.model.LifePointCalculator
 import com.lucidity.haolu.lifepointcalculator.model.Player
 import com.lucidity.haolu.lifepointcalculator.util.Constants
 import com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
+import uk.co.deanwild.materialshowcaseview.shape.CircleShape
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape
 
 class CalculatorFragment : Fragment() {
 
@@ -76,6 +84,8 @@ class CalculatorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presentShowcaseSequence()
+
         observeActionLp()
         observeActionHint()
         observeAnimateActionLp()
@@ -345,6 +355,35 @@ class CalculatorFragment : Fragment() {
         snackBar?.run {
             dismiss()
         }
+    }
+
+    private fun presentShowcaseSequence() {
+        val config = ShowcaseConfig()
+        config.setDelay(500) // half second between each showcase view
+        val sequence = MaterialShowcaseSequence(requireActivity(), "SHOWCASE_ID")
+        sequence.setConfig(config)
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setTarget(binding.vBarPlayerLpBackground)
+                .setDismissText("GOT IT")
+                .setTitleText("Reset calculator")
+                .setContentText("Click on the life point bar to reset.")
+                .withRectangleShape(true)
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setTarget(binding.tvActionLp)
+                .setDismissText("GOT IT")
+                .setTitleText("Change input type")
+                .setContentText("Click on the current life point to change input type.")
+                .withCircleShape()
+                .build()
+        )
+
+        sequence.start()
     }
 
     // TODO: shared module

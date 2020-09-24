@@ -17,6 +17,7 @@ object Dependencies {
     const val JSOUP = "org.jsoup:jsoup:1.10.3"
     const val KOTLIN_STDLIB_JDK7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
     const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8"
+    const val MATERIALSHOWCASEVIEW = "com.github.deano2390:MaterialShowcaseView:1.3.4"
     const val MOSHI = "com.squareup.moshi:moshi:1.9.3"
     const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:1.9.3"
     const val PICASSO = "com.squareup.picasso:picasso:2.5.2"

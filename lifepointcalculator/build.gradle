@@ -44,6 +44,8 @@ dependencies {
     implementation AndroidX.NAVIGATION_FRAGMENT
     implementation AndroidX.NAVIGATION_UI
 
+    implementation Dependencies.MATERIALSHOWCASEVIEW
+
     // Test
     testImplementation Tests.JUNIT
     androidTestImplementation Tests.EXT_JUNIT
