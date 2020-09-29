@@ -173,7 +173,7 @@ class CalculatorFragment : Fragment() {
             binding.tvPlayerOneLp.text = lp.toString()
             binding.root.doOnLayout {
                 binding.vBarPlayerOneLp.layoutParams.width =
-                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerLpBackground.width / 2)
+                    calculateLpBarWidth(lp.toDouble(), binding.cvBarPlayerLpBackground.width / 2)
                 binding.vBarPlayerOneLp.isInvisible = viewmodel.playerOneLpBarInvisible
                 binding.vBarPlayerOneLp.requestLayout()
             }
@@ -185,7 +185,7 @@ class CalculatorFragment : Fragment() {
             binding.tvPlayerTwoLp.text = lp.toString()
             binding.root.doOnLayout {
                 binding.vBarPlayerTwoLp.layoutParams.width =
-                    calculateLpBarWidth(lp.toDouble(), binding.vBarPlayerLpBackground.width / 2)
+                    calculateLpBarWidth(lp.toDouble(), binding.cvBarPlayerLpBackground.width / 2)
                 binding.vBarPlayerTwoLp.isInvisible = viewmodel.playerTwoLpBarInvisible
                 binding.vBarPlayerTwoLp.requestLayout()
             }
@@ -201,7 +201,7 @@ class CalculatorFragment : Fragment() {
                     lp.first,
                     lp.second,
                     binding.vBarPlayerOneLp,
-                    binding.vBarPlayerLpBackground.width / 2
+                    binding.cvBarPlayerLpBackground.width / 2
                 )
             }
         })
@@ -216,7 +216,7 @@ class CalculatorFragment : Fragment() {
                     lp.first,
                     lp.second,
                     binding.vBarPlayerTwoLp,
-                    binding.vBarPlayerLpBackground.width / 2
+                    binding.cvBarPlayerLpBackground.width / 2
                 )
             }
         })
@@ -365,7 +365,7 @@ class CalculatorFragment : Fragment() {
 
         sequence.addSequenceItem(
             MaterialShowcaseView.Builder(requireActivity())
-                .setTarget(binding.vBarPlayerLpBackground)
+                .setTarget(binding.cvBarPlayerLpBackground)
                 .setDismissText("GOT IT")
                 .setTitleText("Reset calculator")
                 .setContentText("Click on the life point bar to reset.")
