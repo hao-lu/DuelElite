@@ -65,6 +65,7 @@ class DiceFragment : Fragment() {
 
     private fun startRollDiceAnimation() {
         binding.diceHao.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        binding.diceHao.isClickable = false
         upDownAnimator.start()
         rotateAnimator.start()
     }
@@ -93,6 +94,7 @@ class DiceFragment : Fragment() {
                         }
                         doOnEnd {
                             icon.setImageResource(getDiceResourceId(diceResourceId))
+                            icon.isClickable = true
                         }
                     }
                     flipDown.startDelay = 300

@@ -61,6 +61,7 @@ class CoinFragment : Fragment() {
 
     private fun startFlipCoinAnimation() {
         binding.ivRandomDevice.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        binding.ivRandomDevice.isClickable = false
         upDownAnimator.start()
         rotateAnimator.start()
     }
@@ -95,6 +96,7 @@ class CoinFragment : Fragment() {
         }
     }
 
+    // TODO: clean up remove logic, generalize
     private fun initUpDownAnimator(resourceId: Int, containerHeight: Int) {
         val icon = binding.ivRandomDevice
         val startY = icon.y
@@ -120,6 +122,7 @@ class CoinFragment : Fragment() {
                         doOnEnd {
                             icon.scaleX = 1f
                             icon.setImageResource(resourceId)
+                            icon.isClickable = true
                         }
                     }
                     flipDown.startDelay = 350
