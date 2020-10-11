@@ -1,5 +1,9 @@
 package com.lucidity.haolu.searchcards.view.fragment
 
+import android.content.Context
+import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.lucidity.haolu.searchcards.viewmodel.SearchCardHomeViewModel
 import com.lucidity.haolu.searchcards.R
 import com.lucidity.haolu.searchcards.SearchCardsDatabase
@@ -74,24 +80,32 @@ class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
     }
 
     override fun onRecentResultClick(position: Int, view: View) {
-        val bundle = Bundle()
-        val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
-        bundle.putString(Constants.BUNDLE_KEY_CARD_NAME, cardName)
-        bundle.putString("transitionName", view.transitionName)
-        val extras = FragmentNavigatorExtras(
-            view to view.transitionName
-        )
-        findNavController().navigate(
-            R.id.action_fragment_search_home_to_fragment_search_card_details,
-            bundle,
-            null,
-            extras)
+        if (isNetworkAvailable()) {
+            val bundle = Bundle()
+            val cardName = viewmodel.recentSearchList.value?.get(position)?.name ?: ""
+            bundle.putString(Constants.BUNDLE_KEY_CARD_NAME, cardName)
+            bundle.putString("transitionName", view.transitionName)
+            val extras = FragmentNavigatorExtras(
+                view to view.transitionName
+            )
+            findNavController().navigate(
+                R.id.action_fragment_search_home_to_fragment_search_card_details,
+                bundle,
+                null,
+                extras)
+        } else {
+            showNoInternetConnectionSnackbar()
+        }
     }
 
     private fun observeSearchBar() {
         viewmodel.searchBar.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let {
-                navigateToSearchFragment()
+                if (isNetworkAvailable()) {
+                    navigateToSearchFragment()
+                } else {
+                    showNoInternetConnectionSnackbar()
+                }
             }
         })
     }
@@ -159,6 +173,20 @@ class SearchCardHomeFragment : Fragment(), OnRecentSearchListener {
             e.printStackTrace()
             null
         }
+    }
+
+    private fun showNoInternetConnectionSnackbar() {
+        Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_SHORT)
+            .setActionTextColor(Color.WHITE)
+            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+            .show()
+    }
+
+    // Move to network util
+    private fun isNetworkAvailable(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 
 }
