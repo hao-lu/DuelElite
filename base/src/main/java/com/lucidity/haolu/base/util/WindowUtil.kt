@@ -1,6 +1,7 @@
 package com.lucidity.haolu.base.util
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -24,7 +25,8 @@ class WindowUtil {
         }
 
         fun setStatusBarColorByTheme(activity: Activity) {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            val resources = activity.resources
+            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
                 activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.night_color_surface)
             } else {
                 activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.color_surface)

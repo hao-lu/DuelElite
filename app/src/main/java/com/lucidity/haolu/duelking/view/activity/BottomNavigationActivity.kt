@@ -38,7 +38,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         setTheme(R.style.App_LightTheme)
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 27) {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
                 window.decorView.systemUiVisibility = darkSystemUiFlags
             } else {
                 window.decorView.systemUiVisibility = lightSystemUiFlags
