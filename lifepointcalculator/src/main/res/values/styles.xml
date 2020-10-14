@@ -34,13 +34,13 @@
     <style name="TextAppearance.LogTitle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.LogEntry" parent="TextAppearance.AppCompat">
         <item name="android:textColor">?android:attr/textColor</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

@@ -63,18 +63,22 @@
 
             <TextView
                 android:id="@+id/et_search_box_hint"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:clickable="false"
                 android:focusable="false"
+                android:ellipsize="end"
                 android:hint="@string/hint_search_box"
+                android:maxLines="1"
                 android:textColorHint="?android:attr/textColorHintInverse"
                 android:textSize="16sp"
                 android:translationZ="5dp"
                 android:visibility="visible"
+                android:layout_marginEnd="@dimen/large_vertical_margin"
                 app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-                app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+                app:layout_constraintEnd_toEndOf="@id/v_search_box_bg"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
             <View
