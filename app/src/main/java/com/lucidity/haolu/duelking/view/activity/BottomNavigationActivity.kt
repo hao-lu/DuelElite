@@ -61,7 +61,7 @@ class BottomNavigationActivity : AppCompatActivity() {
 //        binding.clActivityMain.setOnApplyWindowInsetsListener(null)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar()
     }

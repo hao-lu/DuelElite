@@ -41,21 +41,8 @@
         tools:layout="@layout/fragment_search_card_details">
 
         <action
-            android:id="@+id/action_fragment_search_card_to_fragment_image_dialog"
-            app:destination="@id/fragment_image_dialog"/>
-
-        <action
             android:id="@+id/action_fragment_search_card_to_fragment_full_screen_image_viewer"
             app:destination="@id/fragment_full_screen_image_viewer"/>
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/fragment_image_dialog"
-        android:name="com.lucidity.haolu.searchcards.view.fragment.ImageDialogFragment"
-        android:label="ImageDialogFragment"
-        tools:layout="@layout/fragment_image_dialog_new">
-
     </fragment>
 
     <fragment

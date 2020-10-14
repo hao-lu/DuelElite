@@ -28,8 +28,8 @@ class ImageDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_image_dialog_new, container, false)
-        val imageUrl = arguments!!.getString("imageUrl")
-        mImageUrl = imageUrl
+        val imageUrl = arguments?.getString("imageUrl")
+        mImageUrl = imageUrl!!
         return rootView
     }
 
@@ -54,17 +54,17 @@ class ImageDialogFragment : DialogFragment() {
     // Change the status bar color to black when image view
     override fun onResume() {
         super.onResume()
-        val window = activity!!.window
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        mStatusBarColor = window.statusBarColor
-        window.statusBarColor = ContextCompat.getColor(context!!, android.R.color.black)
+        val window = activity?.window
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        mStatusBarColor = window?.statusBarColor!!
+        window.statusBarColor = ContextCompat.getColor(requireContext(), android.R.color.black)
     }
 
     // Change status bar color back
     override fun onPause() {
         super.onPause()
-        val window = activity!!.window
+        val window = activity?.window!!
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 //        window.statusBarColor = ContextCompat.getColor(context, R.color.colorYugiDarkerBlack)
