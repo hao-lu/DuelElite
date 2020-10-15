@@ -147,9 +147,13 @@ class CalculatorViewModel : ViewModel() {
         updateActionLp(_actionLp.value?.toIntOrNull() ?: 0, 0)
         logLp(player.tag, currLp - prevLp, currLp, timer.formattedRemainingTime)
         if (currLp == 0) {
-            _showResetSnackbar.value = Event(String.format(snackbarMessage, player.tag))
+            _showResetSnackbar.value = Event(String.format(snackbarMessage, determineWinnerString(player)))
             timer.cancel()
         }
+    }
+
+    private fun determineWinnerString(player: Player): String {
+        return if (player.tag == Player.ONE.tag) Player.TWO.tag else Player.ONE.tag
     }
 
     private fun isHalveOrNull(resourceId: Int?) =
@@ -222,7 +226,7 @@ class CalculatorViewModel : ViewModel() {
     }
 
     private fun setIndicatorInvisibility(player: String) {
-        if (player == Player.ONE.name) {
+        if (player == Player.ONE.tag) {
             _playerOneLpIndicatorInvisibility.value = false
             _playerTwoLpIndicatorInvisibility.value = true
         } else {
