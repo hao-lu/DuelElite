@@ -1,6 +1,7 @@
 package com.lucidity.haolu.searchcards.view.fragment
 
 import android.content.Context
+import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -89,6 +90,10 @@ class SearchCardResultsFragment : Fragment(), OnSearchResultListener {
                     activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.etSearchBoxHint, InputMethodManager.SHOW_IMPLICIT)
             }
+        }
+        binding.rvSearchResults.setOnTouchListener { view, motionEvent ->
+            KeyboardUtil.hideKeyboard(requireActivity())
+            false
         }
     }
 
