@@ -10,7 +10,6 @@ buildscript {
         classpath GradlePlugin.ANDROID
         classpath GradlePlugin.KOTLIN
         classpath GradlePlugin.NAVIGATION_SAFE_ARGS
-        classpath GradlePlugin.REALM
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
