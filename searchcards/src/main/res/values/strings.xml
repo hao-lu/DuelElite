@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_search_box">Search for card details, rulings, and tips</string>
+
+    <string name="details_hao">Details</string>
+    <string name="rulings_hao">Rulings</string>
+    <string name="tips_hao">Tips</string>
+
+    <string name="no_rulings">No rulings available</string>
+    <string name="no_tips">No tips available</string>
+    <string name="recent_searches">Recent Searches</string>
+</resources>

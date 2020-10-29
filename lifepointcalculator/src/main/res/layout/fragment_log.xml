@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:background="?android:attr/colorBackground">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            android:elevation="4dp"
+            app:titleTextColor="?android:attr/textColor"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/v_title_background"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_snackbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:layout_marginTop="@dimen/normal_horizontal_margin"
+            android:layout_marginStart="@dimen/normal_horizontal_margin"
+            android:layout_marginEnd="@dimen/normal_horizontal_margin"/>
+
+        <TextView
+            android:id="@+id/tv_player"
+            style="@style/TextAppearance.LogTitle"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player"
+            app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
+            app:layout_constraintStart_toStartOf="@id/v_title_background"
+            app:layout_constraintBottom_toBottomOf="@id/v_title_background"
+            app:layout_constraintTop_toTopOf="@id/v_title_background" />
+
+        <TextView
+            android:id="@+id/tv_action_lp"
+            style="@style/TextAppearance.LogTitle"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_lp"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_lp"
+            app:layout_constraintStart_toEndOf="@id/tv_player"
+            app:layout_constraintBottom_toBottomOf="@id/v_title_background"
+            app:layout_constraintTop_toTopOf="@id/v_title_background"/>
+
+        <TextView
+            android:id="@+id/tv_total_lp"
+            style="@style/TextAppearance.LogTitle"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/total_lp"
+            app:layout_constraintEnd_toStartOf="@id/tv_time"
+            app:layout_constraintStart_toEndOf="@id/tv_action_lp"
+            app:layout_constraintBottom_toBottomOf="@id/v_title_background"
+            app:layout_constraintTop_toTopOf="@id/v_title_background"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/TextAppearance.LogTitle"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_total_lp"
+            app:layout_constraintBottom_toBottomOf="@id/v_title_background"
+            app:layout_constraintTop_toTopOf="@id/v_title_background"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_log"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_title_background" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

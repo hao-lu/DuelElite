@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bt_seven"
+            style="@style/Button.Normal"
+            android:text="@string/seven_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_four"
+            app:layout_constraintEnd_toStartOf="@id/bt_eight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/seven_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_eight"
+            style="@style/Button.Normal"
+            android:text="@string/eight_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_five"
+            app:layout_constraintEnd_toStartOf="@id/bt_nine"
+            app:layout_constraintStart_toEndOf="@id/bt_seven"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/eight_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_nine"
+            style="@style/Button.Normal"
+            android:text="@string/nine_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_six"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bt_eight"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/nine_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_four"
+            style="@style/Button.Normal"
+            android:text="@string/four_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_one"
+            app:layout_constraintEnd_toStartOf="@id/bt_five"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_seven"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/four_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_five"
+            style="@style/Button.Normal"
+            android:text="@string/five_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_two"
+            app:layout_constraintEnd_toStartOf="@id/bt_six"
+            app:layout_constraintStart_toEndOf="@id/bt_four"
+            app:layout_constraintTop_toBottomOf="@id/bt_eight"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/five_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_six"
+            style="@style/Button.Normal"
+            android:text="@string/six_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_three"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bt_five"
+            app:layout_constraintTop_toBottomOf="@id/bt_nine"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/six_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_one"
+            style="@style/Button.Normal"
+            android:text="@string/one_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_clear"
+            app:layout_constraintEnd_toStartOf="@id/bt_two"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_four"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/one_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_two"
+            style="@style/Button.Normal"
+            android:text="@string/two_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_double_zero"
+            app:layout_constraintEnd_toStartOf="@id/bt_three"
+            app:layout_constraintStart_toEndOf="@id/bt_one"
+            app:layout_constraintTop_toBottomOf="@id/bt_five"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/two_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_three"
+            style="@style/Button.Normal"
+            android:text="@string/three_literal"
+            app:layout_constraintBottom_toTopOf="@id/bt_zero"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bt_two"
+            app:layout_constraintTop_toBottomOf="@id/bt_six"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/three_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_clear"
+            style="@style/Button.Normal"
+            android:text="@string/c_literal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bt_double_zero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_one"
+            android:onClick="@{() -> viewmodel.onClearClicked()}"/>
+        <Button
+            android:id="@+id/bt_double_zero"
+            style="@style/Button.Normal"
+            android:text="@string/double_zero_literal"
+            app:layout_constraintBottom_toBottomOf="@id/bt_clear"
+            app:layout_constraintEnd_toStartOf="@id/bt_zero"
+            app:layout_constraintStart_toEndOf="@id/bt_clear"
+            app:layout_constraintTop_toTopOf="@id/bt_clear"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/double_zero_literal)}"/>
+
+        <Button
+            android:id="@+id/bt_zero"
+            style="@style/Button.Normal"
+            android:text="@string/zero_literal"
+            app:layout_constraintBottom_toBottomOf="@id/bt_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bt_two"
+            app:layout_constraintTop_toTopOf="@id/bt_clear"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/zero_literal)}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

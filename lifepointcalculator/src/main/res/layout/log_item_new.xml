@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="log"
+            type="com.lucidity.haolu.lifepointcalculator.model.LifePointLogItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            style="@style/TextAppearance.LogEntry"
+            android:id="@+id/tv_player"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_action_lp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{log.player}"
+            tools:text="You" />
+
+        <TextView
+            style="@style/TextAppearance.LogEntry"
+            android:id="@+id/tv_action_lp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_lp"
+            app:layout_constraintStart_toEndOf="@id/tv_player"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{String.valueOf(log.actionLp)}"
+            app:styleTextByGainOrLoss="@{ log.actionLp }"
+            tools:text="-1000" />
+
+        <TextView
+            style="@style/TextAppearance.LogEntry"
+            android:id="@+id/tv_total_lp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_time"
+            app:layout_constraintStart_toEndOf="@id/tv_action_lp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{String.valueOf(log.totalLp)}"
+            tools:text="7000" />
+
+        <TextView
+            style="@style/TextAppearance.LogEntry"
+            android:id="@+id/tv_time"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_total_lp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{String.valueOf(log.time)}"
+            tools:text="38:20" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

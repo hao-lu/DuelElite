@@ -3,6 +3,7 @@
     package="com.lucidity.haolu.duelking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.lucidity.haolu.duelking.MyApplication"
@@ -10,15 +11,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true">
 
-        <!-- MainActivity -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+        <activity android:name=".view.activity.BottomNavigationActivity"
+            android:theme="@style/AppTheme.Launcher"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,43 +24,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Log Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.view.activity.LogActivity"
-            android:label="@string/title_log_activity">
-        </activity>
-
-        <!-- Searchable Activity -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.SearchableCardActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.SearchSuggestion">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable">
-            </meta-data>
-        </activity>
-
-        <!-- Activity that shows the details of the cards -->
-        <activity
-            android:name="com.lucidity.haolu.duelking.view.activity.CardDetailActivity"
-            android:label="@string/title_activity_card_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <!-- Provides search suggestions for cards -->
-        <provider
-            android:name="com.lucidity.haolu.duelking.CardSuggestionProvider"
-            android:authorities="com.lucidity.haolu.duelking.CardSuggestionProvider"
-            android:exported="false"/>
-
-        <!-- Rng Activity -->
-        <activity android:name="com.lucidity.haolu.duelking.view.activity.RngActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/flip_and_roll">
-        </activity>
-        
 
     </application>
 

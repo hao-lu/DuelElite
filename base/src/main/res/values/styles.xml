@@ -1,0 +1,56 @@
+<resources>
+    <style name="Base.RoundedBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar">true</item>
+<!--        <item name="shapeAppearanceLargeComponent">@style/Base.ShapeAppearance.LargeComponent.RoundedBottomSheet</item>-->
+        <item name="bottomSheetStyle">@style/RoundedBottomSheet</item>
+    </style>
+
+    <style name="Base.ShapeAppearance.LargeComponent.RoundedBottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+        <item name="android:colorBackground">@android:color/white</item>
+    </style>
+
+    <style name="RoundedBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">#0000FF</item>
+    </style>
+
+<!--Text Styling-->
+    <style name="Base.TextAppearance.Header5" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/manrope_bold</item>
+    </style>
+
+    <style name="Base.TextAppearance.Header6" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="font">@font/manrope_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Base.TextAppearance.Subtitle1" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/roboto_regular</item>
+    </style>
+
+    <style name="Base.TextAppearance.Subtitle2" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@font/roboto_medium</item>
+    </style>
+
+    <style name="Base.TextAppearance.Body1" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/roboto_regular</item>
+    </style>
+
+    <style name="Base.TextAppearance.Body2" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@font/roboto_regular</item>
+    </style>
+</resources>

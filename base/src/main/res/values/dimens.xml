@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="small_vertical_margin">4dp</dimen>
+    <dimen name="small_horizontal_margin">4dp</dimen>
+    <dimen name="normal_margin">8dp</dimen>
+    <dimen name="normal_vertical_margin">8dp</dimen>
+    <dimen name="normal_horizontal_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+    <dimen name="large_vertical_margin">16dp</dimen>
+    <dimen name="large_horizontal_margin">16dp</dimen>
+
+    <dimen name="zero_dp">0dp</dimen>
+
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_search"
+    app:startDestination="@id/fragment_search_home"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/fragment_search_home"
+        android:name="com.lucidity.haolu.searchcards.view.fragment.SearchCardHomeFragment"
+        android:label="SearchHome"
+        tools:layout="@layout/fragment_search_card_home">
+
+        <action
+            android:id="@+id/action_fragment_search_home_to_fragment_search"
+            app:destination="@id/fragment_search"/>
+
+        <action
+            android:id="@+id/action_fragment_search_home_to_fragment_search_card_details"
+            app:destination="@id/fragment_search_card_details"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="com.lucidity.haolu.searchcards.view.fragment.SearchCardResultsFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search_card_results">
+
+        <action
+            android:id="@+id/action_fragment_search_card_to_fragment_search_card_details"
+            app:destination="@id/fragment_search_card_details"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_search_card_details"
+        android:name="com.lucidity.haolu.searchcards.view.fragment.SearchCardDetailsFragment"
+        android:label="SearchCardDetails"
+        tools:layout="@layout/fragment_search_card_details">
+
+        <action
+            android:id="@+id/action_fragment_search_card_to_fragment_full_screen_image_viewer"
+            app:destination="@id/fragment_full_screen_image_viewer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_full_screen_image_viewer"
+        android:name="com.lucidity.haolu.searchcards.view.fragment.FullScreenImageViewerFragment"
+        android:label="FullScreenImageViewerFragment"
+        tools:layout="@layout/fragment_image_dialog_new">
+
+    </fragment>
+</navigation>

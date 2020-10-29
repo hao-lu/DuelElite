@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="parentViewModel"
+            type="com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.lucidity.haolu.lifepointcalculator.viewmodel.InputTypeBottomSheetDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Base.RoundedBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_input_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Input type"
+            android:textColor="?android:textColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_input_dialog_accumulated"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="?android:textColor"
+            android:onClick="@{() -> viewModel.onAccumulatedClick()}"
+            android:padding="16dp"
+            android:text="Accumulated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_input_dialog_title" />
+
+        <ImageView
+            android:id="@+id/iv_input_accumulated_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_check"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/tv_input_dialog_accumulated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_input_dialog_accumulated" />
+
+        <TextView
+            android:id="@+id/tv_input_dialog_normal"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="?android:textColor"
+            android:padding="16dp"
+            android:text="Normal"
+            android:onClick="@{() -> viewModel.onNormalClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_input_dialog_accumulated" />
+
+        <ImageView
+            android:id="@+id/iv_input_normal_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="@id/tv_input_dialog_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_input_dialog_normal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

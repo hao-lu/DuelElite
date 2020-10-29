@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_background">#EEEEEE</color>
+    <color name="heading">#E0E0E0</color>
+    <color name="ripple">#9E9E9E</color>
+
+    <color name="yugi_yellow">#d2c86f</color>
+    <color name="yugi_red">#9c396c</color>
+    <color name="yugi_blue">#374096</color>
+    <color name="yugi_dark_gray">#2f2f2f</color>
+    <color name="yugi_black">#252525</color>
+
+    <color name="monster_tan">#AB895D</color>
+    <color name="spell_green">#008182</color>
+    <color name="trap_violet">#A30661</color>
+
+    <color name="fifty_percent_white">#80FFFFFF</color>
+
+    <!--Light Theme-->
+    <color name="primary">#FFFFFF</color>
+    <color name="primary_dark">@color/yugi_blue</color>
+    <color name="accent">@color/yugi_blue</color>
+    <color name="window_background">#FFFFFF</color>
+    <color name="primary_text">#000000</color>
+    <color name="secondary_text">#BDBDBD</color>
+    <color name="color_background">#EEEEEE</color>
+    <color name="color_on_background">#000000</color>
+    <color name="color_surface">#FFFFFF</color>
+    <color name="color_surface_on_surface">#000000</color>
+    <color name="color_secondary_surface">#E5E5E5</color>
+    <color name="text_color_hint">#BDBDBD</color>
+    <color name="text_color_hint_inverse">#757575</color>
+
+
+    <!--Dark Theme-->
+    <color name="night_primary">#252525</color>
+    <color name="night_primary_dark">@color/yugi_blue</color>
+    <color name="night_accent">#517EFA</color>
+    <color name="night_window_background">#252525</color>
+    <color name="night_primary_text">#FFFFFF</color>
+    <color name="night_secondary_text">#BDBDBD</color>
+    <color name="night_color_background">#2F2F2F</color>
+    <color name="night_color_on_background">#FFFFFF</color>
+    <color name="night_color_surface">#252525</color>
+    <color name="night_color_on_surface">#FFFFFF</color>
+    <color name="night_color_secondary_surface">#757575</color>
+    <color name="night_text_color_hint">#757575</color>
+    <color name="night_text_color_hint_inverse">#BDBDBD</color>
+
+</resources>

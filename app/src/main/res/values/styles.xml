@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorYugiBlack</item>
-        <item name="colorPrimaryDark">@color/colorYugiDarkerBlack</item>
-        <item name="colorAccent">@color/colorYugiBlue</item>
+        <item name="colorPrimary">@color/yugi_dark_gray</item>
+        <item name="colorPrimaryDark">@color/yugi_black</item>
+        <item name="colorAccent">@color/yugi_blue</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -13,19 +13,21 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:colorBackground">@color/colorGrayBg</item>
+        <item name="android:colorBackground">@color/gray_background</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <!-- SearchableCardActivity AutoCompleteDropDown Theme -->
     <style name="AppTheme.SearchSuggestion" parent="AppTheme.NoActionBar">
         <item name="android:dropDownItemStyle">@style/CustomDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/CustomDropDownListViewStyle</item>
-        <item name="android:windowBackground">@color/colorGrayBg</item>
+        <item name="android:windowBackground">@color/gray_background</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="CustomDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textColor">#ffffff</item>
@@ -41,18 +43,18 @@
     <!-- MainActivity Button Style -->
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@drawable/ripple_effect</item>
+        <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="DialogTheme" parent="@style/Base.Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="@style/Base.Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="ButtonStyle2" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/ripple_effect</item>
+    <style name="ButtonStyle2" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/ripple</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>

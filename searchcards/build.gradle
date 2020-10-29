@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
+
+android {
+    compileSdkVersion Versions.COMPILE_SDK
+
+    defaultConfig {
+        minSdkVersion Versions.MIN_SDK
+        targetSdkVersion Versions.TARGET_SDK
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation project(path: ':base')
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.KOTLIN_STDLIB_JDK7
+
+    implementation AndroidX.APPCOMPAT
+    implementation AndroidX.CONSTRAINTLAYOUT
+    implementation AndroidX.CORE_KTX
+    implementation AndroidX.MATERIAL
+    implementation AndroidX.NAVIGATION_FRAGMENT
+    implementation AndroidX.NAVIGATION_FRAGMENT_KTX
+    implementation AndroidX.NAVIGATION_UI
+    implementation AndroidX.PALETTE
+    implementation AndroidX.ROOM_KTX
+    implementation AndroidX.ROOM_RUNTIME
+    implementation AndroidX.VIEWPAGER2
+
+    implementation Dependencies.JSOUP
+    implementation Dependencies.MOSHI
+    implementation Dependencies.MOSHI_KOTLIN
+    implementation Dependencies.PICASSO
+
+    kapt AndroidX.ROOM_COMPILER
+
+    // Test
+    testImplementation Tests.JUNIT
+    androidTestImplementation Tests.EXT_JUNIT
+    androidTestImplementation Tests.ESPRESSO_CORE
+
+}

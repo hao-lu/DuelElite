@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="300">
+        <OnClick
+            app:clickAction="transitionToEnd"
+            app:targetId="@id/v_search_box_bg" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:translationZ="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+            app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
+            app:layout_constraintTop_toTopOf="@id/guideline_top">
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+            <Transform
+                android:rotation="0" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/et_search_box_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationZ="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+        <Constraint
+            android:id="@id/v_search_box_bg"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            app:layout_constraintBottom_toTopOf="@id/guideline_bottom"/>
+
+        <Constraint
+            android:id="@id/v_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:translationZ="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_bottom">
+            <PropertySet android:visibility="invisible" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@id/iv_icon">
+            <Layout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/v_search_box_bg"
+                app:layout_constraintBottom_toTopOf="@id/v_divider"
+                app:layout_constraintStart_toStartOf="@id/v_search_box_bg"
+                app:layout_constraintTop_toTopOf="@id/v_search_box_bg" />
+            <PropertySet android:visibility="visible" />
+            <Transform
+                android:translationZ="5dp"
+                android:rotation="90"/>
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="1" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/v_search_box_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"/>
+
+        <Constraint android:id="@id/v_divider">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_bottom"/>
+            <PropertySet android:visibility="visible" />
+        </Constraint>
+    </ConstraintSet>
+</MotionScene>

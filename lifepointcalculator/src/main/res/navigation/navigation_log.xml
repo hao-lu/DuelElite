@@ -1,0 +1,15 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_log"
+    app:startDestination="@id/fragment_log"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/fragment_log"
+        android:name="com.lucidity.haolu.lifepointcalculator.view.fragment.LogFragment"
+        android:label="Log"
+        tools:layout="@layout/fragment_log">
+    </fragment>
+
+</navigation>

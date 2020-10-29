@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="material_margin">8dp</dimen>
+    <dimen name="life_point_bar_height">50dp</dimen>
+
+    <dimen name="life_point_text_size">36sp</dimen>
+
+    <dimen name="card_background_elevation">2dp</dimen>
+    <dimen name="content_elevation">3dp</dimen>
+    <dimen name="shadow_elevation">2dp</dimen>
+    <dimen name="calculator_add_button_width">70dp</dimen>
+    <dimen name="calculator_minus_button_width">70dp</dimen>
+
+    <dimen name="snackbar_margins">8dp</dimen>
+</resources>

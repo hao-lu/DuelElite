@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.lucidity.haolu.lifepointcalculator.viewmodel.CalculatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_cumulated_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:showIn="@layout/fragment_calculator">
+
+        <Button
+            android:id="@+id/button_fifty"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/fifty)}"
+            android:text="@string/fifty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_one_hundred"
+            app:layout_constraintBottom_toTopOf="@id/button_five_hundred"/>
+
+        <Button
+            android:id="@+id/button_one_hundred"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/one_hundred)}"
+            android:text="@string/one_hundred"
+            app:layout_constraintEnd_toStartOf="@+id/button_two_hundred"
+            app:layout_constraintStart_toEndOf="@+id/button_fifty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_one_thousand"/>
+
+        <Button
+            android:id="@+id/button_two_hundred"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/two_hundred)}"
+            android:text="@string/two_hundred"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_one_hundred"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_two_thousand"/>
+
+        <Button
+            android:id="@+id/button_five_hundred"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/five_hundred)}"
+            android:text="@string/five_hundred"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_fifty"
+            app:layout_constraintEnd_toStartOf="@id/button_one_thousand"
+            app:layout_constraintBottom_toTopOf="@id/button_halve"/>
+
+        <Button
+            android:id="@+id/button_one_thousand"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/one_thousand)}"
+            android:text="@string/one_thousand"
+            app:layout_constraintEnd_toStartOf="@+id/button_two_thousand"
+            app:layout_constraintStart_toEndOf="@+id/button_five_hundred"
+            app:layout_constraintTop_toBottomOf="@+id/button_one_hundred"
+            app:layout_constraintBottom_toTopOf="@id/button_halve"/>
+
+        <Button
+            android:id="@+id/button_two_thousand"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onNumberClicked(@string/two_thousand)}"
+            android:text="@string/two_thousand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_two_hundred"
+            app:layout_constraintStart_toEndOf="@id/button_one_thousand"
+            app:layout_constraintBottom_toTopOf="@id/button_halve"/>
+
+        <Button
+            android:id="@+id/button_halve"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onHalveClicked()}"
+            android:text="@string/halve"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_one_thousand"
+            app:layout_constraintEnd_toStartOf="@id/button_clear"/>
+
+        <Button
+            android:id="@+id/button_clear"
+            style="@style/Button.Accumulated.Landscape"
+            android:background="@drawable/ripple"
+            android:onClick="@{() -> viewmodel.onClearClicked()}"
+            android:text="@string/clear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_halve"
+            app:layout_constraintTop_toBottomOf="@+id/button_one_thousand" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
