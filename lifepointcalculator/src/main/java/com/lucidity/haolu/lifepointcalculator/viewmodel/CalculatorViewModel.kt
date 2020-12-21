@@ -175,7 +175,7 @@ class CalculatorViewModel : ViewModel() {
         playerTwoLpBarInvisible = false
         _playerOneLpIndicatorInvisibility.value = true
         _playerTwoLpIndicatorInvisibility.value = true
-        _actionLp.value = ""
+        _actionLp.value = null
         _actionLpHint.value = "0000"
         _playerOneLp.value = LifePointCalculator.START_LP
         _playerTwoLp.value = LifePointCalculator.START_LP

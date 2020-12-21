@@ -117,7 +117,8 @@ class YugiohWikiaDataProvider {
             val listOfCardRulings = ArrayList<CardRulings>()
             val article = document.select("article").first()
             val div = article.getElementById("mw-content-text")
-            val children = div.children()
+            val cl = div.getElementsByClass("mw-parser-output")
+            val children = cl[0].children()
             var addToList = false
             for (child in children) {
                 // Add all header sections excluding References and Notes
@@ -167,8 +168,9 @@ class YugiohWikiaDataProvider {
         val document = fetchDocument(generateCardWikiaTipsEndpoint(cardName))
         document?.let {
             val article = document.select("article").first()
-            val context = article.getElementById("mw-content-text")
-            val children = context.children()
+            val contextDiv = article.getElementById("mw-content-text")
+            val parserDiv = contextDiv.getElementsByClass("mw-parser-output")
+            val children = parserDiv[0].children()
             for (c in children) {
                 if (c.text() == "Traditional Format" || c.text() == "List")
                     break
