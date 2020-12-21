@@ -49,8 +49,13 @@ class PausableCountDownTimer(
     fun cancel() {
         if (isRunning) {
             pause()
-            remainingTime = startTime
         }
+        reset()
+    }
+
+    private fun reset() {
+        remainingTime = startTime
+        formattedRemainingTime = formatTimeToHourMinute(startTime)
     }
 
     private fun formatTimeToHourMinute(millisUntilFinished: Long): String =

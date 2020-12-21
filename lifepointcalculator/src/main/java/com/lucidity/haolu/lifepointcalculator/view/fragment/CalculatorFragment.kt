@@ -277,13 +277,17 @@ class CalculatorFragment : Fragment() {
 
     private fun observeDuelTimeButtonVisibility() {
         viewmodel.duelTimeButtonInvisibility.observe(viewLifecycleOwner, Observer { isInvisible ->
-            binding.ibDuelTime.isInvisible = isInvisible
+            if (!viewmodel.timer.isStarted) {
+                binding.ibDuelTime.isInvisible = isInvisible
+            }
         })
     }
 
     private fun observeDuelTimeTextViewVisibility() {
         viewmodel.duelTimeTextViewInvisibility.observe(viewLifecycleOwner, Observer { isInvisible ->
-            binding.tvDuelTime.isInvisible = isInvisible
+            if (!viewmodel.timer.isStarted) {
+                binding.tvDuelTime.isInvisible = isInvisible
+            }
         })
     }
 
