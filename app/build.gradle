@@ -10,8 +10,8 @@ android {
         applicationId "com.lucidity.haolu.duelking"
         minSdkVersion Versions.MIN_SDK
         targetSdkVersion Versions.TARGET_SDK
-        versionCode 6
-        versionName "2.0.3"
+        versionCode 8
+        versionName "2.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
