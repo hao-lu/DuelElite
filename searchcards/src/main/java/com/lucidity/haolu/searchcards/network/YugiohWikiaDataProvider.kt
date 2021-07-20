@@ -114,28 +114,34 @@ class YugiohWikiaDataProvider {
     suspend fun fetchCardRulings(cardName: String): ArrayList<CardRulings>? {
         val document = fetchDocument(generateCardWikiaRulingEndpoint(cardName))
         document?.let {
-            val listOfCardRulings = ArrayList<CardRulings>()
-            val article = document.select("article").first()
-            val div = article.getElementById("mw-content-text")
-            val cl = div.getElementsByClass("mw-parser-output")
-            val children = cl[0].children()
-            var addToList = false
-            for (child in children) {
-                // Add all header sections excluding References and Notes
-                if (child.`is`("h2") && child.text() != "References" && child.text() != "Notes") {
-                    addToList = true
-                    // New header
-                    listOfCardRulings.add(CardRulings(arrayListOf()))
-                    Log.d(TAG, child.text())
-                } else if (child.`is`("h2")) {
-                    addToList = false
+            try {
+                val listOfCardRulings = ArrayList<CardRulings>()
+                val div = document.getElementById("mw-content-text")
+                val cl = div.getElementsByClass("mw-parser-output")
+                val children = cl[0].children()
+                var addToList = false
+                for (child in children) {
+                    // Add all header sections excluding References and Notes
+                    if (child.`is`("h2") && child.text() != "References" && child.text() != "Notes") {
+                        addToList = true
+                        // New header
+                        listOfCardRulings.add(CardRulings(arrayListOf()))
+                        Log.d(TAG, child.text())
+                    } else if (child.`is`("h2")) {
+                        addToList = false
+                    }
+                    if (addToList) {
+                        val rulingList = listOfCardRulings[listOfCardRulings.size - 1]
+                        listOfCardRulings[listOfCardRulings.size - 1] =
+                            addRulingsItemHelper(child, rulingList)
+                    }
                 }
-                if (addToList) {
-                    val rulingList = listOfCardRulings[listOfCardRulings.size - 1]
-                    listOfCardRulings[listOfCardRulings.size - 1] = addRulingsItemHelper(child, rulingList)
-                }
+                return listOfCardRulings
+            } catch (e: Exception) {
+                // Adding a try catch here, just in case wikia changes their html layout
+
+                return null
             }
-            return listOfCardRulings
         }
         return null
     }
@@ -167,16 +173,20 @@ class YugiohWikiaDataProvider {
         val mTipsList: ArrayList<String> = arrayListOf()
         val document = fetchDocument(generateCardWikiaTipsEndpoint(cardName))
         document?.let {
-            val article = document.select("article").first()
-            val contextDiv = article.getElementById("mw-content-text")
-            val parserDiv = contextDiv.getElementsByClass("mw-parser-output")
-            val children = parserDiv[0].children()
-            for (c in children) {
-                if (c.text() == "Traditional Format" || c.text() == "List")
-                    break
-                if (c.`is`("ul")) mTipsList.add(c.text())
+            try {
+                val contextDiv = document.getElementById("mw-content-text")
+                val parserDiv = contextDiv.getElementsByClass("mw-parser-output")
+                val children = parserDiv[0].children()
+                for (c in children) {
+                    if (c.text() == "Traditional Format" || c.text() == "List")
+                        break
+                    if (c.`is`("ul")) mTipsList.add(c.text())
+                }
+                return mTipsList
+            } catch (e: Exception) {
+                // Adding a try catch here, just in case wikia changes their html layout
+                return null
             }
-            return mTipsList
         }
         return null
     }
